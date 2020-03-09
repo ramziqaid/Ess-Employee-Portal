@@ -1,0 +1,25 @@
+<!-- <label for="Employee" class="text-uppercase">Employee</label>
+<select class="form-control" id="employeeID" name="employeeID" required="required" [(ngModel)]="employeeID"
+  #employee="ngModel" #t (change)="SelectEmoployee(t.value)">
+  <option *ngFor="let emp of empoyeeList" [value]="emp.employeeID">
+    {{emp.EnglishName}}
+  </option>
+</select>
+<div *ngIf="employee.invalid && (employee.dirty || employee.touched) " class="errorMessage">
+  <span *ngIf="employee.hasError('required')">employee is required.</span>
+</div> -->
+
+
+<label for="Employee">Employee</label>
+<select required name="Employee" #refUserId="ngModel" class="form-control" (change)='SelectEmoployee()'
+  [(ngModel)]="employeeID">
+  <!-- <option value=''>Please select User</option> -->
+  <option *ngFor="let emp of empoyeeList" [value]="emp.EmployeeID">
+    {{emp.EnglishName}}
+  </option>
+</select>
+<div *ngIf="!refUserId.valid  && (refUserId.dirty || refUserId.touched)" class="alert alert-danger">
+  <div [hidden]="!refUserId.errors.required">
+    employee is required.
+  </div>
+</div>

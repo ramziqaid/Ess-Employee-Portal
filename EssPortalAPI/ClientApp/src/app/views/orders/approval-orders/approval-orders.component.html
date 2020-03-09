@@ -1,0 +1,48 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i> Bordered Table
+            <button style="   margin-left: 10px;" class="btn btn-info" (click)="ExportTOExcel()">Export
+                as Excel</button>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered  table-striped" id="sample-table" datatable [dtOptions]="dtOptions"
+                [dtTrigger]="dtTrigger" #TABLE>
+                <thead>
+                    <tr>
+                        <th> Number</th>
+                        <th> Type</th>
+                        <th>Created Date</th>
+                        <th>Status</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data">
+                        <td>{{item.RequestID}}</td>
+                        <td> {{item.RequestName}}</td>
+                        <td> {{item.CreatedDate}}</td>
+                        <td>
+                            <progressbar class="progress progress-striped progress-bar-animated" [value]="20"
+                                [max]="100">
+                                {{item.Status_NameEN}}</progressbar>
+                        </td>
+                        <td>
+
+                            <div class="btn-group " role="group">
+                                <button type="button" class="btn btn-success"
+                                    [routerLink]="['/Orders/NewOrders/Amendment/', item.RequestID]"><i
+                                        class="fa fa-list"></i></button>
+                                <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

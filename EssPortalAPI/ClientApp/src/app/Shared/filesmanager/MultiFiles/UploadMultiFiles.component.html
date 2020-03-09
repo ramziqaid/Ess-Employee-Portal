@@ -1,0 +1,46 @@
+<button class="btn primary2 mb-3  float-right " type="button" [disabled]="disabled" (click)="show()" title={{text}}>
+
+  <ng-template [ngIf]="text" [ngIfElse]="uploadText">
+    <i class="fa fa-paperclip" aria-hidden="true"></i>
+    <span> {{text}}</span>
+  </ng-template>
+
+  <ng-template #uploadText>
+    <i class="fa fa-paperclip" aria-hidden="true"></i>
+    Upload Files
+  </ng-template>
+</button>
+
+<ng-template #templateUploadFile>
+
+  <div class="modal-header">
+    <h4 class="modal-title">Manage Attachments {{referenceID}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <app-upload [disabled]="showProgress" *ngIf="canAddRemove" (uploadStatus)="uploadStatus($event)"
+    [referenceID]="referenceID"></app-upload>
+  <h2>File List</h2>
+  <p *ngIf="showProgress"> progress <strong>{{percentage}}%</strong></p>
+  <label class="error" [hidden]="!showDownloadError">Error in download</label>
+  <label class="error" [hidden]="!showUploadError">{{message}}</label>
+  <hr>
+  <div class="container">
+    <ul>
+      <li *ngFor="let file of files">
+        <a>
+          <div style="font-size: 12px; float: left; width: 60%;margin-top: 8px;">
+            {{file.fileName}}
+          </div>
+          <app-download #editTemplate [disabled]="showProgress" [attachmentID]="file.attachmentID"
+            [fileName]="file.fileName" (downloadStatus)="downloadStatus($event)" (deleteFile)="removeRow()"
+            [canRemove]="canAddRemove">
+          </app-download>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</ng-template>

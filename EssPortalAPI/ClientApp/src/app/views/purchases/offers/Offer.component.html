@@ -1,0 +1,125 @@
+<mat-toolbar class="primary">
+  <mat-toolbar-row>
+    <span class="example-spacer"> <strong>Purchases</strong> Offers / {{title}} </span>
+    <button type="button" class="btn" (click)=" onClose()">
+      <mat-icon class="example-icon" aria-hidden="false" aria-label="Example Close icon">clear
+      </mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form #heroForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit()" novalidate enctype="multipart/form-data">
+
+  <ul class="list-group">
+
+    <li class="row" *ngIf="canAddRemove">
+      <div class="col-sm-6">
+        <div class="input-group ">
+          <div class="input-group-prepend">
+            <label class="col-md-3 col-form-label" for="FromDate">Vend</label>
+          </div>
+          <select required name="vend" id="vend" placeholder="Please Select Vend" class="form-control"
+            [(ngModel)]="vendId" #refVend="ngModel">
+            <option value=''>Please Select Vend</option>
+            <option *ngFor="let emp of VendList" [value]="emp.itemNumber">
+              {{emp.NameAR}}
+            </option>
+          </select>
+        </div>
+
+      </div>
+      <div class="col-sm-6" *ngIf="canAddRemove">
+        <div class="input-group  ">
+          <div class="input-group-prepend">
+            <label class="col-md-3 col-form-label" for="Price">Price</label>
+          </div>
+          <input type="number" name="Price" class="form-control" placeholder="Price" id="Price" title="Price"
+            [(ngModel)]="itemPrice" required #refPrice="ngModel">
+        </div>
+      </div>
+    </li>
+
+
+    <li class="row" *ngIf="canAddRemove">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="col-md-3 col-form-label" for="Justification">Justi.</label>
+          </div>
+          <textarea id="textarea-input" name="textarea-input" rows="2" class="form-control" name="Justification"
+            title="Justification" [(ngModel)]="justification" maxlength="500" #refJustification="ngModel"
+            placeholder="Justification" id="Justification" required>
+        </textarea>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="!refJustification.valid  && (refJustification.dirty || refJustification.touched) "
+        class="alert alert-danger">
+        <div [hidden]="!refJustification.errors.required">
+          Justification is required.
+        </div>
+      </div> -->
+      <div class="col-sm-6">
+        <app-MultiFilesManager (onUploadFinished)="uploadFinished($event)" [referenceID]="PurchaseOfferID">
+        </app-MultiFilesManager>
+      </div>
+
+
+    </li>
+
+    <li class="list-group-item" *ngIf="canAddRemove">
+      <button [disabled]="!heroForm.form.valid" class="btn primary btn-block" type="submit">Save</button>
+    </li>
+
+    <li class="list-group-item">
+
+      <div *ngIf="this.listObj">
+        <table class="table table-striped table-bordered">
+          <thead class="text-center  ">
+            <tr>
+              <th>Select</th>
+              <th>Vend</th>
+              <th>Price</th>
+              <th>Justification</th>
+              <th>Attachment</th>
+              <th *ngIf="canAddRemove">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of this.listObj;  let cIndex = index;" class="text-center">
+              <td>
+                <section class="example-section">
+                  <mat-checkbox class="example-margin" #checkbox [disabled]="!canSelectdOffer"
+                    [checked]="item.isSelected" [id]="item.purchaseOfferID"
+                    (change)="changeSelectOffer(item.purchaseOfferID,item.purchasesDetailsID,checkbox.checked)">
+                  </mat-checkbox>
+                </section>
+              </td>
+              <td>{{item.vendNameEN}}</td>
+              <td>{{item.price}}</td>
+              <td>{{item.justification}}</td>
+              <td>
+                <app-MultiFilesManager (onUploadFinished)="uploadFinished($event)" [referenceID]="item.purchaseOfferID"
+                  [text]="' '" [canAddRemove]="canAddRemove">
+                </app-MultiFilesManager>
+              </td>
+              <td *ngIf="canAddRemove">
+                <button type="button" class="btn btn-danger" (click)="onDelete(item.purchaseOfferID,cIndex)"><i
+                    class="fa fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </li>
+
+  </ul>
+
+</form>
+
+
+<!--/.col-->
+<!-- 
+{{heroForm.status }}
+{{diagnostic}} -->

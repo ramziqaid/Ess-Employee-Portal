@@ -1,0 +1,197 @@
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i>
+      <button style="   margin-left: 10px;" class="btn primary" (click)="ExportTOExcel()">Export
+        as Excel</button>
+    </div>
+    <div class="card-body col-sm-12">
+      <table class="table" id="sample-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #TABLE>
+        <thead>
+          <tr>
+            <th></th>
+            <th>No.</th>
+            <th> Number</th>
+            <th> Name</th>
+            <th>Requested Date</th>
+            <th>Status</th>
+            <th>Reason</th>
+            <th>Type</th>
+            <th>Stage</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data;  let cIndex = index;" [ngClass]="{'active':item.isNeedAction==1}">
+            <td><i class="fa fa-arrow-right text-primary" aria-hidden="true"></i></td>
+            <td>{{cIndex+1}}</td>
+            <td>{{item.purchaseNumber}}</td>
+            <td> {{item.purchaseName}}</td>
+            <td> {{item.createdDate}}</td>
+            <td>
+              <span class='badge badge-{{item.statusbadge}}'>{{item.statusEN}}</span>
+            </td>
+            <td> {{item.reasonEN}}</td>
+            <td> {{item.typeEN}}</td>
+            <td> {{item.stageTypeNameEN}}</td>
+
+            <td>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn primary" [routerLink]="['/Purchases/NewRequset/', item.purchaseID]"
+                  [queryParams]="{debug: true}"><i class="fa fa-eye"></i></button>
+                <button type="button" class="btn btn-warning"
+                  [routerLink]="['/Purchases/PrintInvoice/', item.purchaseID]" [queryParams]="{debug: true}"><i
+                    class="fa fa-print"></i></button>
+              </div>
+
+              <!-- <div class="btn-group" dropdown *ngIf="item.isNeedAction">
+                <button type="button" class="btn btn-danger">Action</button>
+                <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split">
+                  <span class="caret"></span>
+                  <span class="sr-only">Split button!</span>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                  <li role="menuitem">
+                    <a class="dropdown-item" (click)="DoneRequest(item.purchaseID)">Done</a>
+                  </li>
+                  <li role="menuitem"><a class="dropdown-item" (click)="RejectedRequest(item.purchaseID)"> Reject</a>
+                  </li>
+                  <li role="menuitem"><a class="dropdown-item" *ngIf="item.isNeedOffer"
+                      [routerLink]="['/Purchases/Offers/', item.purchaseID]" [queryParams]="{debug: true}">
+                      Offers</a>
+                  </li>
+                </ul>
+              </div> -->
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 mb-12" *ngIf="this.oldObj">
+  <!-- Nav tabs -->
+  <tabset>
+    <tab>
+      <ng-template tabHeading><i class="icon-list"></i> <span class="badge badge-success">Items
+        </span>
+        <strong>{{ message }}</strong>
+      </ng-template>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>QTY</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of this.oldObj.purchasesDetails;  let cIndex = index;" class="text-center">
+            <td>{{product.itemNumber}}</td>
+            <td>{{product.itemNameEN | uppercase}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.qty}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+    <tab>
+
+      <ng-template tabHeading><i class="icon-calculator"></i> &nbsp;<span
+          class="badge badge-pill badge-danger">Actions</span>
+      </ng-template>
+
+      <mat-horizontal-stepper [linear]="false" #stepper>
+        <div *ngFor="let item of this.oldObj.purchasesStageTransactionModels;  let cIndex = index;">
+
+          <mat-step>
+            <ng-template matStepLabel> {{item.nameEN}}</ng-template>
+            <table style="width: 25%;">
+              <tr>
+                <td class="font-weight-bold">
+                  <h6 class=" float-left">Stage Status :</h6>
+                </td>
+                <td class="font-weight-bold">
+                  <h6 *ngIf="item.isAction" class=" text-success"> Done </h6>
+                  <h6 *ngIf="!item.isAction" class="  text-danger"> Waiting </h6>
+                </td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">
+                  <h6 class="  float-left">FullName :</h6>
+                </td>
+                <td>
+                  {{item.fullName}}
+                </td>
+              </tr>
+              <tr *ngIf="item.isAction" class="font-weight-bold">
+                <td>
+                  <h6 class=" float-left"> Updated On :</h6>
+                </td>
+                <td>
+                  {{item.actionDate}}
+                </td>
+              </tr>
+              <tr *ngIf="item.isAction" class="font-weight-bold">
+                <td>
+                  <h6 class=" float-left"> Justification :</h6>
+                </td>
+                <td>
+                  {{item.justification}}
+                </td>
+              </tr>
+            </table>
+            <br />
+            <div>
+              <button *ngIf="item.stageOrder !=1" mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+
+        </div>
+
+      </mat-horizontal-stepper>
+
+    </tab>
+
+  </tabset>
+
+</div>
+<!--/.col-->
+
+
+<!--Confirm MODAL START-->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">Justification</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <form [formGroup]="actionForm" (ngSubmit)="ActionSubmit(myform)" #myform="ngForm">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productDescription"><i class="fa fa-pencil-square-o"></i></span>
+            </div>
+            <textarea formControlName="description" class="form-control" rows="3" placeholder="Justification"
+              aria-label="Description" aria-describedby="productDescription"></textarea>
+          </div>
+          <div class="errorMessage" *ngIf="description.touched && description.errors">
+            <span *ngIf="description.hasError('required')">Justification is required.</span>
+            <span *ngIf="description.hasError('maxlength')">Only 150 characters allowed for Justification.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <button [disabled]="actionForm.invalid" class="btn btn-primary btn-block"
+            type="submit">{{actionName}}</button>
+        </li>
+      </ul>
+    </form>
+  </div>
+</ng-template>

@@ -1,0 +1,140 @@
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.ServiceModel;
+using DevExpress.XtraReports.Web.Extensions;
+using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Hosting;
+
+namespace EssPortalAPI.Services
+{
+    public class ReportStorageWebExtension1 : DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension
+    {
+        readonly string reportDirectory;
+        const string FileExtension = ".repx";
+        public ReportStorageWebExtension1(IHostingEnvironment env)
+        {
+            reportDirectory = Path.Combine(env.ContentRootPath, "Reports");
+            if (!Directory.Exists(reportDirectory))
+            {
+                Directory.CreateDirectory(reportDirectory);
+            }
+        }
+
+        public override bool CanSetData(string url)
+        {
+            // Determines whether or not it is possible to store a report by a given URL. 
+            // For instance, make the CanSetData method return false for reports that should be read-only in your storage. 
+            // This method is called only for valid URLs (i.e., if the IsValidUrl method returned true) before the SetData method is called.
+
+            return true;
+        }
+
+        public override bool IsValidUrl(string url)
+        {
+            // Determines whether or not the URL passed to the current Report Storage is valid. 
+            // For instance, implement your own logic to prohibit URLs that contain white spaces or some other special characters. 
+            // This method is called before the CanSetData and GetData methods.
+
+            return true;
+        }
+
+        public override byte[] GetData(string url)
+        {
+            string[] urlParts = url.Split('?');
+            string reportName = urlParts[0];
+
+            var path = Path.Combine(reportDirectory, reportName + FileExtension);
+          
+                if (File.Exists(path))
+                {  //url = "Rep\\XtraReport.repx";
+                    XtraReport report = XtraReport.FromFile(path);
+                    if (urlParts.Length > 1)
+                    {
+
+                        string[] parameterDefinitions = urlParts[1].Split('&');
+                        foreach (string parameterDefinition in parameterDefinitions)
+                        {
+                            string[] keyValue = parameterDefinition.Split('=');
+                            DevExpress.XtraReports.Parameters.Parameter parameter = report.Parameters[keyValue[0]];
+                            parameter.Value = Convert.ChangeType(keyValue[1], parameter.Type);
+                        }
+                    }
+
+                    //read your REPX file to a MemoryStream and return MemoryStream.ToArray();
+                    var memoryStream = new MemoryStream();
+                    report.CreateDocument();
+                    report.SaveLayoutToXml(memoryStream);
+                    memoryStream.Position = 0;
+                    return memoryStream.ToArray();
+
+                }
+                return new byte[0];
+            
+          
+
+             
+            //try
+            //{
+            //    // return File.ReadAllBytes(Path.Combine(reportDirectory, url + FileExtension));
+            //    string ReportDirectory = "";
+            //    var path = Path.Combine(ReportDirectory, url + FileExtension);
+
+            //    //string url= XtraReport
+
+
+            //    Type objType = Type.GetType(Path.Combine(reportDirectory, url + FileExtension));
+
+               
+            //      //  string.Format("Reports/{0}", url));
+            //    object obj = Activator.CreateInstance(objType);
+                
+            //    XtraReport xtraReport = (XtraReport)obj;
+
+            //    xtraReport.Parameters["id"].Value = 1;
+
+            //    using (MemoryStream stream = new MemoryStream())
+            //    {
+            //        xtraReport.SaveLayoutToXml(stream);
+            //        return stream.ToArray();
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    throw new FaultException(new FaultReason(string.Format("Could not find report '{0}'.", url)), new FaultCode("Server"), "GetData");
+            //}
+
+        }
+
+        public override Dictionary<string, string> GetUrls()
+        {
+            // Returns a dictionary of the existing report URLs and display names. 
+            // This method is called when running the Report Designer, 
+            // before the Open Report and Save Report dialogs are shown and after a new report is saved to a storage.
+
+            return Directory.GetFiles(reportDirectory, "*" + FileExtension)
+                                     .Select(Path.GetFileNameWithoutExtension)
+                                     .ToDictionary<string, string>(x => x);
+        }
+
+        public override void SetData(XtraReport report, string url)
+        {
+            // Stores the specified report to a Report Storage using the specified URL. 
+            // This method is called only after the IsValidUrl and CanSetData methods are called.
+            report.SaveLayoutToXml(Path.Combine(reportDirectory, url + FileExtension));
+        }
+
+        public override string SetNewData(XtraReport report, string defaultUrl)
+        {
+            // Stores the specified report using a new URL. 
+            // The IsValidUrl and CanSetData methods are never called before this method. 
+            // You can validate and correct the specified URL directly in the SetNewData method implementation 
+            // and return the resulting URL used to save a report in your storage.
+            SetData(report, defaultUrl);
+            return defaultUrl;
+        }
+    }
+}

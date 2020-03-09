@@ -1,0 +1,5 @@
+<button type="button" [disabled]="disabled" [ngClass]="{'disabled': disabled}" (click)="download()" title="download"
+  class="btn-sm btn-spotify">download <i class="fa fa-download"></i></button>
+
+<button type="button" title="Remove" [disabled]="disabled" *ngIf="canRemove" class="btn-sm btn-danger"
+  (click)="removeFile()">Remove <i class="fa fa-trash"></i></button>

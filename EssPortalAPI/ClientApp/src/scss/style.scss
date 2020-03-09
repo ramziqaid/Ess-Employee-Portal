@@ -1,0 +1,147 @@
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+
+// $validColor:#3f51b5;//42A948;
+// $invalidColor:#ff4081;
+
+$validColor:#673ab7;//#3f51b5;//42A948;
+$invalidColor:#f44336;
+
+//**********************General *****************
+.sidebar 
+{
+     display: flex;
+     flex-direction: column;
+     padding: 0;
+     color: #fff;
+    // background: wheat;
+ }
+
+.red{
+     color:red !important;
+  } 
+
+.ng-valid{
+   [required], .required  
+    {
+      border-left: 5px solid $validColor; /* green */
+      border-color: $validColor;
+    }  
+    :input{
+      border-left: 5px solid $validColor; /* green */
+      border-color: $validColor;
+    } 
+      border-left: 5px solid $validColor; /* green */
+      border-color: $validColor; 
+  }
+  
+ .ng-invalid:not(form) 
+  {
+   border-left: 5px solid $invalidColor; /* red */
+   border-color: $invalidColor;
+  }
+  form {
+    border-left: none !important;  
+  } 
+ 
+ .form-group
+ {
+   .col-form-label
+   {
+    font-weight: 500 !important;
+   }
+ } 
+ 
+.primary{
+  background-color:$validColor;
+  color:white;
+}
+
+.primary2{
+  background-color:$invalidColor;
+  color:white;
+}
+.btn-spotify{
+  background-color: #008681;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+  color: #fff;
+  background:$invalidColor;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.5);
+}
+ 
+ .main .container-fluid 
+ {
+  padding: 0px;
+}
+
+.breadcrumb
+{
+  margin-bottom: 2px;
+}
+.card-header
+ {
+  padding: 4px;
+ }
+
+ .breadcrumb{
+  display: none;
+}
+.main .container-fluid {
+ margin-top: 5px;
+}
+ 
+.mat-step-header .mat-step-icon-state-edit {
+    background-color:  $validColor!important; 
+}
+
+.mat-step-icon-selected,
+.mat-step-icon-state-done,
+.mat-step-icon-state-edit {
+  background-color: $validColor !important;
+  color:#fff;
+} 
+
+//********************Header *************************
+.app-header .navbar-brand{
+  background-color: #008681;
+}
+
+//********************Header *************************
+
+ //************************table****************
+ .table thead th ,.table thead tr th{ 
+  text-align: center;
+}
+
+ .table td 
+ {
+  padding: 4px; 
+}
+
+.table tr {
+ // cursor: pointer;
+}
+
+.table tr td{
+  text-align: center;
+}
+ //************************table****************
+
+
+
+//***********************Footer*********************
+app-footer{
+  max-height: 25px;
+}
+//***********************Footer*********************

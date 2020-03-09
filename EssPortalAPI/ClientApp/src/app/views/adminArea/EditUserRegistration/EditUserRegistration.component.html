@@ -1,0 +1,144 @@
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card mx-6">
+      <div class="card-body p-12">
+
+        <form method="post" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+          <p class="text-muted">Update User</p>
+
+          <!-- <div class="form-group">
+            <div class="input-group  mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-people"></i></span>
+              </div>
+              <input type="text" class="form-control" name="employeeName" formControlName="employeeName"
+                placeholder="employeeName" id="employeeName">
+            </div>
+          </div> -->
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+
+              <input type="text" class="form-control" name="UserName" formControlName="UserName" placeholder="UserName"
+                autocomplete="UserName" id="UserName" required>
+            </div>
+            <div *ngIf="!UserName.valid  && (UserName.dirty || UserName.touched)" class="alert alert-danger">
+              <span *ngIf="UserName.hasError('required')">UserName is required.</span>
+              <span *ngIf="UserName.hasError('maxlength')">Only 10 characters allowed for UserName.</span>
+              <span *ngIf="UserName.hasError('minlength')">Atleast 5 characters needed for UserName.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+
+              <input type="text" class="form-control" name="FullName" maxlength="50" formControlName="FullName"
+                id="FullName" maxlength="50" placeholder="FullName" autocomplete="FullName" required>
+            </div>
+            <div *ngIf="!FullName.valid  && (FullName.dirty || FullName.touched)" class="alert alert-danger">
+              <span *ngIf="FullName.hasError('required')">FullName is required.</span>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+
+              <input type="text" class="form-control" maxlength="50" placeholder="Email" autocomplete="Email"
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="EmailId" formControlName="EmailId"
+                maxlength="50" id="EmailId" required>
+            </div>
+            <div *ngIf="!EmailId.valid  && (EmailId.dirty || EmailId.touched)" class="alert alert-danger">
+              <div [hidden]="!EmailId.errors.required">
+                Email is required
+              </div>
+              <div *ngIf="EmailId.errors && EmailId.errors.pattern">
+                Email is invalid
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-phone"></i></span>
+              </div>
+              <input type="text" class="form-control" name="Contactno" formControlName="Contactno"
+                placeholder="Phone Number" autocomplete="Phone Number" maxlength="10" name="Contactno" id="Contactno"
+                required>
+            </div>
+            <div *ngIf="!Contactno.valid  && (Contactno.dirty || Contactno.touched)" class="alert alert-danger">
+              <div [hidden]="!Contactno.errors.required">
+                Contact Number is required
+              </div>
+              <span *ngIf="Contactno.hasError('maxlength')">Only 20 characters allowed for Contact.</span>
+              <span *ngIf="Contactno.hasError('minlength')">Atleast 8 characters needed for Contact.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-lock"></i></span>
+              </div>
+
+              <input type="password" class="form-control" name="Password" formControlName="Password" id="Password"
+                placeholder="Password" autocomplete="new-password" [pattern]="unamePattern" maxlength="50" required>
+            </div>
+            <div *ngIf="!Password.valid  && (Password.dirty || Password.touched)" class="alert alert-danger">
+              <div [hidden]="!Password.errors.required">
+                Password is required
+              </div>
+              <div *ngIf="Password.errors?.pattern">
+                Passwords must be at least 8 characters and contain at 3 of 4 of the following: upper case
+                (A-Z), lower case (a-z), number (0-9) and special character (e.g. !@#$%^&*)
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-lock"></i></span>
+              </div>
+              <input id="cpassword" formControlName="cpassword" type="password" class="form-control"
+                placeholder="Repeat password" autocomplete="new-password" required>
+            </div>
+            <div *ngIf="!cpassword.valid  && (cpassword.dirty || cpassword.touched)" class="alert alert-danger">
+              <span *ngIf="cpassword.hasError('required')">Confirm Password is required.</span>
+              <span *ngIf="cpassword.hasError('mustMatch')">Password Must Match.</span>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Active</span>
+              </div>
+              <label class="switch switch-label switch-danger offset-md-1">
+                <input class="switch-input" type="checkbox" #inputEl name="Status" id="Status" formControlName="Status">
+                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+              </label>
+            </div>
+
+          </div>
+
+          <button id="register" type="submit" [disabled]="!updateForm.valid" class="btn btn-block btn-success">Update
+            Account</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
