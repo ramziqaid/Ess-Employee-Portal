@@ -1,3 +1,4 @@
+
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
@@ -57,6 +58,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
+import { TestModule } from './views/test/test.module';
 
 
 @NgModule({
@@ -65,6 +67,11 @@ import { AuthModule } from './auth/auth.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    SharedModule,
+    CoreModule,
+    AuthModule,
+    ActionBarModule,
+
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
@@ -79,13 +86,10 @@ import { AuthModule } from './auth/auth.module';
     ChartsModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
-    CoreModule,
-    AuthModule,
-    ActionBarModule,
     MatDialogModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    TestModule
   ],
   declarations: [
     AppComponent,

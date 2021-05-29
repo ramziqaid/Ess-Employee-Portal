@@ -104,7 +104,7 @@ namespace EssPortal.Models
 
         public string  PROFILEID{ get; set; }
 
-        public virtual List<Request> Requests { get; set; }
+        //public virtual List<Request> Requests { get; set; }
         
     }
 }

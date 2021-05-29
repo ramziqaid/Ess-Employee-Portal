@@ -70,7 +70,10 @@ namespace EssPortal.Concrete
         public List<Role> GetAllRole()
         {
             var result = (from role in _context.Role
-                select role).ToList();
+                          
+                select role 
+                 
+                ).ToList();
 
             return result;
         }

@@ -14,10 +14,10 @@ namespace EssPortal.Models
         [Key]
         public int RequestTypeID { get; set; }
 
-          [Column(Order = 1)]
-        public string RequestName { get; set; }
+        [Column(Order = 1)]
+        public string RequestNameAr { get; set; }
         [Column(Order = 2)]
-        public string ControllerName { get; set; }
+        public string RequestNameEn { get; set; }
         public Nullable<int> RequestGroupID { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string icons { get; set; }

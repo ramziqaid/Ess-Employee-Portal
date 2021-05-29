@@ -10,10 +10,6 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 
-// @Injectable({
-//     providedIn: 'root'
-// })
-
 export class AuthService {
     // public token: string;
     constructor(private _http: HttpClient, private _Route: Router) { }

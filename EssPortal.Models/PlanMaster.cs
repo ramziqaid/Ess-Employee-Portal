@@ -9,7 +9,7 @@ namespace EssPortal.Models
 {
     public class PlanMaster
     {
-        [Key]
+        [Key] 
         public int PlanID { get; set; }
         public string PlanName { get; set; }
         public decimal? PlanAmount { get; set; }

@@ -24,10 +24,12 @@ namespace EssPortal.Models
         [Column(Order = 0)]
         public int RequestID { get; set; }
 
+        public string RequsetPrivateNumber { get; set; }
+
         [Column(Order = 1)]
         [Required]
         public long EmployeeID { get; set; }
-        public virtual Employee Employee { get; set; }
+        //public virtual Employee Employee { get; set; }
 
         [Required]
         [Column(Order = 2)]       
@@ -36,16 +38,16 @@ namespace EssPortal.Models
 
         [Column(Order = 3)]
         [Required]
-        public int StatusID { get; set; }
+        public string StatusCode { get; set; }
 
        // [DateValidation]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public  DateTime CreatedDate { get; set; }
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //public  string CreatedDate { get; set; }
 
-        public string CreatedBy { get; set; }
-       
+        public int UserID { get; set; }
+        public virtual Users Users { get; set; }
 
         public Nullable<bool> IsDelegate { get; set; }
         public Nullable<bool> IsDelegateApprove { get; set; }
@@ -55,9 +57,9 @@ namespace EssPortal.Models
         [Display(Name = "Attachment")]
         public  string FileName { get; set; }
       
-        public virtual List<Amendment> Amendments { get; set; }
-        public virtual List<Housing> Housings { get; set; }
-        public virtual List<RequestStage> RequestStages { get; set; }
+        //public virtual List<Amendment> Amendments { get; set; }
+        //public virtual List<Housing> Housings { get; set; }
+        //public virtual List<RequestStage> RequestStages { get; set; }
 
     }
 

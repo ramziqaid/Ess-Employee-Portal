@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static EssPortal.Models.DynamicAxClass;
 
 namespace EssPortal.Interfaces
 {
@@ -15,6 +16,18 @@ namespace EssPortal.Interfaces
         Task<List<dynamic>> GetProjects();
         Task<List<dynamic>> GetClient();
         Task<List<dynamic>> GetVends();
+        Task<List<dynamic>> GetVactionTypes();
+
+        Task<dynamic> GetEmployeeInfo(long pEmployeeID);
+        Task<LoanVm> GetLoansInfo(long pEmployeeID);
+        Task<List<dynamic>> GetAssestInfo(long pEmployeeID);
+        Task<PayslipVM> GetPaySlipInfo(long pEmployeeID);
+        Task<AttendeesVM> GetAttendeesInfo(long pEmployeeID, string pFromDate, string pToDate);
+        Task<dynamic> GetVacationBalanceInfo(long pEmployeeID);
+        Task<List<dynamic>> GetEmployeeVacationInfo(long pEmployeeID);
+
+
+
     }
 
 }

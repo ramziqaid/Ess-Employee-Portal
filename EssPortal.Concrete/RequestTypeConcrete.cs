@@ -20,8 +20,5 @@ namespace EssPortal.Concrete
         {
            
         }
-
-         
-         
     }
 }

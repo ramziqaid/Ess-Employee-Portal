@@ -1,5 +1,5 @@
 import { SystemCode, Attachment, StatusTypeID } from './../../../Shared/index';
-import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef, OnDestroy, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PurchasesService } from '../Services/Purchases.service';
 import * as model from '../Models/Purchases';
@@ -12,6 +12,7 @@ import { PurchaseOfferComponent } from '../offers/Offer.component';
 import { MatTableDataSource } from '@angular/material';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { EssPortalService, AlertifyService, AuthService } from '../../../core';
+import { MatStepper } from '@angular/material';
 
 const ELEMENT_DATA: model.PurchasesDetails[] = [];
 @Component({
@@ -22,11 +23,12 @@ const ELEMENT_DATA: model.PurchasesDetails[] = [];
     provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
   }]
 })
-export class RequsetPurchasesComponent implements OnInit, OnDestroy {
+export class RequsetPurchasesComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   // Add Modal
   @ViewChild('template', { static: true }) modal: TemplateRef<any>;
   @ViewChild('heroForm', { static: false }) heroForm: any;
   @ViewChild(ActionBarComponent, { static: false }) actionBar: ActionBarComponent;
+  @ViewChild('stepper', { static: true }) stepper: MatStepper;
 
   // For the FormControl - Adding products
   insertForm: FormGroup;
@@ -73,7 +75,7 @@ export class RequsetPurchasesComponent implements OnInit, OnDestroy {
   title: string = "New";
   PurchaseID: number;
   showActionColumn: boolean = true;
-
+  initializeIndexStep: boolean = true;
   displayedColumns: string[] = ['itemNumber', 'itemNameEN', 'description', 'price', 'Qty', 'Actions'];
   dataSource = new MatTableDataSource(this.purchasesDetails);
 
@@ -119,6 +121,8 @@ export class RequsetPurchasesComponent implements OnInit, OnDestroy {
         'description': this.description,
       });
 
+
+
     if (this.PurchaseID > 0) {
       this.title = "Edit";
       this.loadPurchase(this.PurchaseID);
@@ -126,6 +130,20 @@ export class RequsetPurchasesComponent implements OnInit, OnDestroy {
 
   }
 
+  ngAfterViewInit() {
+
+  }
+
+  ngAfterViewChecked() {
+    if (this.initializeIndexStep)
+      if (this.newObj.purchases.isNeedAction && this.stepper.steps.length > this.newObj.purchases.stageOrder) {
+        setTimeout(() => {
+          this.stepper.selectedIndex = this.newObj.purchases.stageOrder;
+        }, 0);
+        this.initializeIndexStep = false;
+      }
+
+  }
 
   ngOnDestroy() {
     // Do not forget to unsubscribe
@@ -290,31 +308,32 @@ export class RequsetPurchasesComponent implements OnInit, OnDestroy {
 
     let newProduct = this.insertForm.value;
     if (newProduct.itemTypeID == 8) {
-      this.insertForm.controls['mainGroupID'].clearValidators();
-      this.insertForm.controls['subGroupID'].clearValidators();
+      //this.insertForm.controls['mainGroupID'].clearValidators();
+      //this.insertForm.controls['subGroupID'].clearValidators();
       this.insertForm.controls['itemNumber'].clearValidators();
-      this.insertForm.controls['mainGroupID'].disable();
-      this.insertForm.controls['subGroupID'].disable();
+      //this.insertForm.controls['mainGroupID'].disable();
+      //this.insertForm.controls['subGroupID'].disable();
       this.insertForm.controls['itemNumber'].disable();
-      this.insertForm.controls['mainGroupID'].setValue(null);
-      this.insertForm.controls['mainGroupID'].markAsPristine();
+      // this.insertForm.controls['mainGroupID'].setValue(null);
+      // this.insertForm.controls['mainGroupID'].markAsPristine();
     } else {
-      this.insertForm.controls['mainGroupID'].setValidators([Validators.required]);
-      this.insertForm.controls['subGroupID'].setValidators([Validators.required]);
+      //this.insertForm.controls['mainGroupID'].setValidators([Validators.required]);
+      //this.insertForm.controls['subGroupID'].setValidators([Validators.required]);
       this.insertForm.controls['itemNumber'].setValidators([Validators.required]);
-      this.insertForm.controls['mainGroupID'].enable();
-      this.insertForm.controls['subGroupID'].enable();
+      //this.insertForm.controls['mainGroupID'].enable();
+      //this.insertForm.controls['subGroupID'].enable();
       this.insertForm.controls['itemNumber'].enable();
     }
-    this.insertForm.controls['mainGroupID'].updateValueAndValidity({
-      onlySelf: true
-    });
-    this.insertForm.controls['subGroupID'].updateValueAndValidity({
-      onlySelf: true
-    });
+    // this.insertForm.controls['mainGroupID'].updateValueAndValidity({
+    //   onlySelf: true
+    // });
+    // this.insertForm.controls['subGroupID'].updateValueAndValidity({
+    //   onlySelf: true
+    // });
     this.insertForm.controls['itemNumber'].updateValueAndValidity({
       onlySelf: true
     });
+
     this.itemType = newProduct.itemTypeID;
   }
 
@@ -353,6 +372,7 @@ export class RequsetPurchasesComponent implements OnInit, OnDestroy {
         } else {
           this.showActionColumn = false;
         }
+
       },
       error => { this.alertify.error(error); }
     );
@@ -429,7 +449,6 @@ export class RequsetPurchasesComponent implements OnInit, OnDestroy {
       this.newObj.attachments.push(dtl);
       //console.log(attachmentID);
     }
-
   }
 
   //#region "Confirm MODAL START"

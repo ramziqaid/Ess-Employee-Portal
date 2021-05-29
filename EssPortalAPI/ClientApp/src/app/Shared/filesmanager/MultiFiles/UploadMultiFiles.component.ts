@@ -1,5 +1,5 @@
 import { Attachment } from '../../_models';
-import { Component, OnInit, Output, EventEmitter, TemplateRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, TemplateRef, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UploadDownloadService } from '../service/upload-download.service';
 import { ProgressStatus, ProgressStatusEnum } from '../models/progress-status.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -11,7 +11,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './UploadMultiFiles.component.html',
   styleUrls: ['./UploadMultiFiles.component.css']
 })
-export class MultiFilesManagerComponent implements OnInit {
+export class MultiFilesManagerComponent implements OnInit, OnChanges {
 
   public files: Attachment[] = [];
   public fileInDownload: string;
@@ -35,8 +35,12 @@ export class MultiFilesManagerComponent implements OnInit {
     this.onUploadFinished = new EventEmitter<string>();
   }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
     this.getFiles();
+  }
+
+  ngOnInit() {
+
   }
 
   private getFiles() {
@@ -46,6 +50,8 @@ export class MultiFilesManagerComponent implements OnInit {
           this.files = data;
         }
       );
+    } else {
+      this.files = [];
     }
   }
 

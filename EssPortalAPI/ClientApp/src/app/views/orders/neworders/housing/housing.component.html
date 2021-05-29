@@ -1,0 +1,81 @@
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class=" col-sm-3">
+          <strong>Amendment</strong> Form / {{title}}
+        </div>
+        <div class=" col-sm-6">
+          <actionBar class=" col-md-12   col-sm-12" [disabled]="!heroForm.form.valid" (newAction)="newClick()"
+            (editAction)="edit()" (saveAction)="save()" (deleteAction)="delete()" (cancelAction)="reset()"></actionBar>
+          <app-MultiFilesManager (onUploadFinished)="uploadFinished($event)" [canAddRemove]="!editMode" [text]="' '"
+            [referenceID]="requsetId">
+          </app-MultiFilesManager>
+        </div>
+        <div class=" col-sm-3">
+
+        </div>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="form-horizontal">
+
+      <div class="card-body col-sm-8">
+
+        <div class="row" *ngIf="this.newObj.request.requestID>0">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="Employee">Request Number</label>
+            <div class="col-md-9">
+              <input type="text" id="PurchaseNumber" class="form-control" name="PurchaseNumber" [disabled]="true"
+                [(ngModel)]="this.newObj.request.requestID" #refPurchaseNumber="ngModel">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <employeeList class="form-group row col-md-12   col-sm-12" (employeeSelect)="employeeSelect($event)"
+            [employee]="this.newObj.request.employeeID" [editMode]="editMode">
+          </employeeList>
+        </div>
+
+        <div class="row">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="FromDate">Loan Start Date </label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="FromDate" id="FromDate" bsDatepicker #FromDate
+                [disabled]="editMode" #datepickerMDY="bsDatepicker" [bsValue]="bsFromDate" ngModel
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="FromDate" required>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+          <div class="form-group row col-md-12   col-sm-12">
+
+            <label class="col-md-3  col-form-label" for="Justification">Justification</label>
+            <div class="col-md-9">
+              <textarea id="textarea-input" name="textarea-input" rows="2" class="form-control" name="Justification"
+                [disabled]="editMode" [(ngModel)]="this.newObj.amendments[0].justification" maxlength="50"
+                #refJustification="ngModel" id="Justification" required>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+<!--/.col-->

@@ -8,6 +8,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ProfileComponent } from './Profile/Profile.component';
 import { FormsModule } from "@angular/forms";
+import { PersonalService } from './personal.service';
 
 @NgModule({
   imports: [
@@ -15,10 +16,10 @@ import { FormsModule } from "@angular/forms";
     PersonalInfoRoutesModule,
     FormsModule,
     TabsModule,
-
     SharedModule,
     AccordionModule.forRoot(),
   ],
-  declarations: [PersonalInfoComponent, ProfileComponent]
+  declarations: [PersonalInfoComponent, ProfileComponent],
+  providers: [PersonalService]
 })
 export class PersonalInfoModule { }

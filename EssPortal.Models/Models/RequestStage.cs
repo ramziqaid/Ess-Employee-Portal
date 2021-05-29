@@ -14,7 +14,7 @@ namespace EssPortal.Models
     {
         [Key]
         [Column(Order = 0)]
-        public int ID { get; set; } 
+        public int OrderStageID { get; set; } 
 
         [Required]
         [Display(Name = "Request ID")]
@@ -31,17 +31,17 @@ namespace EssPortal.Models
         [MaxLength(500)]
         public string Justification { get; set; }
 
-        [Display(Name = "ActionName ")]
-        public string ActionName { get; set; }
+        [Display(Name = "ActionCode ")]
+        public string ActionCode { get; set; }
 
        
         [Display(Name = "Create By ")]
         [Required(ErrorMessage = "CreateBy")]
-        public long EmployeeID { get; set; }
+        public int UserID { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime CreateDate { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //public string CreateDate { get; set; }
     }
 
 

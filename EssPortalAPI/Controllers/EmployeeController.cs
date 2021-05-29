@@ -54,5 +54,19 @@ namespace EssPortalAPI.Controllers
             return Ok(employeeInfoView);
 
         }
+
+        [HttpGet]
+        [Route("GetByManager/{ManagerID}")]
+        public async Task<IActionResult> GetByManager([FromRoute] string ManagerID)
+        { 
+            IEnumerable<Employee> employeeInfoView;
+            employeeInfoView = await _employeeRepository.FindAllAsync(p => p.ManagerID == ManagerID || p.EmployeeID == ManagerID);
+            if (employeeInfoView == null)
+            {
+                return NotFound();
+            }
+            return Ok(employeeInfoView.Distinct().OrderBy(p => p.EnglishName));
+
+        }
     }
 }

@@ -175,7 +175,7 @@ namespace EssPortalAPI.Controllers
                 var result = await _purchasesRepository.savePurchasesStage(purchasesStage);
                 if (result)
                 {
-                    return Ok();
+                    return Ok(result);
                 }
                 else
                 {

@@ -9,8 +9,8 @@ import { LoginModel } from './Models/app.LoginModel';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  LoginModel: LoginModel = new LoginModel();
-
+  LoginModel: LoginModel = new LoginModel(); 
+  
   ngOnInit(): void {
     localStorage.clear();
   }
@@ -30,6 +30,7 @@ export class LoginComponent {
     // public snackBar: MatSnackBar,
     loginservice: AuthService) {
     this._loginservice = loginservice;
+    
   }
 
   onSubmit() {
@@ -77,3 +78,5 @@ export class LoginComponent {
 
   }
 }
+
+ 

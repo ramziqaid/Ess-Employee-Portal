@@ -1,3 +1,4 @@
+import { ActionBarComponent } from './../../../actionBar/actionBar.component';
 
 import { Component, OnInit, SimpleChanges, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import * as m from '../../Models/Request';
@@ -5,26 +6,23 @@ import { RequestService } from '../../Services/Request.service';
 import * as shared from './../../../../Shared/index';
 import { EssPortalService, AlertifyService, AuthService } from '../../../../core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Attachment } from './../../../../Shared/index';
 
 @Component({
   selector: 'app-amendment',
   templateUrl: './amendment.component.html',
   styleUrls: ['./amendment.component.scss']
 })
-export class AmendmentComponent implements OnInit, OnChanges {
-
-  ngOnChanges(changes: SimpleChanges): void {
-    throw new Error("Method not implemented.");
-  }
+export class AmendmentComponent implements OnInit {
 
   request: m.Requests = new m.Requests();
-  //amendments: m.Amendments = new m.Amendments();
-  // requestStages: m.RequestStage = new m.RequestStage();
 
   bstime = new Date();
   bsFromDate = new Date();
   empoyeeList: shared.Employee[];
   emendmentReason: m.AmendmentReason[];
+  attachment: Attachment[] = [];
+
   newObj: any;
   editMode: boolean = true;
   title: string = "New";
@@ -33,7 +31,7 @@ export class AmendmentComponent implements OnInit, OnChanges {
   @ViewChild('heroForm', { static: false }) heroForm: any;
   @ViewChild('time', { static: false }) time: any;
   @ViewChild('FromDate', { static: true }) FromDate: ElementRef;
-
+  @ViewChild(ActionBarComponent, { static: false }) actionBar: ActionBarComponent;
 
   constructor(private sharedService: EssPortalService,
     private requestService: RequestService,
@@ -42,7 +40,6 @@ export class AmendmentComponent implements OnInit, OnChanges {
     private alertify: AlertifyService) {
 
     if (this._avRoute.snapshot.params["RequestID"]) {
-      // debugger;
       this.requsetId = this._avRoute.snapshot.params["RequestID"];
     }
   }
@@ -52,34 +49,12 @@ export class AmendmentComponent implements OnInit, OnChanges {
     this.loadAmendmentReasons();
     this.newObj = this.getEmptyObject();
 
-
     if (this.requsetId > 0) {
       this.title = "Edit";
-      this.requestService.getRequest(this.requsetId).subscribe(
-        (date) => {
-          this.newObj.request = date;
-          this.newObj.Amendments = date['Amendments'];
-          this.newObj.RequestStages = date['RequestStages'];
-
-          this.bsFromDate = new Date(this.newObj.Amendments[0].FromDate);
-          const time = new Date();
-
-          if (this.newObj.Amendments[0].Time !== 'undefined') {
-            time.setHours(this.newObj.Amendments[0].Time.substring(0, 2));
-            time.setMinutes(this.newObj.Amendments[0].Time.substring(2, 2));
-          }
-          this.bstime = time;
-
-        }, error => {
-          this.alertify.error(error);
-        }
-      );
+      this.loadRequest(this.requsetId);
     }
 
   }
-
-
-
   onSubmit() {
 
   }
@@ -89,61 +64,59 @@ export class AmendmentComponent implements OnInit, OnChanges {
   newClick() {
     this.editMode = false;
     this.newObj = this.getEmptyObject();
-
-    // this.newObj.Amendments = [];
-    // this.newObj.Amendments[0] = this.amendments;
-    //this.newObj.RequestStages = [];
-    //this.newObj.RequestStages[0] = this.requestStages;
-
-
-
+    this.requsetId = -1;
   }
   edit() {
     this.editMode = false;
   }
 
   save() {
-    this.newObj;
+
     if (this.heroForm.valid) {
 
-      this.newObj.request.RequestTypeID = shared.RequestTypeId.Amendment;
-      this.newObj.request.StatusID = shared.RequestStatus.NewRequest;
-      this.authService.currentUserName.subscribe(user => { this.newObj.request.CreatedBy = user });
-
-      this.newObj.Amendments[0].Time = `${this.time.hours}:${this.time.minutes}`; // "02:02";// this.meridian;
-      this.newObj.Amendments[0].FromDate = this.FromDate.nativeElement.value;// "02/02/2018";
-
-      this.newObj.RequestStages[0].StageTypeID = shared.RequestStatus.NewRequest;
-      this.newObj.RequestStages[0].EmployeeID = this.newObj.request.EmployeeID;// this.authService.userEmployeeId;
-      this.newObj.RequestStages[0].ActionName = shared.ActionName.Submit;
-
-      // this.newObj.request = this.request;
-      // this.newObj.Amendments = [];
-      // this.newObj.Amendments[0] = this.amendments;
-      // this.newObj.RequestStages = [];
-      // this.newObj.RequestStages[0] = this.requestStages;
-      //this.newObj = { request: this.request, amendments: this.amendments };
+      this.newObj.request.requestTypeID = shared.RequestTypeId.Amendment;
+      this.newObj.request.statusID = shared.RequestStatus.NewRequest;
+      this.authService.currentUserName.subscribe(user => { this.newObj.request.createdBy = user });
+      this.newObj.amendments[0].time = `${this.time.hours}:${this.time.minutes}`; // "02:02";// this.meridian;
+      this.newObj.amendments[0].fromDate = this.FromDate.nativeElement.value;// "02/02/2018";
 
       this.requestService.saveRequest(this.newObj).subscribe((data) => {
         this.alertify.success('Save successful');
         this.heroForm.reset();
+        this.newObj = data;
+
+        this.requsetId = this.newObj.requestID;
+
+        this.loadRequest(this.requsetId);
+        this.editMode = true;
+        this.actionBar.editMode();
       }, error => {
         this.alertify.error(error);
       }
       );
     }
-
   }
 
   delete() {
-
+    if (this.requsetId > 0) {
+      this.alertify.confirm('Are you sure you want Delete Order?', () => {
+        this.requestService.deleteRequest(this.requsetId).subscribe(
+          result => {
+            this.alertify.success("Done . . .");
+            this.reset();
+          },
+          error => { this.alertify.error(error); }
+        );
+      });
+    }
   }
+
 
   reset() {
     this.editMode = true;
     this.heroForm.reset();
+    this.requsetId = -1;
   }
-
   //#endregion
 
   //#region load
@@ -169,26 +142,69 @@ export class AmendmentComponent implements OnInit, OnChanges {
   private getEmptyObject(): any {
     const obj = {
       request: {
-        RequestID: -1,
-        EmployeeID: null,
-        RequestTypeID: null,
-        StatusID: null,
-        CreatedBy: null,
-        // currencyIDs: []
+        //RequestID: -1,
+        employeeID: null,
+        requestTypeID: null,
+        statusID: null,
+        createdBy: null,
       },
-      Amendments: [],
-      RequestStages: []
+      amendments: [],
+      requestStages: []
     };
-    obj.Amendments[0] = new m.Amendments();
-    obj.Amendments[0].Type = "CheckIn";
+    obj.amendments[0] = new m.Amendments();
+    obj.amendments[0].Type = "CheckIn";
+    obj.amendments[0].amendmentReasonId = -1;
 
     const time = new Date();
     this.bstime = time;
     this.bsFromDate = time;
 
+    obj.requestStages[0] = new m.RequestStage();
+
     return obj;
 
   };
-  //#endregion
 
+  loadRequest(requsetId: number) {
+    this.requestService.getRequest(requsetId).subscribe(
+      (date) => {
+
+        this.newObj.request = date.request;
+        this.newObj.amendments = date.amendments;
+        this.newObj.requestStages = date.requestStages;
+
+        this.bsFromDate = new Date(this.newObj.amendments[0].fromDate);
+        const time = new Date();
+
+        if (this.newObj.amendments[0].time !== 'undefined') {
+          const h = this.newObj.amendments[0].time;
+          time.setHours(h.substring(0, 2));
+          time.setMinutes(h.substring(3, 5));
+        }
+        this.bstime = time;
+        if (this.actionBar) { this.actionBar.editMode() };
+      }, error => {
+        this.alertify.error(error);
+      }
+    );
+  }
+
+  employeeSelect(employeeID: any) {
+    this.newObj.request.employeeID = employeeID;
+  }
+
+  uploadFinished(attachmentID: string) {
+    if (attachmentID != undefined) {
+      var dtl = new Attachment;
+      dtl.attachmentID = +attachmentID;
+      dtl.fileName = "fileName";
+      dtl.fileType = "fileType";
+      if (this.newObj.attachments === undefined || this.newObj.attachments === null) {
+        this.newObj.attachments = this.attachment;
+      }
+      this.newObj.attachments.push(dtl);
+      //console.log(attachmentID);
+    }
+  }
+  //#endregion
 }

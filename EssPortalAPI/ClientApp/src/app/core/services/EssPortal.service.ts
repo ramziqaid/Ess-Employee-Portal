@@ -25,6 +25,24 @@ export class EssPortalService {
         return this.apiService.get(`Employee/Get/${employeeID}`).pipe();
     }
 
+    getEmployeeByManagerId(managerID: Number): Observable<Employee[]> {
+        return this.apiService.get(`Employee/GetByManager/${managerID}`).pipe();
+    }
+
+    checkEmployeeIsManager(employeeID: Number): boolean {
+        var employeeInfo: any;
+        this.getEmployeeById(employeeID).subscribe(
+            result => {
+                employeeInfo = result;
+                if (employeeInfo.filter(p => p.isManager == 1).length > 0) {
+                    return true;
+                }
+            }
+        );
+        return false;
+    }
+
+
     getSystemCode(): Observable<SystemCode[]> {
         return this.apiService.get(`SystemCode`).pipe();
     }
@@ -43,6 +61,10 @@ export class EssPortalService {
             catchError(this.handleError));
     }
 
+    getVacationTypes(): Observable<any[]> {
+        return this.apiService.get("AXInfo/GetVactionTyps").pipe(shareReplay(),
+            catchError(this.handleError));
+    }
 
     getCurrentDate(): string {
         var today = new Date();

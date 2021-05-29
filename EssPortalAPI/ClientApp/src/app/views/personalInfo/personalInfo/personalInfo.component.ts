@@ -24,7 +24,6 @@ export class PersonalInfoComponent implements OnInit {
     this.emp.getEmployeeById(this.auth.userEmployeeId).subscribe(
       result => {
         this.employeeInfo = result;
-
       },
       error => { this.alertify.error(error); }
     );

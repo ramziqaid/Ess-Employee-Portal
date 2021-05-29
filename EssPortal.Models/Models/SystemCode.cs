@@ -8,15 +8,15 @@ namespace EssPortal.Models
 {
   
     [Table("SystemCode", Schema = "ess")]
-    public class SystemCode
+    public class SystemCodes
     { 
 
         [Key]
-        public int SystemCodeID { get; set; } 
+        public string SystemCode { get; set; } 
 
         public string DescriptionAr { get; set; }
         public string DescriptionEn { get; set; }
-        public string Category { get; set; } 
+        public string SystemCodeType { get; set; } 
         
     }
 }

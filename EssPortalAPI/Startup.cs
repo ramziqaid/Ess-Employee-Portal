@@ -27,6 +27,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace EssPortalAPI
 {
@@ -108,16 +109,18 @@ namespace EssPortalAPI
             services.AddTransient<IReports, ReportsMaster>();
             services.AddTransient<IGenerateRecepit, GenerateRecepitConcrete>();
             services.AddTransient<IEmployeeRepository, EmployeesConcrete>();
-            services.AddTransient<IRequestTypeRepository, RequestTypeConcrete>();
-            services.AddTransient<IAmendmentReasonRepository, AmendmentReasonConcrete>();
+            services.AddTransient<IRequestTypeRepository, RequestTypeConcrete>();            
             services.AddTransient<IRequestRepository, RequestConcrete>();
             services.AddTransient<ISystemCodeRepository, SystemCodeConcrete>();
             services.AddTransient<IPurchasesRepository, PurchasesConcrete>();
             services.AddTransient<IAXInfoRepository, AXInfoConcrete>();
-            services.AddTransient<IAttachmentRepository, AttachmentConcrete>();  
+            services.AddTransient<IAttachmentRepository, AttachmentConcrete>();
+            services.AddTransient<IOperationPermissionRepository, OperationPermissionConcrete>();
+            services.AddTransient<IOperationRepository, OperationConcrete>();
             services.AddTransient<IPurchasesStageTypeRepository, PurchasesStageTypeConcrete>();
             services.AddTransient<INotificationRepository, NotificationConcrete>();
-            
+             
+
             services.AddScoped<IUrlHelper>(implementationFactory =>
             {
                 var actionContext = implementationFactory.GetService<IActionContextAccessor>().ActionContext;
@@ -142,8 +145,7 @@ namespace EssPortalAPI
            //.AddJsonOptions(options =>
            //{
            //    options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-           //});
-
+           //}); 
 
             services.AddMvc();
 
@@ -159,6 +161,12 @@ namespace EssPortalAPI
 
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+            services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddAuthorization(options =>
             { 
@@ -166,6 +174,8 @@ namespace EssPortalAPI
                // options.AddPolicy("RequireManagerRole", policy => policy.RequireRole("Manager").RequireAuthenticatedUser());
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin","Manager").RequireAuthenticatedUser());
             });
+
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -188,7 +198,16 @@ namespace EssPortalAPI
             app.UseDevExpressControls();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            app.UseCors("CorsPolicy"); 
+            app.UseCors("CorsPolicy");
+           
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger(); 
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseMvc(routes =>
             {
@@ -197,6 +216,8 @@ namespace EssPortalAPI
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            
+            
         }
     }
 }

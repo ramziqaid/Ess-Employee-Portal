@@ -80,10 +80,10 @@ namespace EssPortalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (request.RequestID != request.Amendments[0].RequestID)
-            {
-                return BadRequest();
-            }
+            //if (request.RequestID != request.Amendments[0].RequestID)
+            //{
+            //    return BadRequest();
+            //}
             //await unitOfWork.Amendment.UpdateAsyn(request.Amendments[0], request.Amendments[0].ID);
             //await unitOfWork.CompleteAsync();
 

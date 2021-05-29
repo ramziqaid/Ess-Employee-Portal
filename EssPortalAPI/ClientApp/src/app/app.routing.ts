@@ -1,3 +1,4 @@
+import { TestComponent } from './views/test/test.component';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -48,6 +49,7 @@ export const routes: Routes = [
     }
   },
   { path: 'UserLogout', component: UserLogoutComponent },
+  { path: 'test', component: TestComponent },
   // {
   //   path: 'register',
   //   component: RegisterComponent,
@@ -78,7 +80,7 @@ export const routes: Routes = [
       {
         path: 'PersonalInfo',
         loadChildren: () => import('./views/PersonalInfo/personalInfo.module').then(m => m.PersonalInfoModule),
-        canLoad: [AuthGuard]
+
       },
       {
         canActivate: [AdminAuthGuardService],

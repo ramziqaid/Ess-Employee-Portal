@@ -80,6 +80,7 @@ namespace EssPortal.Concrete
                               RoleName = role.RoleName,
                               RoleId = usertb.RoleId,
                               UserName = user.UserName,
+                              FullName=user.FullName,
                               UserId = usertb.UserId,
                               UserRolesId = usertb.UserRolesId
 

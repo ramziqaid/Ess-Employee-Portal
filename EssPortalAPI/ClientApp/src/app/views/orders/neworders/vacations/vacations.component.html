@@ -1,0 +1,144 @@
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class=" col-sm-3">
+          <strong>Amendment</strong> Form / {{title}}
+        </div>
+        <div class=" col-sm-6">
+          <actionBar class=" col-md-12   col-sm-12" [disabled]="!heroForm.form.valid" (newAction)="newClick()"
+            (editAction)="edit()" (saveAction)="save()" (deleteAction)="delete()" (cancelAction)="reset()"></actionBar>
+          <app-MultiFilesManager (onUploadFinished)="uploadFinished($event)" [canAddRemove]="!editMode" [text]="' '"
+            [referenceID]="requsetId">
+          </app-MultiFilesManager>
+        </div>
+        <div class=" col-sm-3">
+
+        </div>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="form-horizontal">
+
+      <div class="card-body col-sm-8">
+
+        <div class="row" *ngIf="this.newObj.request.requestID>0">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="Employee">Request Number</label>
+            <div class="col-md-9">
+              <input type="text" id="PurchaseNumber" class="form-control" name="PurchaseNumber" [disabled]="true"
+                [(ngModel)]="this.newObj.request.requestID" #refPurchaseNumber="ngModel">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <employeeList class="form-group row col-md-12   col-sm-12" (employeeSelect)="employeeSelect($event)"
+            [employee]="this.newObj.request.employeeID" [loadAllEmployee]="false" [required]="true"
+            [editMode]="editMode">
+          </employeeList>
+        </div>
+
+        <div class="row">
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="Type">Leave Request Form </label>
+            <div class="col-md-9">
+              <select required name="Reason" id="Reason" #Reason="ngModel" class="form-control" [disabled]="editMode"
+                [(ngModel)]="this.newObj.leave[0].vacationTypeID">
+                <option value=''>Please select Vacation Types</option>
+                <option *ngFor="let item of vactionTypes" [value]="item.ID">
+                  {{item.NameEn}}
+                </option>
+              </select>
+
+              <div *ngIf="!Reason.valid  && (Reason.dirty || Reason.touched) && !editMode" class="alert alert-danger">
+                <div [hidden]="!Reason.errors.required">
+                  vacation Types is required.
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="fromdate">From Date</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" bsDaterangepicker
+                #FromDate [(ngModel)]="daterangepickerModel" name="fromdate" id="fromdate" required
+                [disabled]="editMode">
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="inputSuccess1">Number of Days</label>
+            <div class="col-md-9">
+              <input type="number" class="form-control" [disabled]="true" id="daysNo" name="daysNo"
+                [(ngModel)]="this.newObj.leave[0].daysNo">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="inputSuccess1">Vacation Balance</label>
+            <div class="col-md-9 row">
+
+              <div class="form-group row   col-sm-6">
+                <label class="col-sm-6 col-form-label" for="inputSuccess1">Current Balance</label>
+                <input type="number" class=" col-sm-6 form-control" [disabled]="true" id="daysNo" name="daysNo">
+              </div>
+
+              <div class="form-group row     col-sm-7">
+                <label class="col-sm-6 col-form-label" for="inputSuccess1">Begining Vacation</label>
+                <input type="number" class=" col-sm-6 form-control" [disabled]="true" id="daysNo" name="daysNo">
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <employeeList class="form-group row col-md-12   col-sm-12" (employeeSelect)="employeereplacmentSelect($event)"
+            [employee]="this.newObj.leave[0].replacmentStuffID" [loadAllEmployee]="true"
+            [labelName]="'Replacement Employee'" [required]="false" [editMode]="editMode">
+          </employeeList>
+        </div>
+
+        <div class="row">
+          <div class="form-group row col-md-12   col-sm-12">
+
+            <label class="col-md-3  col-form-label" for="Justification">Justification</label>
+            <div class="col-md-9">
+              <textarea id="textarea-input" name="textarea-input" rows="2" class="form-control" name="Justification"
+                [disabled]="editMode" [(ngModel)]="this.newObj.leave[0].justification" maxlength="50"
+                #refJustification="ngModel" id="Justification" required>
+                </textarea>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="card-footer">
+
+      </div>
+    </form>
+
+  </div>
+
+</div>
+<!--/.col-->

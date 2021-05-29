@@ -44,8 +44,8 @@ namespace EssPortal.Models
         [MaxLength(500)]
         public string Justification { get; set; }
 
-
-        public virtual List<AmendmentReason> AmendmentReasons { get; set; }
+        public string AmendmentReasonCode { get; set; }        
+        //public virtual List<AmendmentReason> AmendmentReasons { get; set; }
 
     }
 }

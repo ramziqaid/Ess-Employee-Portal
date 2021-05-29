@@ -24,6 +24,6 @@ namespace EssPortal.Models
 
         [Display(Name = "Request ID")]
         public int RequestID { get; set; }
-        public virtual Request Request { get; set; }
+       // public virtual Request Request { get; set; }
     }
 }

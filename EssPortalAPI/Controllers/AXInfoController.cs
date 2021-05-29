@@ -12,6 +12,7 @@ using EssPortal.Models;
 using EssPortal.ViewModels;
 using EssPortal.Interfaces;
 using System.Security.Claims;
+using static EssPortal.Models.DynamicAxClass;
 
 namespace EssPortalAPI.Controllers
 {
@@ -88,148 +89,126 @@ namespace EssPortalAPI.Controllers
             }
             return Ok(vend);
         }
-        
 
-        //// GET: api/CreateRole
-        //[HttpGet]
-        //public IEnumerable<Role> Get()
-        //{
-        //    try
-        //    {
-        //        return _role.GetAllRole();
-        //    }
-        //    catch (Exception)
-        //    {
+        [Route("GetVactionTyps")]
+        [HttpGet]
+        public async Task<IActionResult> GetVactionTypes()
+        {
+            IEnumerable<object> vend = await _iAXInfoRepository.GetVactionTypes();
+            if (vend == null)
+            {
+                return BadRequest("Not Found Vaction Types ");
+            }
+            return Ok(vend);
+        }
 
-        //        throw;
-        //    }
-        //}
 
-        //// GET: api/CreateRole/5
-        //[HttpGet("{id}", Name = "GetRole2")]
-        //public Role Get(int id)
-        //{
-        //    try
-        //    {
-        //        return _role.GetRolebyId(id);
-        //    }
-        //    catch (Exception)
-        //    {
+        [HttpGet]
+        [Route("GetLoansInfo/{employeeID}")] 
+        public async Task<IActionResult> GetLoansInfo([FromRoute] long employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //        throw;
-        //    }
-        //}
+           LoanVm loanvms = await _iAXInfoRepository.GetLoansInfo(employeeID);
+            if (loanvms == null)
+            {
+                return NotFound();
+            } 
+            return Ok(loanvms);
+        }
 
-        //// POST: api/CreateRole
-        //[HttpPost]
-        //public HttpResponseMessage Post([FromBody] RoleViewModel roleViewModel)
-        //{
+        [HttpGet]
+        [Route("GetAssestInfo/{employeeID}")]
+        public async Task<IActionResult> GetAssestInfo([FromRoute] long employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            if (_role.CheckRoleExits(roleViewModel.RoleName))
-        //            {
-        //                var response = new HttpResponseMessage()
-        //                {
-        //                    StatusCode = HttpStatusCode.Conflict
-        //                };
+            IEnumerable<object>  assset= await _iAXInfoRepository.GetAssestInfo(employeeID);
+            if (assset == null)
+            {
+                return NotFound();
+            }
+            return Ok(assset);
+        }
+         
+        [HttpGet]
+        [Route("GetPaySlipInfo/{employeeID}")]
+        public async Task<IActionResult> GetPaySlipInfo([FromRoute] long employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //                return response;
-        //            }
-        //            else
-        //            {
-        //                var temprole = AutoMapper.Mapper.Map<Role>(roleViewModel);
+            PayslipVM obj = await _iAXInfoRepository.GetPaySlipInfo(employeeID);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
 
-        //                _role.InsertRole(temprole);
 
-        //                var response = new HttpResponseMessage()
-        //                {
-        //                    StatusCode = HttpStatusCode.OK
-        //                };
+        [HttpGet]
+        [Route("GetAttendeesInfo/{employeeID}/{fromdate?}/{todate?}")]
+        public async Task<IActionResult> GetAttendeesInfo( long employeeID,   string fromdate,   string todate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            AttendeesVM obj = await _iAXInfoRepository.GetAttendeesInfo(employeeID, fromdate, todate);
 
-        //                return response;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            var response = new HttpResponseMessage()
-        //            {
+              if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
 
-        //                StatusCode = HttpStatusCode.BadRequest
-        //            };
 
-        //            return response;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
+        [HttpGet]
+        [Route("GetVacationBalanceInfo/{employeeID}")]
+        public async Task<IActionResult> GetVacationBalanceInfo([FromRoute] long employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //        throw;
-        //    }
-        //}
+            IEnumerable<object> obj = await _iAXInfoRepository.GetVacationBalanceInfo(employeeID);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
 
-        //// PUT: api/CreateRole/5
-        //[HttpPut("{id}")]
-        //public HttpResponseMessage Put(int id, [FromBody] RoleViewModel roleViewModel)
-        //{
-        //    try
-        //    {
-        //        var temprole = AutoMapper.Mapper.Map<Role>(roleViewModel);
-        //        _role.UpdateRole(temprole);
 
-        //        var response = new HttpResponseMessage()
-        //        {
-        //            StatusCode = HttpStatusCode.OK
-        //        };
+        [HttpGet]
+        [Route("GetEmployeeVacationInfo/{employeeID}")]
+        public async Task<IActionResult> GetEmployeeVacationInfo([FromRoute] long employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //        return response;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        var response = new HttpResponseMessage()
-        //        {
+            IEnumerable<object> obj = await _iAXInfoRepository.GetEmployeeVacationInfo(employeeID);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
 
-        //            StatusCode = HttpStatusCode.BadRequest
-        //        };
-
-        //        return response;
-
-        //    }
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public HttpResponseMessage Delete(int id)
-        //{
-        //    try
-        //    {
-
-        //        var result = _role.DeleteRole(id);
-
-        //        if (result)
-        //        {
-        //            var response = new HttpResponseMessage()
-        //            {
-        //                StatusCode = HttpStatusCode.OK
-        //            };
-        //            return response;
-        //        }
-        //        else
-        //        {
-        //            var response = new HttpResponseMessage()
-        //            {
-        //                StatusCode = HttpStatusCode.BadRequest
-        //            };
-        //            return response;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+       
 
     }
 }

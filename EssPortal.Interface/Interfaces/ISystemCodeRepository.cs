@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EssPortal.Interfaces
 {
-    public interface ISystemCodeRepository : IGenericRepository<SystemCode>
+    public interface ISystemCodeRepository : IGenericRepository<SystemCodes>
     { 
     }
 

@@ -3,29 +3,45 @@
     <div class="card-header">
       <div class="row">
         <div class=" col-sm-3">
-          <strong>Request Number :</strong> {{this.newObj.request.RequestID}}
-        </div>
-        <div class=" col-sm-6">
-          <actionBar [disabled]="!heroForm.form.valid" (newAction)="newClick()" (editAction)="edit()"
-            (saveAction)="save()" (deleteAction)="delete()" (cancelAction)="reset()"></actionBar>
-        </div>
-        <div class=" col-sm-3">
           <strong>Amendment</strong> Form / {{title}}
         </div>
+        <div class=" col-sm-6">
+          <actionBar class=" col-md-12   col-sm-12" [disabled]="!heroForm.form.valid" (newAction)="newClick()"
+            (editAction)="edit()" (saveAction)="save()" (deleteAction)="delete()" (cancelAction)="reset()"></actionBar>
+          <app-MultiFilesManager (onUploadFinished)="uploadFinished($event)" [canAddRemove]="!editMode" [text]="' '"
+            [referenceID]="requsetId">
+          </app-MultiFilesManager>
+        </div>
+        <div class=" col-sm-3">
+
+        </div>
       </div>
-
-
-
     </div>
+
     <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="form-horizontal">
 
-      <div class="card-body ">
+      <div class="card-body col-sm-8">
+
+        <div class="row" *ngIf="this.newObj.request.requestID>0">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="Employee">Request Number</label>
+            <div class="col-md-9">
+              <input type="text" id="PurchaseNumber" class="form-control" name="PurchaseNumber" [disabled]="true"
+                [(ngModel)]="this.newObj.request.requestID" #refPurchaseNumber="ngModel">
+            </div>
+          </div>
+
+        </div>
 
         <div class="row">
-          <div class="form-group row col-sm-6">
-            <div class="form-group col-sm-12">
+          <employeeList class="form-group row col-md-12   col-sm-12" (employeeSelect)="employeeSelect($event)"
+            [employee]="this.newObj.request.employeeID" [editMode]="editMode">
+          </employeeList>
 
-              <label class="col-form-label" for="Employee">Employee</label>
+          <!-- <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="Employee">Employee</label>
+            <div class="col-md-9">
               <select required name="Employee" #refUserId="ngModel" class="form-control" [disabled]="editMode"
                 [(ngModel)]="this.newObj.request.EmployeeID">
                 <option value=''>Please select User</option>
@@ -33,77 +49,95 @@
                   {{emp.EnglishName}}
                 </option>
               </select>
-            </div>
-          </div>
+            </div> 
+          </div> -->
 
-          <div class="form-group row col-sm-6">
-            <div class="form-group col-sm-12">
-              <label class="  col-form-label" for="FromDate">From Date</label>
+        </div>
+
+        <div class="row">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="FromDate">From Date</label>
+            <div class="col-md-9">
               <input type="text" class="form-control" name="FromDate" id="FromDate" bsDatepicker #FromDate
                 [disabled]="editMode" #datepickerMDY="bsDatepicker" [bsValue]="bsFromDate" ngModel
                 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="FromDate" required>
-
-
             </div>
           </div>
 
         </div>
 
         <div class="row">
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="Type">Reason </label>
+            <div class="col-md-9">
+              <select required name="Reason" id="Reason" #Reason="ngModel" class="form-control" [disabled]="editMode"
+                [(ngModel)]="this.newObj.amendments[0].amendmentReasonId">
+                <option value=''>Please select Reason</option>
+                <option *ngFor="let item of emendmentReason" [value]="item.amendmentReasonId">
+                  {{item.amendReasonEn}}
+                </option>
+              </select>
 
-          <div class="form-group row col-sm-6">
-            <div class="form-group col-sm-6">
-              <label class=" col-form-label" for="inputSuccess1">Time</label>
+              <div *ngIf="!Reason.valid  && (Reason.dirty || Reason.touched) && !editMode" class="alert alert-danger">
+                <div [hidden]="!Reason.errors.required">
+                  Reason is required.
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="inputSuccess1">Time</label>
+            <div class="col-md-9">
               <timepicker [(ngModel)]="bstime" [showMeridian]="false" id="time" #time name="time" [disabled]="editMode"
                 required>
               </timepicker>
-            </div>
-            <div class="form-group row col-sm-6">
-              <div class="form-group col-sm-12">
-                <label class="  col-form-label" for="date-input">Select Type</label>
 
-                <div class="col-md-12 col-form-label">
-                  <div class="form-check form-check-inline mr-1" id="inline-radios">
-                    <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
-                      [disabled]="editMode" [(ngModel)]="this.newObj.Amendments[0].Type" value="CheckIn">
-                    <label class="form-check-label" for="inlineRadio1">Check In</label>
-                  </div>
-                  <div class="form-check form-check-inline mr-1">
-                    <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
-                      [disabled]="editMode" [(ngModel)]="this.newObj.Amendments[0].Type" value="CheckOut">
-                    <label class="form-check-label" for="inlineRadio1">Check Out</label>
-                  </div>
-
-                </div>
-
-              </div>
             </div>
           </div>
+        </div>
 
-          <div class="form-group row col-sm-6">
-            <div class="form-group col-sm-12">
-              <label class=" col-form-label" for="Reason">Reason</label>
+        <div class="row">
+          <div class="form-group row col-md-12   col-sm-12">
+            <label class="col-md-3 col-form-label" for="date-input">Select Type</label>
 
-              <select required name="Reason" id="Reason" #Reason="ngModel" class="form-control" [disabled]="editMode"
-                [(ngModel)]="this.newObj.Amendments[0].AmendmentReasonId">
-                <option value=''>Please select Reason</option>
-                <option *ngFor="let item of emendmentReason" [value]="item.ID">
-                  {{item.AmendReasonEn}}
-                </option>
-              </select>
+            <div class="col-md-9">
+              <mat-radio-group aria-label="Select an option" [disabled]="editMode" name="Type" required
+                [(ngModel)]="this.newObj.amendments[0].type">
+                <mat-radio-button value="CheckIn">CheckIn
+                </mat-radio-button>
+                <mat-radio-button value="CheckOut">CheckOut
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <!-- <div class="form-check form-check-inline mr-1" id="inline-radios">
+              <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
+                [disabled]="editMode" [(ngModel)]="this.newObj.Amendments[0].Type" value="CheckIn">
+              <label class="form-check-label" for="inlineRadio1">Check In</label>
+            </div>
+            <div class="form-check form-check-inline mr-1">
+              <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
+                [disabled]="editMode" [(ngModel)]="this.newObj.Amendments[0].Type" value="CheckOut">
+              <label class="form-check-label" for="inlineRadio1">Check Out</label>
+            </div> -->
+
             </div>
 
           </div>
         </div>
 
         <div class="row">
+          <div class="form-group row col-md-12   col-sm-12">
 
-          <div class="form-group row col-sm-12">
-            <div class="form-group col-sm-12">
-              <label class="  col-form-label" for="Justification">Justification</label>
-
+            <label class="col-md-3  col-form-label" for="Justification">Justification</label>
+            <div class="col-md-9">
               <textarea id="textarea-input" name="textarea-input" rows="2" class="form-control" name="Justification"
-                [disabled]="editMode" [(ngModel)]="this.newObj.Amendments[0].Justification" maxlength="50"
+                [disabled]="editMode" [(ngModel)]="this.newObj.amendments[0].justification" maxlength="50"
                 #refJustification="ngModel" id="Justification" required>
                 </textarea>
 

@@ -1,3 +1,4 @@
+import { TestModule } from './../test/test.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
@@ -13,8 +14,9 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    TestModule
   ],
-  declarations: [ DashboardComponent ]
+  declarations: [DashboardComponent]
 })
 export class DashboardModule { }

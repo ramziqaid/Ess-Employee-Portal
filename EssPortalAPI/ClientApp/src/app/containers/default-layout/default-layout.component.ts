@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../core/services/Alertify.service';
 import { NotificationService } from './../../core/services/Notification.service';
 import { Component, OnDestroy, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
@@ -17,6 +18,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   NotificationArray: any[];
 
   constructor(private notService: NotificationService,
+    private alertify: AlertifyService,
     @Inject(DOCUMENT) _document?: any) {
 
     this.changes = new MutationObserver((mutations) => {
@@ -38,6 +40,7 @@ export class DefaultLayoutComponent implements OnDestroy {
         this.NotificationArray = result;
         if (this.NotificationArray.length > 0) {
           this.NotificationCount = this.NotificationArray[0].notiCount;
+          this.alertify.warning(this.NotificationArray[0].messageAR);
         }
       }
     );

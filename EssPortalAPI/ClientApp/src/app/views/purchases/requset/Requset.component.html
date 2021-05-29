@@ -209,6 +209,7 @@
                     </ng-container>
 
 
+
                     <ng-container matColumnDef="itemNameEN">
                       <th mat-header-cell *matHeaderCellDef> item Name </th>
                       <td mat-cell *matCellDef="let element"> {{element.itemNameEN}} </td>
@@ -293,8 +294,13 @@
                   <tr *ngFor="let item of this.newObj.purchasesStageTransactionModels;  let cIndex = index;">
                     <td>{{item.stageOrder}}</td>
                     <td>{{item.nameEN}}</td>
-                    <td> {{item.fullName}}</td>
-                    <td> {{item.actionDate}}</td>
+                    <td *ngIf="item.stageOrder==1">
+                      {{item.stageUserFullName}}
+                    </td>
+                    <td *ngIf="item.stageOrder>1">
+                      {{item.fullName}}
+                    </td>
+                    <td> {{item.actionDate  }}</td>
 
                     <td *ngIf="item.isAction">
                       <span class="badge badge-success">Done</span>
@@ -334,9 +340,10 @@
       <br />
       <br />
 
+
       <mat-form-field class="example-full-width">
         <mat-label>Justification</mat-label>
-        <input matInput placeholder="Justification" value={{item.justification}} formControlName="description2"
+        <input matInput placeholder="Justification" value={{item.justification}}
           [disabled]="!this.newObj.purchases.isNeedAction || item.stageOrder!=this.newObj.purchases.stageOrder"
           required>
       </mat-form-field>
@@ -398,7 +405,7 @@
 
         </li>
 
-        <li class="list-group-item" *ngIf="itemType==7">
+        <li class="list-group-item">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="mainGroup"><i class="fa fa-pencil-square-o"></i></span>
@@ -419,7 +426,7 @@
           </div>
         </li>
 
-        <li class="list-group-item" *ngIf="itemType==7">
+        <li class="list-group-item">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="itemGroup"><i class="fa fa-pencil-square-o"></i></span>

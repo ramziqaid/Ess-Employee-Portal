@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EssPortal.Concrete
 {
-    public class SystemCodeConcrete : GenericRepository<SystemCode>, ISystemCodeRepository
+    public class SystemCodeConcrete : GenericRepository<SystemCodes>, ISystemCodeRepository
     {
        
         public SystemCodeConcrete(DatabaseContext context) : base(context)

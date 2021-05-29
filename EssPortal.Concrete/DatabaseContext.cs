@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EssPortal.Models;
+ 
 
 namespace EssPortal.Concrete
 {
@@ -26,9 +27,10 @@ namespace EssPortal.Concrete
 
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestStage> RequestStages { get; set; }
+        public DbSet<RequestExtraField> RequestExtraFields { get; set; }
         public DbSet<Amendment> Amendments { get; set; }
         public DbSet<RequestType> RequestTypes { get; set; }
-        public DbSet<AmendmentReason> AmendmentReasons { get; set; }
+        public DbSet<OrderStageType> OrderStageTypes { get; set; }
         public DbSet<Employee> EmployeeInfoView { get; set; }
         public DbSet<Housing> Housings { get; set; } 
         public DbSet<Purchases> Purchases { get; set; }
@@ -37,7 +39,9 @@ namespace EssPortal.Concrete
         public DbSet<PurchasesStageType> PurchasesStageTypes { get; set; }
         public DbSet<PurchaseOffer> PurchaseOffers { get; set; }
         public DbSet<Attachment> Attachments { get; set; } 
-        public DbSet<SystemCode> SystemCode { get; set; }
+        public DbSet<SystemCodes> SystemCode { get; set; }
+        public DbSet<operation> Operations { get; set; }
+        public DbSet<operationPermission> OperationPermissions { get; set; }
 
         //Dyanmic AX
         public DbSet<BankInfo> bankInfos { get; set; }

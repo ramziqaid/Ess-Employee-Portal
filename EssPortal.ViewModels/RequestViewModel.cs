@@ -13,9 +13,11 @@ namespace EssPortal.ViewModels
     { 
         public Request request { get; set; }
         public Employee employee { get; set; }
-
-        public List<Amendment> amendments { get; set; }
         public List<RequestStage> RequestStages { get; set; }
+        public List<RequestExtraField> RequestExtraFields { get; set; }
+
+        public List<Attachment> attachments { get; set; }
+        public List<Amendment> amendments { get; set; } 
         public List<Housing> Housings { get; set; }  
     }
 

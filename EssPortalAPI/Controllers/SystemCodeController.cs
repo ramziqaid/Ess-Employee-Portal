@@ -31,7 +31,7 @@ namespace EssPortalAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            IEnumerable<SystemCode> systemCodes;
+            IEnumerable<SystemCodes> systemCodes;
             systemCodes = await _systemCodeRepository.GetAllAsyn();
             return Ok(systemCodes);
         }
@@ -40,10 +40,10 @@ namespace EssPortalAPI.Controllers
         // GET: api/SystemCode/acv
 
         [HttpGet("{Code}", Name = "GetSystemCode")]
-        public async Task<IActionResult> Get(  int SystemCodeID)
+        public async Task<IActionResult> Get( string SystemCode)
         {
-             SystemCode systemCodes;
-            systemCodes = await _systemCodeRepository.FindAsync(p => p.SystemCodeID == SystemCodeID);
+             SystemCodes systemCodes;
+            systemCodes = await _systemCodeRepository.FindAsync(p => p.SystemCode == SystemCode);
             return Ok(systemCodes);
         }
          
