@@ -44,7 +44,7 @@
     "@devexpress/analytics-core": "19.2-next",
     "devexpress-reporting-angular": "19.2-next",
     "apexcharts": "^3.19.3",
-    "chart.js": "2.9.3",
+    "chart.js": "2.9.4",
     "classlist.js": "1.1.20150312",
     "core-js": "2.4.1",
     "css-star-rating": "git+https://git@github.com/uilibrary/css-star-rating.git",
