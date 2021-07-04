@@ -7,14 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClientApp\**" />
+    <Content Remove="ClientApp\**" />
+    <EmbeddedResource Remove="ClientApp\**" />
+    <None Remove="ClientApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\SchemeController.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Reports\EvaluationReport.repx" />
     <None Remove="Reports\InvoiceReport.repx" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Reports\EvaluationReport.repx" />
     <EmbeddedResource Include="Reports\InvoiceReport.repx" />
   </ItemGroup>
 
@@ -27,9 +36,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Sendgrid" Version="9.12.0" />
     <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="20.1.6" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.4" />
  
   </ItemGroup>
 
@@ -43,12 +52,23 @@
 
 
   <ItemGroup>
+    <Compile Update="Reports\EvaluationReport.cs">
+      <DependentUpon>EvaluationReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\EvaluationReport.Designer.cs">
+      <DependentUpon>EvaluationReport.repx</DependentUpon>
+    </Compile>
     <Compile Update="Reports\InvoiceReport.cs">
       <DependentUpon>InvoiceReport.repx</DependentUpon>
     </Compile>
     <Compile Update="Reports\InvoiceReport.Designer.cs">
       <DependentUpon>InvoiceReport.repx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

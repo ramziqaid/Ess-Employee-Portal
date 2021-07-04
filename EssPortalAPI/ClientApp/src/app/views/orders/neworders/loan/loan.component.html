@@ -1,0 +1,221 @@
+
+
+<mat-card class="p-0">
+  <mat-card-title class="">
+      
+      <mat-divider></mat-divider>
+       
+        <actionBar  
+         [disabled]="!heroForm.form.valid" 
+          (newAction)="newClick()"
+          (editAction)="edit()" 
+          (saveAction)="save()" 
+          (deleteAction)="delete()"
+           (cancelAction)="reset()" 
+           [referenceID]="requestID"
+           [showPrint]="false"
+           (onUploadFinishedFire)="uploadFinished($event)" 
+           >
+          </actionBar> 
+          <mat-divider></mat-divider>
+       
+  </mat-card-title>
+  <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm" novalidate>
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+ 
+                <div class="pb-16" > 
+                  <employeeList   (employeeSelect)="employeeSelect($event)"
+                  [empoyeeList]= "this.empoyeeList" 
+                  [employee]="this.employeeID" [editMode]="true">
+                </employeeList>   
+                </div>
+
+                    <div class="pb-16">
+                      <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "LOAN_TYPE" | translate }}   </mat-label>  
+                      <mat-select 
+                      required 
+                      name="LoanType" 
+                      #refLoanType="ngModel"  
+                       id="loanType" 
+                      [disabled]="editMode"
+                      (selectionChange)="selectedValue($event)"
+                       [(ngModel)]="this.loanTypeID">
+                        <mat-option *ngFor="let item of loanType" [value]="item.ID">
+                           {{(authService.currentLang=="1")? item.NameEN :item.NameAR }} 
+                        </mat-option>
+                      </mat-select>
+                    
+                      <small *ngIf="!refLoanType.valid  && (refLoanType.dirty || refLoanType.touched) && !editMode" class="form-error-msg">
+                        <small [hidden]="!refLoanType.errors.required">
+                          {{ "FILED_IS_REQUIRED" | translate }}
+                        </small>
+                      </small>
+                    </mat-form-field>
+                  </div> 
+                  
+ 
+    
+                  <div class="pb-16">
+                    <div class="pb-16" >
+                      <mat-form-field class="full-width" appearance="fill"> 
+                        <mat-label>{{ "LOAN_AMOUNT" | translate }} </mat-label>
+                         <input
+                         matInput
+                         type="number"
+                         name="LoanAmount"
+                         id="loanAmount" 
+                         placeholder=" {{ 'LOAN_AMOUNT' | translate }} "
+                         #refLoanAmount="ngModel"
+                         [(ngModel)]="this.loanAmount" 
+                         required  
+                         min="1"
+                         (ngModelChange)="amountChangeFn($event)"
+                         [disabled]="editMode"
+                         >
+                     </mat-form-field>  
+                     <small *ngIf="!refLoanAmount.valid  && (refLoanAmount.dirty || refLoanAmount.touched) && !editMode" class="form-error-msg">
+                      <small [hidden]="!refLoanAmount.errors.required">
+                        {{ "FILED_IS_REQUIRED" | translate }}
+                      </small>
+                    </small>
+                   </div>                
+               </div> 
+         
+           
+              </div> 
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+
+                <div class="pb-16" >
+                  <mat-form-field class="full-width" appearance="fill"> 
+                     <input
+                     matInput
+                     name="requsetPrivateNumber"
+                     id="requsetPrivateNumber" 
+                     placeholder=" {{ 'ORDER_NUMBER' | translate }} "
+                     [disabled]="true"
+                     [(ngModel)]="this.newObj.request.requsetPrivateNumber"  
+                     >
+                 </mat-form-field>  
+               </div>
+
+               <div class="pb-16">  
+                <mat-form-field class="full-width" appearance="fill"> 
+                  <mat-label> {{ "LOAN_START_DATE" | translate }}   </mat-label> 
+                    <input 
+                    matInput
+                    name="FromDate" 
+                    id="FromDate"  
+                    #refFromDate="ngModel"
+                    [(ngModel)]="bsFromDate" 
+                    required  
+                    [disabled]="editMode"
+                    [matDatepicker]="appDatepicker">
+                  
+                    <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle> 
+                    <mat-datepicker touchUi #appDatepicker ></mat-datepicker>  
+                </mat-form-field>
+               
+              <small *ngIf="!refFromDate.valid  && (refFromDate.dirty || refFromDate.touched) && !editMode" class="form-error-msg">
+                <small [hidden]="!refFromDate.errors.required">
+                  {{ "FILED_IS_REQUIRED" | translate }}
+                </small>
+              </small>
+            </div> 
+                
+            <div class="pb-16">
+              <mat-form-field class="full-width" appearance="fill"> 
+                <mat-label>{{ "NO_OF_INSTALLMEN" | translate }} </mat-label>
+                 <input
+                 matInput
+                 type="number"
+                 name="NoOfInstallmen"
+                 id="NoOfInstallmen" 
+                 placeholder=" {{ 'NO_OF_INSTALLMEN' | translate }} "
+                 #refNoOfInstallmen="ngModel"
+                 [(ngModel)]="noOfInstallmen" 
+                 required   
+                 min="10" max="100"
+                 (ngModelChange)="noOfInstallmenChangeFn($event)"
+                 [disabled]="editMode"
+                 >
+             </mat-form-field> 
+             <small *ngIf="!refNoOfInstallmen.valid  && (refNoOfInstallmen.dirty || refNoOfInstallmen.touched) && !editMode" class="form-error-msg">
+              <small [hidden]="!refNoOfInstallmen.errors.required">
+                {{ "FILED_IS_REQUIRED" | translate }}
+              
+            </small>
+          </small>
+          <mat-error *ngIf="refNoOfInstallmen.hasError('min')"> {{ "FILED_IS_REQUIRED" | translate }}</mat-error>
+
+            </div> 
+           </div>  
+           
+           <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+            <div class="pb-16">
+              <div class="pb-16" >
+                <mat-form-field class="full-width" appearance="fill"> 
+                  <mat-label>{{ "MONTHLY_INSTALLMENT" | translate }} </mat-label>
+                   <input
+                   matInput
+                   type="number"
+                   name="MonthlyInstallment"
+                   id="MonthlyInstallment" 
+                   placeholder=" {{ 'MONTHLY_INSTALLMENT' | translate }} "
+                   #refMonthlyInstallment="ngModel"
+                   [(ngModel)]="monthlyInstallment" 
+                   required  
+                   min="1" 
+                    [disabled]="true"
+                   >
+               </mat-form-field>  
+               <small *ngIf="!refMonthlyInstallment.valid  && (refMonthlyInstallment.dirty || refMonthlyInstallment.touched) && !editMode" class="form-error-msg">
+                <small [hidden]="!refMonthlyInstallment.errors.required">
+                  {{ "FILED_IS_REQUIRED" | translate }}
+                </small>
+              </small>
+             </div>                
+         </div>             
+          </div>
+
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16"> 
+                  <div class="pb-16">
+                    <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "JUSTIFICATION" | translate }} </mat-label>
+                        <textarea matInput 
+                        id="textarea-input"   
+                        rows="2" 
+                        class="form-control" 
+                        name="Justification"
+                        [disabled]="editMode"
+                        [(ngModel)]="this.justification" maxlength="500"
+                          #refJustification="ngModel" id="Justification" required>
+                          </textarea>  
+                          <small *ngIf="!refJustification.valid  && (refJustification.dirty || refJustification.touched) && !editMode" class="form-error-msg">
+                            <small [hidden]="!refJustification.errors.required">
+                              {{ "FILED_IS_REQUIRED" | translate }}
+                            </small>
+                          </small>  
+                    </mat-form-field>
+                  </div> 
+                </div>
+          </div>
+           
+      </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- <div style="float: right; width:50%;">
+  < 
+
+ 
+  <h3>Form Value</h3>
+  {{heroForm.value | json }}
+ 
+</div> -->
+
+<!-- {{heroForm.value | json }} -->
+  

@@ -14,8 +14,7 @@ namespace EssPortal.Models
         [Key] 
         public int ID { get; set; }
 
-
-        public string EmployeeID { get; set; }
+        public long EmployeeID { get; set; }
 
         [Display(Name = "Personnel Number")]
         public string  Personnelnumber{ get; set; }
@@ -66,7 +65,7 @@ namespace EssPortal.Models
 
         public string  GENDERName{ get; set; }
 
-        public string ManagerID { get; set; }
+        public long? ManagerID { get; set; }
 
         public string  DirectManagerName{ get; set; }
 

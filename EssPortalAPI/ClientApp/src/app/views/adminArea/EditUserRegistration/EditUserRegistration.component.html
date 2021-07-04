@@ -1,144 +1,149 @@
-<div class="row">
-  <div class="col-md-6 mx-auto">
-    <div class="card mx-6">
-      <div class="card-body p-12">
+ 
 
-        <form method="post" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
-          <p class="text-muted">Update User</p>
+<mat-card class="p-0">
+  <mat-card-title class="">
+      <div class="card-title-text">Form validation</div>
+      <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+      <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">
+                
+                  <div class="pb-16">
+                      <mat-form-field class="full-width">
+                          <input
+                          matInput
+                          name="UserName"
+                          formControlName="UserName"
+                          placeholder="Username (Min Length: 4, Max Length: 9)"
+                          value="">
+                      </mat-form-field>
+               
 
-          <!-- <div class="form-group">
-            <div class="input-group  mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-people"></i></span>
+                    <small *ngIf="updateForm.controls['UserName'].hasError('minlength') && updateForm.controls['UserName'].touched" 
+                      class="form-error-msg"> Username require at least {{updateForm.controls['UserName'].errors.minlength.requiredLength}} characters 
+                      </small>
+                      <small 
+                      *ngIf="updateForm.controls['UserName'].hasError('maxlength') && updateForm.controls['UserName'].touched" 
+                      class="form-error-msg"> Username can not contain more than {{updateForm.controls['UserName'].errors.maxlength.requiredLength}} characters </small>
+                
+                    </div>
+
+                  <div class="pb-16">
+                      <mat-form-field class="full-width">
+                          <input
+                          matInput
+                          name="FullName"
+                          formControlName="FullName"
+                          placeholder="Full Name" 
+                          value="">
+                      </mat-form-field>
+                      <small 
+                      *ngIf="updateForm.controls['FullName'].hasError('required') && updateForm.controls['FullName'].touched" 
+                      class="form-error-msg">   {{ "FILED_IS_REQUIRED" | translate }} </small>
+                  </div>
+
+                  <div class="pb-16">
+                    <mat-form-field class="full-width">
+                    <input 
+                        type="password"
+                        name="Password"
+                        matInput
+                        formControlName="Password"
+                        [pattern]="unamePattern"
+                        placeholder="Password" 
+                        value="">
+                    </mat-form-field>
+                    <div *ngIf="!Password.valid  && (Password.dirty || Password.touched)" class="form-error-msg">
+                                       
+                      <div *ngIf="Password.errors?.pattern">
+                        {{ "PASSWORD_ERROR" | translate }} 
+                      </div>
+                      <small 
+                      *ngIf="updateForm.controls['Password'].errors?.required && updateForm.controls['Password'].touched" 
+                      class="form-error-msg">   {{ "FILED_IS_REQUIRED" | translate }} </small>
+                    </div> 
+                </div>
+
+                <div class="pb-16">
+                    <mat-form-field class="full-width">
+                    <input
+                        type="password"
+                        name="cpassword"
+                        matInput
+                        appEqualValidator="password"
+                        formControlName="cpassword"
+                        placeholder="Confirm Password"
+                        value="">
+                    </mat-form-field>
+                  
+                    <div *ngIf="!cpassword.valid  && (cpassword.dirty || cpassword.touched)" class="form-error-msg">
+                      <span *ngIf="cpassword.hasError('required')">  {{ "FILED_IS_REQUIRED" | translate }}  </span>
+                      <span *ngIf="cpassword.hasError('mustMatch')">{{ "PASSWORD_MUST_MATCH" | translate }}</span>
+                    </div>
+        
+                </div> 
+              
               </div>
-              <input type="text" class="form-control" name="employeeName" formControlName="employeeName"
-                placeholder="employeeName" id="employeeName">
-            </div>
-          </div> -->
+ 
 
-          <div class="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
+              <div fxFlex="100" fxFlex.gt-xs="50">
+                <div class="pb-16">
+                  <mat-form-field class="full-width">
+                  <input
+                      matInput
+                      type="email"
+                      name="EmailId"
+                      formControlName="EmailId"
+                      placeholder="Your Email"
+                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                      value="">
+                  </mat-form-field>
+                  <small 
+                  *ngIf="updateForm.controls['EmailId'].hasError('required') && updateForm.controls['EmailId'].touched" 
+                  class="form-error-msg">   {{ "FILED_IS_REQUIRED" | translate }}</small>
+                  <small 
+                  *ngIf="updateForm.controls['EmailId'].hasError('EmailId') && updateForm.controls['EmailId'].touched" 
+                  class="form-error-msg"> {{ "INVAILD_EMAIL_ADDRESS" | translate }}  </small>
               </div>
 
-              <input type="text" class="form-control" name="UserName" formControlName="UserName" placeholder="UserName"
-                autocomplete="UserName" id="UserName" required>
-            </div>
-            <div *ngIf="!UserName.valid  && (UserName.dirty || UserName.touched)" class="alert alert-danger">
-              <span *ngIf="UserName.hasError('required')">UserName is required.</span>
-              <span *ngIf="UserName.hasError('maxlength')">Only 10 characters allowed for UserName.</span>
-              <span *ngIf="UserName.hasError('minlength')">Atleast 5 characters needed for UserName.</span>
-            </div>
+              <div class="pb-16">
+                  <mat-form-field class="full-width">
+                  <input
+                      matInput 
+                      type="tel"
+                      name="Contactno"
+                      formControlName="Contactno"
+                      placeholder="phone"
+                      value="">
+                  </mat-form-field>
+              
+                  <div *ngIf="!Contactno.valid  && (Contactno.dirty || Contactno.touched)" class="form-error-msg">
+                    <small [hidden]="!Contactno.errors.required">
+                      {{ "FILED_IS_REQUIRED" | translate }}
+                    </small>
+                    <small *ngIf="Contactno.hasError('maxlength')">Only 20 characters allowed for Contact.</small>
+                    <small *ngIf="Contactno.hasError('minlength')">Atleast 8 characters needed for Contact.</small>
+                  </div>
+              </div>
+
+
+              
+                  
+                  <div class="pb-16 pt-8">
+                      <mat-checkbox
+                      name="Status"
+                      formControlName="Status" 
+                      class="pb-16">Active</mat-checkbox>
+ 
+                  </div>
+                  
+              </div>
+
           </div>
+          <button mat-raised-button color="primary"   [disabled]="updateForm.invalid">Submit</button>
+      </form>
+  </mat-card-content>
+</mat-card>
 
-          <div class="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-
-              <input type="text" class="form-control" name="FullName" maxlength="50" formControlName="FullName"
-                id="FullName" maxlength="50" placeholder="FullName" autocomplete="FullName" required>
-            </div>
-            <div *ngIf="!FullName.valid  && (FullName.dirty || FullName.touched)" class="alert alert-danger">
-              <span *ngIf="FullName.hasError('required')">FullName is required.</span>
-            </div>
-
-          </div>
-
-          <div class="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">@</span>
-              </div>
-
-              <input type="text" class="form-control" maxlength="50" placeholder="Email" autocomplete="Email"
-                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="EmailId" formControlName="EmailId"
-                maxlength="50" id="EmailId" required>
-            </div>
-            <div *ngIf="!EmailId.valid  && (EmailId.dirty || EmailId.touched)" class="alert alert-danger">
-              <div [hidden]="!EmailId.errors.required">
-                Email is required
-              </div>
-              <div *ngIf="EmailId.errors && EmailId.errors.pattern">
-                Email is invalid
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-phone"></i></span>
-              </div>
-              <input type="text" class="form-control" name="Contactno" formControlName="Contactno"
-                placeholder="Phone Number" autocomplete="Phone Number" maxlength="10" name="Contactno" id="Contactno"
-                required>
-            </div>
-            <div *ngIf="!Contactno.valid  && (Contactno.dirty || Contactno.touched)" class="alert alert-danger">
-              <div [hidden]="!Contactno.errors.required">
-                Contact Number is required
-              </div>
-              <span *ngIf="Contactno.hasError('maxlength')">Only 20 characters allowed for Contact.</span>
-              <span *ngIf="Contactno.hasError('minlength')">Atleast 8 characters needed for Contact.</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-
-              <input type="password" class="form-control" name="Password" formControlName="Password" id="Password"
-                placeholder="Password" autocomplete="new-password" [pattern]="unamePattern" maxlength="50" required>
-            </div>
-            <div *ngIf="!Password.valid  && (Password.dirty || Password.touched)" class="alert alert-danger">
-              <div [hidden]="!Password.errors.required">
-                Password is required
-              </div>
-              <div *ngIf="Password.errors?.pattern">
-                Passwords must be at least 8 characters and contain at 3 of 4 of the following: upper case
-                (A-Z), lower case (a-z), number (0-9) and special character (e.g. !@#$%^&*)
-              </div>
-            </div>
-
-          </div>
-
-          <div class="form-group">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-              <input id="cpassword" formControlName="cpassword" type="password" class="form-control"
-                placeholder="Repeat password" autocomplete="new-password" required>
-            </div>
-            <div *ngIf="!cpassword.valid  && (cpassword.dirty || cpassword.touched)" class="alert alert-danger">
-              <span *ngIf="cpassword.hasError('required')">Confirm Password is required.</span>
-              <span *ngIf="cpassword.hasError('mustMatch')">Password Must Match.</span>
-            </div>
-
-          </div>
-
-          <div class="form-group">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Active</span>
-              </div>
-              <label class="switch switch-label switch-danger offset-md-1">
-                <input class="switch-input" type="checkbox" #inputEl name="Status" id="Status" formControlName="Status">
-                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-              </label>
-            </div>
-
-          </div>
-
-          <button id="register" type="submit" [disabled]="!updateForm.valid" class="btn btn-block btn-success">Update
-            Account</button>
-        </form>
-      </div>
-
-    </div>
-  </div>
-</div>

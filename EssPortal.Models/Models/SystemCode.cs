@@ -16,7 +16,9 @@ namespace EssPortal.Models
 
         public string DescriptionAr { get; set; }
         public string DescriptionEn { get; set; }
-        public string SystemCodeType { get; set; } 
-        
+        public string SystemCodeType { get; set; }
+        public string Variable1 { get; set; }
+        public string Variable2 { get; set; }
+        public short? Sort { get; set; }
     }
 }

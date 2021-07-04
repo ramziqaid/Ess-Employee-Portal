@@ -33,7 +33,7 @@ namespace EssPortalAPI.Controllers
         {
             IEnumerable<SystemCodes> systemCodes;
             systemCodes = await _systemCodeRepository.GetAllAsyn();
-            return Ok(systemCodes);
+            return Ok(systemCodes.OrderBy(p=>p.Sort));
         }
 
 

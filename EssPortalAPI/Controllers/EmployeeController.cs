@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EssPortal.Interfaces;
 using EssPortal.Models;
+using EssPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,13 +38,12 @@ namespace EssPortalAPI.Controllers
             {
                 return NotFound();
             }
-             return Ok(employeeInfoView.Distinct().OrderBy(p=>p.EnglishName));
+             return Ok(employeeInfoView.Distinct().OrderBy(p=>p.Personnelnumber));
         }
-       
-     
+            
         [HttpGet]
         [Route("Get/{EmployeeID}")]
-        public async Task<IActionResult> Get([FromRoute] string EmployeeID)
+        public async Task<IActionResult> Get([FromRoute] long EmployeeID)
         { 
              Employee employeeInfoView;
             employeeInfoView = await _employeeRepository.FindAsync(p=>p.EmployeeID==EmployeeID);
@@ -56,16 +57,63 @@ namespace EssPortalAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetByManager/{ManagerID}")]
-        public async Task<IActionResult> GetByManager([FromRoute] string ManagerID)
-        { 
-            IEnumerable<Employee> employeeInfoView;
-            employeeInfoView = await _employeeRepository.FindAllAsync(p => p.ManagerID == ManagerID || p.EmployeeID == ManagerID);
-            if (employeeInfoView == null)
+        [Route("GetByManager/{EmployeeID}")]
+        public async Task<IActionResult> GetByManager([FromRoute] string EmployeeID)
+        {
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest("Bad Request");
             }
-            return Ok(employeeInfoView.Distinct().OrderBy(p => p.EnglishName));
+            try
+            {
+                var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                IEnumerable<Employee> employeeInfoView;
+                employeeInfoView = await _employeeRepository.GetByManager(EmployeeID, userId);             
+                return Ok(employeeInfoView);
+            }
+            catch (Exception ex)
+            {
+                //ModelState.AddModelError("error", ex.Message);
+                return BadRequest(ex.Message);
+            } 
+
+        }
+
+        [HttpGet]
+        [Route("checkEmployeeIsHR/{EmployeeID}")]
+        public async Task<IActionResult> CheckEmployeeIsHR([FromRoute] string EmployeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Bad Request");
+            }
+            try
+            {
+                var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                string type = await _employeeRepository.CheckEmployeeIsHR(EmployeeID, userId); 
+                return Ok(type);
+            }
+            catch (Exception ex)
+            {               
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("GetEmployeeUserHR")]
+        public async Task<IActionResult> GetEmployeeUserHR()
+        { 
+            try
+            { 
+                IEnumerable<EmployeeUserHRViewModel> employeeInfoView = await _employeeRepository.GetEmployeeUserHR();                  
+                return Ok(employeeInfoView);
+            }
+            catch (Exception ex)
+            {
+                //ModelState.AddModelError("error", ex.Message);
+                return BadRequest(ex.Message);
+            }
 
         }
     }

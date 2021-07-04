@@ -6,7 +6,8 @@ namespace EssPortal.Models.searchVM
 {
    public class RequestListVM
     {
-      public  int? requestID;
+        public  int? requestID;
+        public string RequsetPrivateNumber;
         public long? employeeID;
         public long? managerId;
         public int? requestTypeID;

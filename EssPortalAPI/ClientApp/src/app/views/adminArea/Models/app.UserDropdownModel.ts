@@ -1,5 +1,5 @@
 export class UserDropdownModel 
 {
-    public UserId: number;
-    public UserName: string;
+    public userId: number;
+    public userName: string;
 }

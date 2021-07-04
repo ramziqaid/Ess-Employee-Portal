@@ -1,0 +1,15 @@
+<div class="container-upload">
+
+  <button 
+  mat-raised-button
+  color="accent"
+  class="mx-4 btn primary upload"
+  [disabled]="disabled" 
+  [ngClass]="{'disabled': disabled}" 
+   title='{{ "SELECT_ATTACHMENTS" | translate }} '
+  (click)="inputFile.click()">
+    <mat-icon>file_upload </mat-icon> 
+  </button>
+  <input name="file" id="file" (change)="upload($event)" type="file" #inputFile hidden>
+  
+</div>

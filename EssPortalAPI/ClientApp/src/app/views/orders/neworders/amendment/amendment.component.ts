@@ -1,12 +1,16 @@
-import { ActionBarComponent } from './../../../actionBar/actionBar.component';
 
+
+import { DateAdapter } from '@angular/material/core';
 import { Component, OnInit, SimpleChanges, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import * as m from '../../Models/Request';
 import { RequestService } from '../../Services/Request.service';
-import * as shared from './../../../../Shared/index';
-import { EssPortalService, AlertifyService, AuthService } from '../../../../core';
+import { EssPortalService, AlertifyService, AuthService, HelpersService } from '../../../../core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Attachment } from './../../../../Shared/index';
+import * as shared from 'app/shared/models/common.model';
+import * as enums from 'app/shared/enum.enum';
+import { ActionBarComponent } from 'app/shared/UI/action-Bar/actionBar.component';
+import * as _moment from 'moment';
+import { SystemCode } from 'app/shared/models/common.model';
 
 @Component({
   selector: 'app-amendment',
@@ -17,44 +21,60 @@ export class AmendmentComponent implements OnInit {
 
   request: m.Requests = new m.Requests();
 
-  bstime = new Date();
   bsFromDate = new Date();
   empoyeeList: shared.Employee[];
-  emendmentReason: m.AmendmentReason[];
-  attachment: Attachment[] = [];
+  emendmentReason: SystemCode[];
+  attachment: shared.Attachment[] = [];
+  extraFiled: m.RequestExtraField[] = [];
 
   newObj: any;
   editMode: boolean = true;
   title: string = "New";
-  requsetId: number;
+  isAdmin: boolean = false;
+
+  requestID: number; 
+  employeeID: number;
+  type: string;
+  amendmentReasonCode: string = "";
+  fromDate: string;
+  time: string;
+  justification: string;
+
+
 
   @ViewChild('heroForm', { static: false }) heroForm: any;
-  @ViewChild('time', { static: false }) time: any;
+  @ViewChild('time', { static: false }) time2: any;
   @ViewChild('FromDate', { static: true }) FromDate: ElementRef;
   @ViewChild(ActionBarComponent, { static: false }) actionBar: ActionBarComponent;
 
-  constructor(private sharedService: EssPortalService,
+  constructor(
+    private sharedService: EssPortalService,
     private requestService: RequestService,
+    private helpersService: HelpersService,
     private authService: AuthService,
     private _avRoute: ActivatedRoute,
-    private alertify: AlertifyService) {
+    private alertify: AlertifyService,
+    private dateAdapter: DateAdapter<Date>) {
 
     if (this._avRoute.snapshot.params["RequestID"]) {
-      this.requsetId = this._avRoute.snapshot.params["RequestID"];
+      this.requestID = this._avRoute.snapshot.params["RequestID"];
     }
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
+
 
   ngOnInit() {
     this.loadEmployees();
     this.loadAmendmentReasons();
     this.newObj = this.getEmptyObject();
-
-    if (this.requsetId > 0) {
+    if (this.requestID > 0) {
       this.title = "Edit";
-      this.loadRequest(this.requsetId);
+      this.loadRequest(this.requestID);
     }
+    this.isAdmin = this.authService.isAdminUser;
 
   }
+
   onSubmit() {
 
   }
@@ -62,32 +82,58 @@ export class AmendmentComponent implements OnInit {
   //#region "actionBar"
 
   newClick() {
+    this.heroForm.reset();
     this.editMode = false;
+    this.employeeID = this.authService.logginEmployeeId();
     this.newObj = this.getEmptyObject();
-    this.requsetId = -1;
+    this.getNextPrivateNumber();
+    //this.requsetId = -1;
+    this.requestID = this.newObj.request.requestID;
+
+    this.newObj.request.requestTypeID = enums.RequestTypeId.Amendment;
+    this.newObj.request.statusCode = enums.RequestStatus.NewRequest;
+    this.authService.currentUserName.subscribe(user => { this.newObj.request.createdBy = user });
+    this.newObj.request.employeeID = this.authService.logginEmployeeId(); 
   }
+
   edit() {
     this.editMode = false;
   }
 
+
   save() {
 
+    this.findInvalidControls();
     if (this.heroForm.valid) {
+      var dateToDB = _moment(this.bsFromDate).format("DD/MM/YYYY");
+      if (!this.sharedService.isCheckDateFormat(dateToDB)) {
+        this.alertify.error('FORMATE_DATE_ISNOT_CORRECT');
+        return;
+      }
 
-      this.newObj.request.requestTypeID = shared.RequestTypeId.Amendment;
-      this.newObj.request.statusID = shared.RequestStatus.NewRequest;
-      this.authService.currentUserName.subscribe(user => { this.newObj.request.createdBy = user });
-      this.newObj.amendments[0].time = `${this.time.hours}:${this.time.minutes}`; // "02:02";// this.meridian;
-      this.newObj.amendments[0].fromDate = this.FromDate.nativeElement.value;// "02/02/2018";
+      // this.newObj.request.requestTypeID = enums.RequestTypeId.Amendment;
+      // this.newObj.request.statusCode = enums.RequestStatus.NewRequest;
+      // this.authService.currentUserName.subscribe(user => { this.newObj.request.createdBy = user });
+      // this.newObj.request.employeeID = this.authService.logginEmployeeId();
+      // this.newObj.request.requsetPrivateNumber = this.nextPrivateNumber;
+
+      //extraFiled
+      this.addUpdateExtraField(1, this.amendmentReasonCode);
+      this.addUpdateExtraField(2, this.type);
+      this.addUpdateExtraField(3, this.time);
+      this.addUpdateExtraField(4, dateToDB);
+      this.addUpdateExtraField(5, this.justification);
+
+      // this.newObj.amendments[0].fromDate = dateToDB;// "02/02/2018";
 
       this.requestService.saveRequest(this.newObj).subscribe((data) => {
-        this.alertify.success('Save successful');
+        this.alertify.success('SAVED_SUCCESSFULLY');
         this.heroForm.reset();
         this.newObj = data;
 
-        this.requsetId = this.newObj.requestID;
+        this.requestID = this.newObj.requestID;
 
-        this.loadRequest(this.requsetId);
+        this.loadRequest(this.requestID);
         this.editMode = true;
         this.actionBar.editMode();
       }, error => {
@@ -98,12 +144,13 @@ export class AmendmentComponent implements OnInit {
   }
 
   delete() {
-    if (this.requsetId > 0) {
-      this.alertify.confirm('Are you sure you want Delete Order?', () => {
-        this.requestService.deleteRequest(this.requsetId).subscribe(
+    if (this.requestID > 0) {
+      this.alertify.confirm('DO_YOU_WANT_DELETE_ORDER', () => {
+        this.requestService.deleteRequest(this.requestID).subscribe(
           result => {
-            this.alertify.success("Done . . .");
+            this.alertify.success("DELETED_SUCCESSFULLY");
             this.reset();
+            this.actionBar.queryMode();
           },
           error => { this.alertify.error(error); }
         );
@@ -111,11 +158,19 @@ export class AmendmentComponent implements OnInit {
     }
   }
 
+  private findInvalidControls() {
+    const controls = this.heroForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        this.heroForm.controls[name].markAsTouched({ onlySelf: true });
+      }
+    }
+  }
+
 
   reset() {
     this.editMode = true;
     this.heroForm.reset();
-    this.requsetId = -1;
   }
   //#endregion
 
@@ -131,7 +186,7 @@ export class AmendmentComponent implements OnInit {
   }
 
   private loadAmendmentReasons() {
-    this.requestService.getAmendmentReasons().subscribe(
+    this.requestService.getSystemCode(enums.SystemCodeType.Code_CAC).subscribe(
       result => {
         this.emendmentReason = result;
       },
@@ -139,49 +194,11 @@ export class AmendmentComponent implements OnInit {
     );
   }
 
-  private getEmptyObject(): any {
-    const obj = {
-      request: {
-        //RequestID: -1,
-        employeeID: null,
-        requestTypeID: null,
-        statusID: null,
-        createdBy: null,
-      },
-      amendments: [],
-      requestStages: []
-    };
-    obj.amendments[0] = new m.Amendments();
-    obj.amendments[0].Type = "CheckIn";
-    obj.amendments[0].amendmentReasonId = -1;
-
-    const time = new Date();
-    this.bstime = time;
-    this.bsFromDate = time;
-
-    obj.requestStages[0] = new m.RequestStage();
-
-    return obj;
-
-  };
-
   loadRequest(requsetId: number) {
+    this.newObj = this.getEmptyObject();
     this.requestService.getRequest(requsetId).subscribe(
-      (date) => {
-
-        this.newObj.request = date.request;
-        this.newObj.amendments = date.amendments;
-        this.newObj.requestStages = date.requestStages;
-
-        this.bsFromDate = new Date(this.newObj.amendments[0].fromDate);
-        const time = new Date();
-
-        if (this.newObj.amendments[0].time !== 'undefined') {
-          const h = this.newObj.amendments[0].time;
-          time.setHours(h.substring(0, 2));
-          time.setMinutes(h.substring(3, 5));
-        }
-        this.bstime = time;
+      (data) => {
+        this.bindData(data);
         if (this.actionBar) { this.actionBar.editMode() };
       }, error => {
         this.alertify.error(error);
@@ -189,14 +206,101 @@ export class AmendmentComponent implements OnInit {
     );
   }
 
+  bindData(data: any) {
+
+    this.newObj.request = data.request;
+    this.newObj.requestStages = data.requestStages;
+    this.newObj.requestExtraFields = data.requestExtraFields;
+    this.requestID = this.newObj.request.requestID; 
+    this.employeeID = this.newObj.request.employeeID;
+
+    try {
+      this.amendmentReasonCode = this.getExtraFieldValue(1);
+      this.type = this.getExtraFieldValue(2);
+      this.time = this.getExtraFieldValue(3);
+      this.bsFromDate = this.helpersService.getDate(this.getExtraFieldValue(4));
+      this.justification = this.getExtraFieldValue(5);
+
+    }
+    catch (error) {
+
+    }
+
+  }
+
+  getNextPrivateNumber() {
+    this.requestService.getNextPrivateNumber().subscribe(
+      (data) => {
+        this.newObj.request.requsetPrivateNumber= data;
+      }, error => {
+        this.alertify.error(error);
+      }
+    );
+  }
+
+  //#endregion
+
+  private getEmptyObject(): any {
+
+    const obj = {
+      request: {
+        requestID: this.sharedService.getRandomNumber(),
+        requsetPrivateNumber: null,
+        employeeID: this.employeeID = this.authService.logginEmployeeId(),
+        requestTypeID: null,
+        statusCode: null,
+        createdBy: null,
+      },
+      requestExtraFields: [],
+      requestStages: []
+    };
+
+    this.type = "CheckIn";
+    const time = new Date();
+    //this.bsFromDate = time; 
+    obj.requestStages[0] = new m.RequestStage();
+    obj.requestStages[0].actionCode = enums.RequestAction.NewRequest;
+    obj.requestStages[0].stageTypeID = 1;
+    obj.requestStages[0].userID = this.authService.logginUserID();
+    obj.requestStages[0].justification = undefined;
+
+    return obj;
+  };
+
+  //#region Extra Filed
+  addUpdateExtraField(extraFieldTypeID: number, value: string) {
+    var objIndex = this.newObj.requestExtraFields.findIndex((obj => obj.extraFieldTypeID == extraFieldTypeID));
+    if (objIndex == -1) {
+      var dtl = new m.RequestExtraField;
+      dtl.requestExtraFieldID = -Math.floor(this.newObj.requestExtraFields.length + 1);
+      dtl.extraFieldTypeID = extraFieldTypeID;
+      dtl.value = value;
+      dtl.requestID = this.requestID;
+      this.newObj.requestExtraFields.push(dtl);
+    } else {
+      this.newObj.requestExtraFields[objIndex].value = value
+    }
+  }
+
+  getExtraFieldValue(extraFieldTypeID: number): string {
+    var objIndex = this.newObj.requestExtraFields.findIndex((obj => obj.extraFieldTypeID == extraFieldTypeID));
+    if (objIndex != -1) {
+      return this.newObj.requestExtraFields[objIndex].value;
+    }
+    return undefined;
+  }
+  //#endregion
+
+
   employeeSelect(employeeID: any) {
-    this.newObj.request.employeeID = employeeID;
+    this.employeeID = employeeID;
   }
 
   uploadFinished(attachmentID: string) {
     if (attachmentID != undefined) {
-      var dtl = new Attachment;
+      var dtl = new shared.Attachment;
       dtl.attachmentID = +attachmentID;
+      dtl.referenceID = this.requestID;
       dtl.fileName = "fileName";
       dtl.fileType = "fileType";
       if (this.newObj.attachments === undefined || this.newObj.attachments === null) {
@@ -206,5 +310,5 @@ export class AmendmentComponent implements OnInit {
       //console.log(attachmentID);
     }
   }
-  //#endregion
+
 }

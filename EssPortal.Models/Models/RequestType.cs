@@ -12,16 +12,17 @@ namespace EssPortal.Models
     {
         [Column(Order = 0)]
         [Key]
-        public int RequestTypeID { get; set; }
-
-        [Column(Order = 1)]
+        public int RequestTypeID { get; set; } 
         public string RequestNameAr { get; set; }
         [Column(Order = 2)]
         public string RequestNameEn { get; set; }
         public Nullable<int> RequestGroupID { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public string icons { get; set; }
+        public string Rout { get; set; }
+        public Nullable<bool> IsNeedAttachment { get; set; } 
 
         public virtual List<Request> Requests { get; set; }
     }
 }
+ 
+

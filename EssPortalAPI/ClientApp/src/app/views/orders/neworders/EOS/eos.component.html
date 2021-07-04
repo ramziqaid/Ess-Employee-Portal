@@ -1,0 +1,170 @@
+
+
+<mat-card class="p-0">
+  <mat-card-title class="">
+      
+      <mat-divider></mat-divider>
+       
+        <actionBar  
+         [disabled]="!heroForm.form.valid" 
+          (newAction)="newClick()"
+          (editAction)="edit()" 
+          (saveAction)="save()" 
+          (deleteAction)="delete()"
+           (cancelAction)="reset()" 
+           [referenceID]="requestID"
+           [showPrint]="false"
+           (onUploadFinishedFire)="uploadFinished($event)" 
+           >
+          </actionBar> 
+          <mat-divider></mat-divider>
+       
+  </mat-card-title>
+  <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm" novalidate>
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+ 
+                <div class="pb-16" > 
+                  <employeeList   (employeeSelect)="employeeSelect($event)"
+                  [empoyeeList]= "this.empoyeeList" 
+                  [employee]="this.employeeID" [editMode]="true">
+                </employeeList>   
+                </div>
+
+                    <div class="pb-16">
+                      <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "EOS_TYPE" | translate }}   </mat-label>  
+                      <mat-select 
+                      required 
+                      name="EOSType" 
+                      #refEOSType="ngModel"  
+                       id="loanType" 
+                      [disabled]="editMode"
+                      (selectionChange)="selectedValue($event)"
+                       [(ngModel)]="this.eosTypeCode">
+                       <mat-option *ngFor="let item of eosTypeList" [value]="item.systemCode">
+                        {{(authService.currentLang=="1")? item.descriptionEn :item.descriptionAr }} 
+                     </mat-option>
+                      </mat-select>
+                    
+                      <small *ngIf="!refEOSType.valid  && (refEOSType.dirty || refEOSType.touched) && !editMode" class="form-error-msg">
+                        <small [hidden]="!refEOSType.errors.required">
+                          {{ "FILED_IS_REQUIRED" | translate }}
+                        </small>
+                      </small>
+                    </mat-form-field>
+                  </div> 
+                  
+ 
+    
+                  <div class="pb-16">  
+                    <mat-form-field class="full-width" appearance="fill"> 
+                      <mat-label> {{ "LAST_WORKING_DATE_BEFORE" | translate }}   </mat-label> 
+                        <input 
+                        matInput
+                        name="LastWorkingDateBefore" 
+                        id="LastWorkingDateBefore"  
+                        #refLastWorkingDateBefore="ngModel"
+                        [(ngModel)]="bsFromDate1" 
+                        required  
+                        [disabled]="editMode"
+                        [min]="minFromDate" 
+                        [matDatepicker]="appDatepicker">
+                      
+                        <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle> 
+                        <mat-datepicker touchUi #appDatepicker ></mat-datepicker>  
+                    </mat-form-field>
+                   
+                  <small *ngIf="!refLastWorkingDateBefore.valid  && (refLastWorkingDateBefore.dirty || refLastWorkingDateBefore.touched) && !editMode" class="form-error-msg">
+                    <small [hidden]="!refLastWorkingDateBefore.errors.required">
+                      {{ "FILED_IS_REQUIRED" | translate }}
+                    </small>
+                  </small>
+                </div> 
+         
+           
+              </div> 
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+
+                <div class="pb-16" >
+                  <mat-form-field class="full-width" appearance="fill"> 
+                     <input
+                     matInput
+                     name="requsetPrivateNumber"
+                     id="requsetPrivateNumber" 
+                     placeholder=" {{ 'ORDER_NUMBER' | translate }} "
+                     [disabled]="true"
+                     [(ngModel)]=" this.newObj.request.requsetPrivateNumber"  
+                     >
+                 </mat-form-field>  
+               </div>
+
+               <div class="pb-16">  
+                <mat-form-field class="full-width" appearance="fill"> 
+                  <mat-label> {{ "LAST_WORKING_DATE" | translate }}   </mat-label> 
+                    <input 
+                    matInput 
+                    name="LastWorkingDate" 
+                    id="LastWorkingDate"  
+                    #refLastWorkingDate="ngModel"
+                    [(ngModel)]="bsFromDate2" 
+                    required  
+                    [disabled]="editMode"
+                    [min]="minFromDate" 
+                    [matDatepicker]="appDatepicker2">
+                  
+                    <mat-datepicker-toggle matSuffix [for]="appDatepicker2"></mat-datepicker-toggle> 
+                    <mat-datepicker touchUi #appDatepicker2 ></mat-datepicker>  
+                </mat-form-field>
+               
+              <small *ngIf="!refLastWorkingDate.valid  && (refLastWorkingDate.dirty || refLastWorkingDate.touched) && !editMode" class="form-error-msg">
+                <small [hidden]="!refLastWorkingDate.errors.required">
+                  {{ "FILED_IS_REQUIRED" | translate }}
+                </small>
+                <mat-error *ngIf="refLastWorkingDate.hasError('matDatepickerMax')">Date should be inferior</mat-error>
+              </small>
+            
+            </div> 
+           </div>  
+        
+
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16"> 
+                  <div class="pb-16">
+                    <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "JUSTIFICATION" | translate }} </mat-label>
+                        <textarea matInput 
+                        id="textarea-input"   
+                        rows="2" 
+                        class="form-control" 
+                        name="Justification"
+                        [disabled]="editMode"
+                        [(ngModel)]="this.justification" maxlength="500"
+                          #refJustification="ngModel" id="Justification" required>
+                          </textarea>  
+                          <small *ngIf="!refJustification.valid  && (refJustification.dirty || refJustification.touched) && !editMode" class="form-error-msg">
+                            <small [hidden]="!refJustification.errors.required">
+                              {{ "FILED_IS_REQUIRED" | translate }}
+                            </small>
+                          </small>  
+                    </mat-form-field>
+                  </div> 
+                </div>
+          </div>
+           
+      </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- <div style="float: right; width:50%;">
+  < 
+
+ 
+  <h3>Form Value</h3>
+  {{heroForm.value | json }}
+ 
+</div> -->
+
+<!-- {{heroForm.value | json }} -->
+  

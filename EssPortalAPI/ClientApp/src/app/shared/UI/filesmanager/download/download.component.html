@@ -1,0 +1,17 @@
+<button 
+mat-icon-button
+color="primary" 
+type="button" 
+[disabled]="disabled" [ngClass]="{'disabled': disabled}" (click)="download()" title='{{ "DOWNLOAD" | translate }} '
+  class="btn-sm btn-spotify">
+  <mat-icon>download</mat-icon>  
+</button>
+
+<button    
+mat-icon-button
+color="warn" 
+type="button" title='{{ "DELETE" | translate }}'  [disabled]="disabled" *ngIf="canRemove" 
+  (click)="removeFile()">
+  <mat-icon>delete</mat-icon>
+  
+</button>

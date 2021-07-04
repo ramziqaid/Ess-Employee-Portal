@@ -24,7 +24,7 @@ namespace EssPortal.Concrete
         //  private readonly UserManager<IdentityUser> _userManager;
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
-        public UsersConcrete(DatabaseContext context, IConfiguration configuration)  
+        public UsersConcrete(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
@@ -93,15 +93,20 @@ namespace EssPortal.Concrete
 
                               }).FirstOrDefault();
 
-                if (result == null) throw new Exception("Username Not have Permission Login ");
-
+                if (result == null) throw new Exception("MSG_USER_DONT_HAVE_ROLE_PERMISSION"); 
 
                 var employee = (from emp in _context.EmployeeInfoView
-                                where emp.EmployeeID.Equals(result.EmployeeId.ToString())
-                                select emp).SingleOrDefault();
+                                where emp.EmployeeID == result.EmployeeId
+                                select emp).FirstOrDefault();
+
                 if (employee != null)
                 {
                     result.EmployeeName = employee.ArabicName;
+                }
+                else
+                {
+                    if(username.ToUpper()!= "SUPERADMIN")
+                    throw new Exception("MSG_USER_DONT_HAVE_EMPLOYEE");
                 }
 
                 return result;
@@ -113,14 +118,14 @@ namespace EssPortal.Concrete
         }
 
 
-        public  List<Users> GetAllUsers()
+        public List<Users> GetAllUsers()
         {
             using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
             {
                 var paramater = new DynamicParameters();
                 paramater.Add("@UserID", -1);
 
-                IEnumerable<Users> users =   con.Query<Users>("[ESS].LoadUserInfo", paramater, null, true, commandType: CommandType.StoredProcedure);
+                IEnumerable<Users> users = con.Query<Users>("[ESS].LoadUserInfo", paramater, null, true, commandType: CommandType.StoredProcedure);
                 return users.ToList();
 
             }
@@ -186,7 +191,7 @@ namespace EssPortal.Concrete
             user.Contactno = user.Contactno.Trim();
             user.FullName = user.FullName.Trim();
             user.UserName = user.UserName.Trim();
-          
+
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
@@ -263,7 +268,7 @@ namespace EssPortal.Concrete
                 return false;
 
             byte[] passwordHash, passwordSalt;
-             
+
             if (!VerifyPasswordHash(usersChangePasswordViewModel.oldPassword, user.PasswordHash, user.PasswordSalt))
             {
                 throw new Exception("The Old Password Not Correct");
@@ -296,7 +301,7 @@ namespace EssPortal.Concrete
             if (user.UserName.ToUpper() == "SUPERADMIN")
                 return false;
 
-            byte[] passwordHash, passwordSalt; 
+            byte[] passwordHash, passwordSalt;
 
             CreatePasswordHash("Aa123123", out passwordHash, out passwordSalt);
 
@@ -367,6 +372,6 @@ namespace EssPortal.Concrete
             }
         }
 
-       
+
     }
 }

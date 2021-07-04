@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+ <!-- <div class="col-sm-12">
   <div class="card">
     <div class="card-header">
       <i class="fa fa-align-justify"></i>
@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of data;  let cIndex = index;">
+          <tr *ngFor="let item of dataSource;  let cIndex = index;">
             <td>{{cIndex+1}}</td>
             <td>{{item.employeeNumber}}</td>
             <td> {{item.employeeNameEn}}</td>
@@ -38,9 +38,7 @@
 
               <div class="btn-group " role="group">
                 <button type="button" class="btn primary" [routerLink]="['/AdminArea/User/Edit', item.userId]"
-                  title="Edit" [queryParams]="{debug: true}"><i class="fa fa-edit"></i></button>
-
-                <!-- <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button> -->
+                  title="Edit" [queryParams]="{debug: true}"><i class="fa fa-edit"></i></button> 
 
                 <button class="btn btn-warning" type="button" title="Reset Password"
                   (click)="resetPassword(item.userId)">
@@ -54,5 +52,75 @@
       </table>
 
     </div>
+  </div>
+</div>  -->
+
+
+
+<div class="ml-8 mr-8 mt-8 pb-16">
+  <div class="mat-elevation-z8">
+
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput   class="full-width" (keyup)="applyFilter($event)" placeholder="Search" #input>
+    </mat-form-field>
+      <mat-table [dataSource]="dataSource" matSort >
+
+        <ng-container matColumnDef="index">
+          <mat-header-cell *matHeaderCellDef> {{ "INDEX" | translate }}  </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+        </ng-container>
+
+          <ng-container matColumnDef="employeeNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "EMPLOYEENUMBER" | translate }}  </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="employeeNumber"> {{row.employeeNumber}} </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="employeeNameEn">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>   {{ "EMPLOYEE_NAME" | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="employeeNameEn"> {{row.employeeNameEn}} </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "USERNAME" | translate }}  </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="userName"> {{row.userName}} </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="emailId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "EMAIL" | translate }}  </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.color]="row.color" data-label="color"> {{row.emailId}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
+            <mat-cell *matCellDef="let row; " [style.color]="row.color" data-label="color"> 
+              <mat-checkbox (change)="changeStatus(row.userId,!row.status)" [checked]="row.status"></mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell *matCellDef="let row;" [style.color]="row.color" data-label="color"> 
+          
+              <button mat-icon-button mat-sm-button color="primary" aria-label="reset" class="mr-16" [routerLink]="['/AdminArea/User/Edit', row.userId]"
+                  title="Edit" [queryParams]="{debug: true}">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              <button mat-icon-button mat-sm-button color="accent" aria-label="reset" title="Reset Password" class="mr-16"      (click)="resetPassword(row.userId)">
+                <mat-icon>history</mat-icon>
+              </button>
+           
+            </mat-cell>
+          </ng-container>
+           
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns; let cIndex = index;"  >
+          </mat-row>
+         
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
   </div>
 </div>

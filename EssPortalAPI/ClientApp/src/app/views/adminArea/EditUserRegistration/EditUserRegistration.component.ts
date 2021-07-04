@@ -1,8 +1,8 @@
-import { AdminService } from './../Services/admin.service';
+import { Employee } from './../../../shared/models/common.model';
+import { AdminService } from '../Services/admin.service';
 import { OnInit, Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { EssPortalService, AlertifyService, AuthService } from '../../../core';
-import { Employee } from '../../../Shared/_models';
+import { EssPortalService, AlertifyService, AuthService } from '../../../core'; 
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserModel } from '../Models/adminModel';
 
@@ -82,8 +82,8 @@ export class EditUserRegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.updateForm.valid) {
-      this.UserModel = Object.assign({}, this.updateForm.value);
+    if (this.updateForm.valid && this.cpassword.value ==this.Password.value) {
+      this.UserModel = Object.assign({}, this.updateForm.value); 
       this.UserModel.userId = this.UserId;
       this.userService.UpdateUser(this.UserModel).subscribe(
         response => {

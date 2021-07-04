@@ -1,50 +1,53 @@
 
 class Requests {
-    iD: number;
+    requestID: number;
+    requsetPrivateNumber:string;
     employeeID: number;
     requestTypeID: number;
-    statusID: number;
-    createdDate: Date;
+    statusCode: string; 
     userID: number;
     isDelegate: boolean;
     isDelegateApprove: boolean;
     delegateFromID: number;
     delegateToID: number;
+    createdDate: Date;
     fileName: string;
 }
 
+class RequestExtraField {
+    requestExtraFieldID: number;
+    requestID: number;
+    extraFieldTypeID:number ;
+    value: string; 
+}
+
+
 class RequestType {
-    iD: number;
-    requestName: string;
-    controllerName: string;
+    requestTypeID: number;
+    requestNameAr: string;
+    requestNameEn: string;
     requestGroupID: number;
     isActive: boolean;
     icons: string;
 }
 
 class RequestStage {
-    ID: number;
+    iD: number;
     stageTypeID: number;
-    Justification: string;
-    actionName: string;
-    employeeID: number;
+    justification: string;
+    actionCode: string;
+    userID: number;
     createDate: string;
 }
 
 class Amendments {
     ID: number;
-    amendmentReasonId: number;
+    amendmentReasonCode: number;
     requestID: number;
     type: string;
     time: string;
     fromDate: string;
     justification: string;
-}
-
-class AmendmentReason {
-    amendmentReasonId: number;
-    AmendReasonEn: string;
-    AmendReasonAr: string;
 }
 
 class Leave {
@@ -73,7 +76,17 @@ class Housing {
     justification: string;
 }
 
+class SearchRequestCritria{
+    requestID: number;
+    employeeID: number;
+    managerID: number;
+    requestTypeID: number;
+    statusID: number;
+}
 
 
 
-export { Requests, RequestStage, Amendments, RequestType, AmendmentReason, Leave }
+
+export { Requests, RequestStage, Amendments, RequestType, Leave,
+    RequestExtraField,
+    SearchRequestCritria }

@@ -1,48 +1,77 @@
-<div class="col-sm-12">
-    <div class="card">
-        <div class="card-header">
-            <i class="fa fa-align-justify"></i> Bordered Table
-            <button style="   margin-left: 10px;" class="btn btn-info" (click)="ExportTOExcel()">Export
-                as Excel</button>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered  table-striped" id="sample-table" datatable [dtOptions]="dtOptions"
-                [dtTrigger]="dtTrigger" #TABLE>
-                <thead>
-                    <tr>
-                        <th> Number</th>
-                        <th> Type</th>
-                        <th>Created Date</th>
-                        <th>Status</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of data">
-                        <td>{{item.RequestID}}</td>
-                        <td> {{item.RequestName}}</td>
-                        <td> {{item.CreatedDate}}</td>
-                        <td>
-                            <progressbar class="progress progress-striped progress-bar-animated" [value]="20"
-                                [max]="100">
-                                {{item.Status_NameEN}}</progressbar>
-                        </td>
-                        <td>
+ 
+  <mat-card class="p-0"  >
+    <mat-card-content class="p-0">
+      <ngx-datatable
+      class="material ml-0 mr-0"
+            [rows]="items"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [scrollbarH]="true"
+            [limit]="10"
+            [rowHeight]="50">
 
-                            <div class="btn-group " role="group">
-                                <button type="button" class="btn btn-success"
-                                    [routerLink]="['/Orders/NewOrders/Amendment/', item.RequestID]"><i
-                                        class="fa fa-list"></i></button>
-                                <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
-                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+        
+            <ngx-datatable-column name="{{ 'ORDER_NUMBER' | translate }}" [width]="50">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.RequsetPrivateNumber }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name=" {{ 'ORDER_TYPE' | translate }}" [width]="100">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{(authService.currentLang=="1")? row.RequestNameEn : row.RequestNameAr }} 
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name=" {{ 'EMPLOYEE_NAME' | translate }}" [width]="100">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{(authService.currentLang=="1")? row.EnglishName : row.ArabicName }} 
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name=" {{ 'CREATED_DATE' | translate }}" [width]="50">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.CreatedDate}}
+              </ng-template>
+            </ngx-datatable-column> 
 
-
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-</div>
+            <ngx-datatable-column name=" {{ 'ORDER_STATUS' | translate }}" [width]="80">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <mat-chip   mat-sm-chip  [color]=" row.StatusID == 'CSR01' ? 'primary' : row.StatusID == 2 ? 'accent' : 'accent'" selected>
+                    {{(authService.currentLang=="1")? row.StatusNameEN : row.StatusNameAR }} 
+                  </mat-chip>
+                   </ng-template>
+            </ngx-datatable-column>
+            
+            <ngx-datatable-column name=" {{ 'REASON_REJECT' | translate }}" [width]="120">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <input   matInput type="text" name="reason"    [(ngModel)]="row.reason" />
+                </ng-template>
+              </ngx-datatable-column> 
+              
+            <ngx-datatable-column  name=" {{ 'ACTIONS' | translate }}" [width]="80">
+              <ng-template let-row="row" ngx-datatable-cell-template>                
+                <button mat-flat-button   color="primary" class="background2" (click)="approval(row)">
+                     {{ "APPROVAL" | translate }} </button>             
+                <button mat-flat-button mat-sm-button color="warn" class="mr-16" (click)="reject(row)">
+                    {{ "REJECT" | translate }}  </button> 
+            </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Stage" [sortable] [width]="20">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <button mat-icon-button mat-sm-button color="primary" class="mr-16 color2" 
+                title='{{ "ORDER_STAGE_DETAILS" | translate }}'
+                (click)="openPopUp(row)">
+                  <mat-icon>format_list_numbered
+                  </mat-icon>
+                </button>
+                <button mat-icon-button mat-sm-button color="primary" aria-label="reset" class="mr-16 color1"  
+                (click)="btnRout(row.RequestTypeID,row.RequestID)"
+                    title='{{ "VIEW" | translate }}'  [queryParams]="{debug: true}">
+                  <mat-icon>visibility</mat-icon>
+                </button> 
+                </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+    </mat-card-content>
+  </mat-card>
+  
+  

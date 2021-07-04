@@ -16,6 +16,7 @@ using EssPortal.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using EssPortalAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using EssPortalAPI.Email;
 
 namespace EssPortalAPI.Controllers
 {
@@ -29,10 +30,13 @@ namespace EssPortalAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
         private readonly IUsers _users;
-        public AuthenticateController(IOptions<AppSettings> appSettings, IUsers users)
+        private IEmailSender _emailSender;
+
+        public AuthenticateController(IOptions<AppSettings> appSettings, IUsers users,IEmailSender emailSender)
         {
             _users = users;
             _appSettings = appSettings.Value;
+            _emailSender = emailSender;
         }
 
 
@@ -47,7 +51,7 @@ namespace EssPortalAPI.Controllers
                     var loginstatus = _users.AuthenticateUsers(value.UserName, value.Password);
 
                     if (loginstatus == null)
-                        return BadRequest("Username/Password was not Found");
+                        return BadRequest("MSG_USERNAMR_PASSWORD_NOTFOUND");
 
                     //if (loginstatus)
                     //{
@@ -68,6 +72,7 @@ namespace EssPortalAPI.Controllers
                                  new Claim(ClaimTypes.Name, value.UserName),
                                  new Claim(ClaimTypes.Email, userdetails.EmailId),
                                  new Claim(ClaimTypes.Role, userdetails.RoleName),
+                                 new Claim("EmployeeId", userdetails.EmployeeId.ToString()),
                                  new Claim("LoggedOn", DateTime.Now.ToString()),
                                 }),
                             Expires = DateTime.UtcNow.AddMinutes(tokenExpiryTime),
@@ -76,7 +81,7 @@ namespace EssPortalAPI.Controllers
 
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 
-                        };
+                        }; 
                         var token = tokenHandler.CreateToken(tokenDescriptor);
                         //value.Token = tokenHandler.WriteToken(token);
                         //value.UserName = value.UserName;

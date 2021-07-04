@@ -14,9 +14,17 @@ export class ApiService {
         return throwError(error.error);
     }
 
-    get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    get(path: string, params: HttpParams = new HttpParams()): Observable<any> { 
+        while(path.includes('/undefined')){
+            path = path.replace('/undefined','');
+        }
+        
         return this.http.get(`${environment.apiUrl}${path}`, { params })
             .pipe(catchError(this.formatErrors));
+    }
+
+    get2(path: string, params: HttpParams = new HttpParams()): Observable<any> {  
+        return this.http.get(`${environment.apiUrl}${path}`, { params });             
     }
 
     put(path: string, body: Object = {}): Observable<any> {

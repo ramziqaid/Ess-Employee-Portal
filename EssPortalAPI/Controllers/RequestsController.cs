@@ -60,8 +60,6 @@ namespace EssPortalAPI.Controllers
             }
             var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             RequestViewModel request = await _requestRepository.GetRequestInfo( requestId, userId);
-            //IEnumerable<object> request = await _requestRepository.GetRequestInfo(requestId, userId);
-
             if (request == null)
             {
                 return BadRequest("Not Found Requset by Number " + requestId);
@@ -80,7 +78,8 @@ namespace EssPortalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            IEnumerable<object> request=await _requestRepository.getRequestsList(requestVM.requestID, requestVM.employeeID, requestVM.managerId, requestVM.requestTypeID,
+            IEnumerable<object> request=await _requestRepository.getRequestsList(requestVM.requestID, requestVM.RequsetPrivateNumber,
+                requestVM.employeeID, requestVM.managerId, requestVM.requestTypeID,
                 requestVM.statusCode, requestVM.showMyEmployee);
             if (request == null)
             {
@@ -148,11 +147,7 @@ namespace EssPortalAPI.Controllers
             try
             {
                 var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                //if (userId != request.request.UserID)
-                //{
-                //    return BadRequest("You do not have permission to edit this data");
-                //}
-
+               
                 var obj = await _requestRepository.updateRequest(request, userId);
                 //return Ok();
                 return Ok(obj);

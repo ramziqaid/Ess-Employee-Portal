@@ -1,0 +1,37 @@
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+mat-radio-button,
+mat-label {
+  margin: 0 10px;
+}
+
+.mr-16:hover {
+  cursor: pointer;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+.mat-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.mat-column-index,
+.mat-column-CreatedDate,
+.mat-column-action,
+.mat-column-RequestID {
+  min-width: 100px !important;
+  max-width: 100px !important;
+}
+
+.mat-column-StatusNameEN {
+  min-width: 150px !important;
+  max-width: 150px !important;
+}

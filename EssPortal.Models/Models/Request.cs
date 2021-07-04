@@ -7,60 +7,28 @@ using System.Threading.Tasks;
 
 namespace EssPortal.Models
 {
-    public class DateValidationAttribute : ValidationAttribute
-    {
-        public override bool IsValid(object value)
-        {
-            DateTime todayDate = Convert.ToDateTime(value);
-            return todayDate >= DateTime.Now;
-        }
-    }
+  
 
     [Table("Requests", Schema = "ess")]
     public class Request
     {
-        [Key]
-        [Display(Name = "Request ID")]
-        [Column(Order = 0)]
-        public int RequestID { get; set; }
-
-        public string RequsetPrivateNumber { get; set; }
-
-        [Column(Order = 1)]
+        [Key]  
+        public int RequestID { get; set; } 
+        public string RequsetPrivateNumber { get; set; } 
         [Required]
-        public long EmployeeID { get; set; }
-        //public virtual Employee Employee { get; set; }
-
-        [Required]
-        [Column(Order = 2)]       
+         public long EmployeeID { get; set; } 
+        [Required] 
         public int RequestTypeID { get; set; }
-        public virtual RequestType RequestType { get; set; }
-
-        [Column(Order = 3)]
+        public virtual RequestType RequestType { get; set; }  
         [Required]
-        public string StatusCode { get; set; }
-
-       // [DateValidation]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //public  string CreatedDate { get; set; }
-
+        public string StatusCode { get; set; } 
         public int UserID { get; set; }
-        public virtual Users Users { get; set; }
-
+        public virtual Users Users { get; set; } 
         public Nullable<bool> IsDelegate { get; set; }
         public Nullable<bool> IsDelegateApprove { get; set; }
         public Nullable<long> DelegateFromID { get; set; }
-        public Nullable<long> DelegateToID { get; set; }
-
-        [Display(Name = "Attachment")]
-        public  string FileName { get; set; }
-      
-        //public virtual List<Amendment> Amendments { get; set; }
-        //public virtual List<Housing> Housings { get; set; }
-        //public virtual List<RequestStage> RequestStages { get; set; }
-
+        public Nullable<long> DelegateToID { get; set; } 
+        public Nullable<Boolean> IsReplacementEmployeeApprove { get; set; } 
     }
 
 }

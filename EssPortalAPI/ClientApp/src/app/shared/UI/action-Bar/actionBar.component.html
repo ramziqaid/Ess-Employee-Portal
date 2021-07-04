@@ -1,0 +1,47 @@
+<section > 
+<div class="example-button-row"> 
+<button mat-raised-button type="button" *ngIf="showNew"  color="primary" class="btn background2  btn-md primary " id="btnNew" 
+title='{{ "NEW" | translate }}' (click)="newClick()" [disabled]="getStatus(0)">
+    <mat-icon>add</mat-icon>  
+    {{ "NEW" | translate }} 
+</button>
+
+<button mat-raised-button color="primary" type="button" *ngIf="showEdit" class="btn  background2 btn-md primary" id="btnEdit" 
+title='{{ "EDIT" | translate }}' (click)="editClick()" [disabled]="getStatus(1)">
+    <mat-icon>edit</mat-icon> 
+    {{ "EDIT" | translate }}  
+</button>
+
+<button mat-raised-button color="primary" type="submit" *ngIf="showSave" class="btn background2  btn-md  primary2" id="btnSave" 
+title='{{ "SAVE" | translate }}'  (click)="saveClick()" value="Submit"   [disabled]="getStatus(2)">
+    <mat-icon>save</mat-icon> 
+    {{ "SAVE" | translate }}
+</button>
+
+<button mat-raised-button color="primary" type="button" *ngIf="showDelete" class="btn  background2 btn-md primary" id="btnDelete" 
+title='{{ "DELETE" | translate }}' (click)="deleteClick()" [disabled]="getStatus(3)">
+    <mat-icon>delete</mat-icon> 
+    {{ "DELETE" | translate }} 
+</button>
+
+<button mat-raised-button color="primary" type="button" *ngIf="showCancel" class="btn background2 btn-md  primary" id="btnCancel" 
+title='{{ "CANCEL" | translate }}' (click)="cancelClick()" [disabled]="getStatus(4)">
+    <mat-icon>cancel</mat-icon> 
+    {{ "CANCEL" | translate }} 
+</button>
+
+<button mat-raised-button color="primary" type="button" *ngIf="showPrint"
+title='{{ "PRINT" | translate }}' class="btn  background2 btn-md primary" id="btnPrinte"  (click)="printClick()">
+  <mat-icon>print</mat-icon> 
+  {{ "PRINT" | translate }} 
+</button> 
+
+<app-MultiFilesManager (onUploadFinished)="uploadFinishedFire($event)" [canAddRemove]="getStatus(0)"   *ngIf="showAttachmentBTN"
+[referenceID]="referenceID" [text]="textUpload">
+</app-MultiFilesManager>
+
+</div>
+</section>
+<mat-divider></mat-divider>
+ 
+       

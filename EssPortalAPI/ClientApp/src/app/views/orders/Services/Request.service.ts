@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { RequestType } from '../Models/Request';
 import { Observable, throwError } from 'rxjs';
 
-import { shareReplay, catchError } from 'rxjs/operators';
+import { shareReplay, catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { SystemCode } from 'app/shared/models/common.model';
+import * as enums from 'app/shared/enum.enum';  
 
 @Injectable()
 
@@ -24,27 +26,36 @@ export class RequestService {
     return this.requestType$;
   }
 
-  getAmendmentReasons(): Observable<any[]> {
-    return this.apiService.get("AmendmentsReason").pipe(shareReplay());
-  }
+ 
+getSystemCode(SystemCodeType: enums.SystemCodeType): Observable<SystemCode[]> {
+  return this.apiService.get("SystemCode").pipe(
+    map(result => result.filter((result) => result.systemCodeType == SystemCodeType)),
+    catchError(this.handleError)
+  );
+}
 
-  getRequestForManager(managerId: number): Observable<any[]> {
-    return this.apiService.get(`Requests/GetRequestForManager/${managerId}`).pipe(shareReplay(),
+
+  getRequestList(request:any): Observable<any[]> { 
+  return this.apiService.post("Requests/GetRequestList",request).pipe(shareReplay(),
       catchError(this.handleError));
   }
-
-  getRequestForEmployee(EmployeeId: number): Observable<any[]> {
-    return this.apiService.get(`Requests/GetRequestForEmployee/${EmployeeId}`).pipe();
+ 
+getNextPrivateNumber() {
+    return this.apiService.get(`Requests/GetNextPrivateNumber`).pipe(shareReplay());
   }
 
-  getRequest(requestId: number) {
+getRequest(requestId: number) {
     return this.apiService.get(`Requests/${requestId}`).pipe(shareReplay());
+  }
+
+  getRequestStage(requestId: number) {
+    return this.apiService.get(`Requests/GetOrderStage/${requestId}`).pipe(shareReplay());
   }
   //#endregion load
 
 
   saveRequest(request: any) {
-    if (request.request.requestID == undefined) {
+    if (request.request.requestID == undefined || request.request.requestID <1) {
       return this.apiService.post("Requests/CreateOrder", request).pipe(
         catchError(this.handleError)
       );
@@ -56,6 +67,12 @@ export class RequestService {
     }
   }
 
+  approvalRequest(requestStage:any): Observable<any[]> 
+    { 
+    return this.apiService.post("Requests/ApprovalOrder",requestStage).pipe(shareReplay(),
+        catchError(this.handleError));
+    }
+   
   deleteRequest(requestID: number) {
     return this.apiService.delete(`Requests/DeleteRequest/${requestID}`).pipe(
       catchError(this.handleError)
@@ -63,6 +80,7 @@ export class RequestService {
   }
 
 
+  
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

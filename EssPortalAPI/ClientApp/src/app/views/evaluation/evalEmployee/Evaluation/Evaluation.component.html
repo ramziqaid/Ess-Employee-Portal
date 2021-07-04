@@ -1,0 +1,319 @@
+ 
+<mat-card class="p-0">
+  <mat-card-title class="" >      
+      <mat-divider></mat-divider>       
+        <actionBar  
+         [disabled]="!heroForm.form.valid" 
+          (newAction)="newClick()"
+          (editAction)="edit()" 
+          (saveAction)="save()" 
+          (deleteAction)="delete()"
+           (cancelAction)="reset()" 
+           (printAction)="printPopUp()"
+           [referenceID]="evaluationID" 
+           [showAttachmentBTN]="false" 
+           (showNew)="showNew"
+           (showEdit)="showEdit"
+           (showSave)="showSave"
+           (showDelete)="showDelete"
+           (showCancel)="showCancel"
+           (showPrint)="showPrint"
+           >
+          </actionBar> 
+          <mat-divider></mat-divider>  
+                 
+  </mat-card-title>
+  <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm" novalidate>
+          <div fxLayout="row wrap">
+             <div class="borderDiv" fxFlex="100">
+            
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">   
+                    <div class="pb-16"  >    
+                      <employeeList  (employeeSelect)="employeeSelect($event)"
+                       #employeeList [empoyeeList]= "this.empoyeeList" 
+                        [employee]="this.employeeID" [editMode]="true">
+                      </employeeList>  
+                    </div>
+
+                    <div class="pb-16">
+                      <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "COMMUNITIES" | translate }}   </mat-label>  
+                      <mat-select required name="EvalCommunity" 
+                      #refEvalCommunity="ngModel"   
+                      id="evalCommunity" 
+                      (selectionChange)="evalCommunityChange($event)"
+                      [disabled]="editMode"
+                       [(ngModel)]="this.evalCommunityID">
+                        <mat-option *ngFor="let item of evalCommunity" [value]="item.EvalCommunityID">
+                           {{(authService.currentLang=="1")? item.CommunityDescEn :item.CommunityDescAr }} 
+                        </mat-option>
+                      </mat-select>                    
+                      <small *ngIf="!refEvalCommunity.valid  && (refEvalCommunity.dirty || refEvalCommunity.touched) && !editMode" class="form-error-msg">
+                        <small [hidden]="!refEvalCommunity.errors.required">
+                          {{ "FILED_IS_REQUIRED" | translate }}
+                        </small>
+                      </small>
+                    </mat-form-field>
+                  </div> 
+                    
+              </div> 
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">          
+
+                <div class="pb-16">
+                  <mat-form-field class="full-width" appearance="fill">   
+                  <mat-label>{{ "EVALPERIOD" | translate }}   </mat-label>  
+                  <mat-select required name="EvalPeriod" #refEvalPeriod="ngModel"  
+                   id="evalPeriod" 
+                   (selectionChange)="evalPeriodChange($event)"
+                  [disabled]="editMode"
+                   [(ngModel)]="this.evalPeriodID">
+                    <mat-option *ngFor="let item of evalPeriod" [value]="item.EvalPeriodID">
+                       {{  item.NamePeriod  }} 
+                    </mat-option>
+                  </mat-select>
+                
+                  <small *ngIf="!refEvalPeriod.valid  && (refEvalPeriod.dirty || refEvalPeriod.touched) && !editMode" class="form-error-msg">
+                    <small [hidden]="!refEvalPeriod.errors.required">
+                      {{ "FILED_IS_REQUIRED" | translate }}
+                    </small>
+                  </small>
+                </mat-form-field>
+              </div> 
+
+                <div class="pb-16" >
+                  <mat-form-field class="full-width" appearance="fill"> 
+                     <input
+                     matInput
+                     name="requsetPrivateNumber"
+                     id="requsetPrivateNumber" 
+                     placeholder=" {{ 'DATE' | translate }} "
+                     [disabled]="true"
+                     [(ngModel)]="fromDate"  
+                     >
+                 </mat-form-field>  
+               </div> 
+      
+            </div>  
+          </div>
+          
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16 borderDiv"> 
+                   
+                    <mat-accordion class="example-headers-align" multi>
+                      <mat-expansion-panel   [expanded]="true"  >
+                        <mat-expansion-panel-header class="background1">
+                          <mat-panel-title class="background1">
+                            {{ "ELEMENTS_EVALUATION" | translate }} 
+                          </mat-panel-title>                         
+                        </mat-expansion-panel-header> 
+                        
+                        <mat-table [dataSource]="evalChartCommunity" matSort > 
+
+                          <ng-container matColumnDef="index">
+                            <mat-header-cell class="w-75"  width ="20%" *matHeaderCellDef> {{ "INDEX" | translate }}  </mat-header-cell>
+                            <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+                          </ng-container>
+                      
+                          <ng-container matColumnDef="evalCharterDetails">                            
+                            <mat-header-cell class="w-100" *matHeaderCellDef [attr.rowspan]="2" >   {{ "SKILLS" | translate }} </mat-header-cell>
+                            <mat-cell *matCellDef="let row" data-label="SKILLS">  
+                              {{(authService.currentLang=="1")? row.evalCharterDetailsEn :row.evalCharterDetailsAr }} 
+                            </mat-cell>
+                          </ng-container> 
+                  
+
+                          <ng-container matColumnDef="evalCharterDetailsItems">
+                            <mat-header-cell class="w-100" *matHeaderCellDef >   {{ "OBJECTIVES" | translate }} </mat-header-cell>
+                            <mat-cell *matCellDef="let row" data-label="OBJECTIVES">  
+                              {{(authService.currentLang=="1")? row.evalCharterDetailsItemsEn :row.evalCharterDetailsItemsAr }} 
+                            </mat-cell>
+                          </ng-container> 
+
+                          <ng-container matColumnDef="degree">
+                            <mat-header-cell style="text-align:center" *matHeaderCellDef>  {{ "DEGREE" | translate }} </mat-header-cell>
+                            <mat-cell *matCellDef="let element">                
+                              <mat-form-field class="full-width"  >    
+                                <mat-select required name="Degree"                                    
+                                [(value)]="element.degreeEmployee"
+                                id="evalCommunity"  
+                                [disabled]="editModeDTL"
+                                 >
+                                  <mat-option *ngFor="let item of evalDegree" [value]="item.variable1">
+                                     {{(authService.currentLang=="1")? item.descriptionEn :item.descriptionAr }} 
+                                  </mat-option>
+                                </mat-select>
+                              
+                                <small *ngIf="!refEvalCommunity.valid  && (refEvalCommunity.dirty || refEvalCommunity.touched) && !editMode" class="form-error-msg">
+                                  <small [hidden]="!refEvalCommunity.errors.required">
+                                    {{ "FILED_IS_REQUIRED" | translate }}
+                                  </small>
+                                </small>
+                              </mat-form-field>
+                            </mat-cell>
+                          </ng-container>
+                        
+                          <ng-container matColumnDef="weight" >
+                            <mat-header-cell  class="w-75"  *matHeaderCellDef> {{ "RELATIVE_WEIGHT" | translate }}  </mat-header-cell>
+                            <mat-cell *matCellDef="let row"  > 
+                             {{ row.weight }} 
+                            </mat-cell>
+                          </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns1; let cIndex = index;">
+                            </mat-row>
+                        </mat-table>
+
+                        <mat-paginator #paginator1 [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+                         
+                      </mat-expansion-panel>   
+                    </mat-accordion>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16 borderDiv" *ngIf="this.evaluationID>0" >   
+                  <mat-accordion class="example-headers-align" multi>
+                    <mat-expansion-panel   [expanded]="true"  >
+                      <mat-expansion-panel-header class="background1">
+                        <mat-panel-title class="background1">
+                          {{ "EVALUATION_RESULT" | translate }} 
+                        </mat-panel-title>                         
+                      </mat-expansion-panel-header> 
+                      <div class="example-button-row">
+                        <div class="pb-16">
+                    
+                          <table fxFlex="50" class="doughnut-grid-item ">
+                            <tr>
+                              <td  >
+                                <h3 class="m-0 font-normal">{{ "GENERAL_ESTIMATE" | translate }} </h3>  
+                              </td>
+                              <td>
+                                :
+                              </td>
+                              <td>                                                              
+                                <mat-form-field class="full-width" fxFlex="50">
+                                  <input
+                                  matInput  [disabled]="true" 
+                                  [value]= this.newObj.evaluationVM.resultDegree 
+                                   >
+                              </mat-form-field>
+                            
+                              <mat-form-field class="full-width" *ngIf="authService.currentLang==1">
+                                <input
+                                matInput  [disabled]="true"
+                                [value]=  this.newObj.evaluationVM.resultEN  
+                                 >
+                                 
+                            </mat-form-field>
+                            <mat-form-field class="full-width" *ngIf="authService.currentLang==2">
+                              <input
+                              matInput  [disabled]="true"
+                              [value]=  this.newObj.evaluationVM.resultAR  
+                               >                               
+                          </mat-form-field>
+                              </td>
+                              
+                            </tr>
+                            <tr>
+                              <td>
+                                <h3 class="m-0 font-normal">{{ "EMPLOYEE_APPROVAL" | translate }} </h3>  
+                              </td>
+                              <td>
+                                :
+                              </td>
+                              <td>
+                                <mat-form-field class="full-width">
+                                  <input
+                                  matInput  [disabled]="true"
+                                  [value]= this.newObj.evaluationVM.arabicName
+                                   >
+                              </mat-form-field>
+                                <h3 class="m-0 font-normal"></h3> 
+                              </td>
+                            </tr>
+                          </table>
+                          <table fxFlex="50" class="doughnut-grid-item ">
+                            <tr>
+                              <td>
+                                <h3 class="m-0 font-normal">{{ "MANAGER_APPROVAL" | translate }} </h3>  
+                              </td>
+                              <td>
+                                :
+                              </td>
+                              <td>
+                                <mat-form-field class="full-width">
+                                  <input
+                                  matInput  [disabled]="true"
+                                  [value]= this.newObj.evaluationVM.managerApprovalArabicName
+                                   >
+                              </mat-form-field> 
+                              </td>
+                              
+                            </tr>
+                            <tr>
+                              <td>
+                                <h3 class="m-0 font-normal">{{ "HR_APPROVAL" | translate }} </h3>  
+                              </td>
+                              <td>
+                                :
+                              </td>
+                              <td>
+                                <mat-form-field class="full-width">
+                                  <input
+                                  matInput  [disabled]="true"
+                                  [value]= this.newObj.evaluationVM.hrApprovalArabicName
+                                   >
+                              </mat-form-field>
+                              </td>
+                            </tr>
+                          </table>
+                      </div>
+                        </div>
+                    </mat-expansion-panel>   
+                  </mat-accordion>
+                 
+              </div>
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16 borderDiv" *ngIf="showApprovCancelBox">   
+                    <div class="example-button-row">
+                      <button mat-raised-button type="button"   color="primary" class="btn  ml-16 btn-md primary background2" id="btnEmployeeApproval" *ngIf="isShowEmployeeApproval" (click)="approvalRejectAction(1)"  >
+                            {{ "EMPLOYEE_APPROVAL" | translate }} 
+                      </button> 
+                      <button mat-raised-button type="button"   color="warn" class="btn ml-16  btn-md primary " id="btnEmployeeCancelApproval" *ngIf="isShowEmployeeCancelApproval" (click)="approvalRejectAction(2)"  >
+                        {{ "EMPLOYEE_CANCEL_APPROVAL" | translate }} 
+                       </button> 
+
+                       <button mat-raised-button type="button"   color="primary" class="btn ml-16  btn-md primary background2" id="btnManagerApproval" *ngIf="isShowManagerApproval" (click)="approvalRejectAction(3)"  >
+                        {{ "MANAGER_APPROVAL" | translate }} 
+                        </button>                         
+                        <button mat-raised-button type="button"   color="warn" class="btn ml-16  btn-md primary background2" id="btnManagerCancelApproval" *ngIf="isShowManagerCancelApproval" (click)="approvalRejectAction(4)"  >
+                          {{ "MANAGER_CANCEL_APPROVAL" | translate }} 
+                        </button> 
+                        <button mat-raised-button type="button"   color="warn" class="btn ml-16  btn-md primary " id="btnManagerReject" *ngIf="isShowManagerReject" (click)="approvalRejectAction(5)"  >
+                          {{ "MANAGER_REJECTED" | translate }} 
+                        </button> 
+
+                        <button mat-raised-button type="button"   color="primary" class="btn ml-16  btn-md primary background2" id="btnHRApproval" *ngIf="isShowHRApproval" (click)="approvalRejectAction(6)"  >
+                          {{ "HR_APPROVAL" | translate }} 
+                          </button>                         
+                     
+                          <button mat-raised-button type="button"   color="warn" class="btn  ml-16 btn-md primary " id="btnHRReject" *ngIf="isShowHRReject" (click)="approvalRejectAction(7)"  >
+                            {{ "HR_REJECTED" | translate }} 
+                          </button>  
+                        
+                      </div>
+                      <mat-form-field class="full-width" appearance="fill">                               
+                        <mat-label>{{ "REASON_REJECT" | translate }} </mat-label>
+                          <input matInput matInput [disabled]="!(isShowHRReject || isShowManagerReject)"
+                          id="textarea-input"     class="form-control" name="reason" 
+                             [(ngModel)]="this.notes" maxlength="500"
+                             id="Reason" required>                           
+                      </mat-form-field>
+                </div>
+          </div>
+           
+      </form>
+  </mat-card-content>
+</mat-card>
+ 
+<!-- {{heroForm.value | json }}
+{{heroForm.valid}}
+{{this.newObj | json }} -->

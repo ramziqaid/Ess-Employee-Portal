@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EssPortal.ViewModels
 {
-    [Table("Requests", Schema = "ess")]
+     
     public class RequestViewModel
     { 
         public Request request { get; set; }
@@ -17,8 +17,7 @@ namespace EssPortal.ViewModels
         public List<RequestExtraField> RequestExtraFields { get; set; }
 
         public List<Attachment> attachments { get; set; }
-        public List<Amendment> amendments { get; set; } 
-        public List<Housing> Housings { get; set; }  
+        public List<Amendment> amendments { get; set; }  
     }
 
 }

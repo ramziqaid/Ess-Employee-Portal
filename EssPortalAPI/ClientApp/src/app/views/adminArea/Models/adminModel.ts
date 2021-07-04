@@ -12,11 +12,7 @@ class UserModel {
     employeeNameAR: string;
 }
 
-class UserChangePasswordModel {
-    userId: number;
-    newpassword: string;
-    oldpassword: string;
-}
+
 class AssignRemoveModel {
     public userId: number;
     public roleId: number;
@@ -41,4 +37,4 @@ class UserDropdownModel {
     public userName: string;
 }
 
-export { UserModel, AssignRemoveModel, AssignRolesViewModel, RoleModel, UserDropdownModel, UserChangePasswordModel }
+export { UserModel, AssignRemoveModel, AssignRolesViewModel, RoleModel, UserDropdownModel }

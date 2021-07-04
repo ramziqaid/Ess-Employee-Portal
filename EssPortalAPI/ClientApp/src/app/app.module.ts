@@ -1,115 +1,72 @@
-
-import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { GestureConfig } from '@angular/material/core';
+import { 
+  PerfectScrollbarModule, 
+  PERFECT_SCROLLBAR_CONFIG, 
+  PerfectScrollbarConfigInterface
+} from 'ngx-perfect-scrollbar';
 
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './shared/inmemory-db/inmemory-db.service'; 
+import { rootRouterConfig } from './app.routing';
+import { SharedModule } from './shared/shared.module';
+import { AppComponent } from './app.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ErrorHandlerService } from './shared/services/error-handler.service';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
+import { PopupModule } from './views/popup/popup.module';
+
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
-import { AppComponent } from './app.component';
-
-// Import containers
-import { DefaultLayoutComponent } from './containers';
-
-import { P404Component } from './views/error/404.component';
-import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
-
-//components
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
-
-import {
-  AppAsideModule,
-  AppBreadcrumbModule,
-  AppHeaderModule,
-  AppFooterModule,
-  AppSidebarModule,
-} from '@coreui/angular';
-
-// Import routing module
-import { AppRoutingModule } from './app.routing';
-
-// Import 3rd party components
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ChartsModule } from 'ng2-charts';
-import { SharedModule } from './Shared/shared.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { UserLogoutComponent } from './views/login/app.UserLogout.Component';
-import { ActionBarModule } from './views/actionBar/actionBar.module';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { AccessDeniedComponent } from './views/error/access-denied/access-denied.component';
-import { AdminLogoutComponent } from './views/login/app.AdminLogout.Component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { CoreModule } from './core/core.module';
-import { AuthModule } from './auth/auth.module';
-import { TestModule } from './views/test/test.module';
-
-
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
     SharedModule,
     CoreModule,
     AuthModule,
-    ActionBarModule,
-
-    AppAsideModule,
-    AppBreadcrumbModule.forRoot(),
-    AppFooterModule,
-    AppHeaderModule,
-    AppSidebarModule,
+    PopupModule,
+    HttpClientModule,
     PerfectScrollbarModule,
-    BsDropdownModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot(),
     ModalModule.forRoot(),
-    TabsModule.forRoot(),
-    ChartsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatIconModule,
-    TestModule
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    InMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true}),
+    RouterModule.forRoot(rootRouterConfig, { useHash: false, relativeLinkResolution: 'legacy' })
   ],
-  declarations: [
-    AppComponent,
-    ...APP_CONTAINERS,
-    P404Component,
-    P500Component,
-    AccessDeniedComponent,
-    LoginComponent,
-    UserLogoutComponent,
-    AdminLogoutComponent,
-  ],
-  exports: [BsDatepickerModule, TimepickerModule],
+  declarations: [AppComponent],
   providers: [
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    // { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
+    // REQUIRED IF YOU USE JWT AUTHENTICATION
     {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
     },
-    // AuthGuard,
-    // AdminAuthGuardService,
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

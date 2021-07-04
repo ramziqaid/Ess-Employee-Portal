@@ -82,6 +82,33 @@ namespace EssPortal.Concrete
             }
         }
 
+        public async Task<List<dynamic>> GetLoanTypes()
+        {
+            using (var con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            {
+                return con.Query("SELECT * FROM [ess].[LoanTypesView]", null, null, true, 0, commandType: CommandType.Text).ToList();
+            }
+        }
+
+        public async Task<List<dynamic>> GetEvalPeriod()
+        {
+            using (var con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            {
+                return con.Query("SELECT * FROM [ess].[EvalPeriodView]", null, null, true, 0, commandType: CommandType.Text).ToList();
+            }
+        }
+
+        public async Task<List<dynamic>> GetEvalCommunity()
+        {
+            using (var con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            {
+                return con.Query("SELECT * FROM [ess].[EvalCommunityView]", null, null, true, 0, commandType: CommandType.Text).ToList();
+            }
+        }
+        
+
+
+
         public async Task<dynamic> GetEmployeeInfo(long pEmployeeID)
         {
             var employee = (from emp in _context.EmployeeInfoView
@@ -93,22 +120,29 @@ namespace EssPortal.Concrete
 
         public async Task<LoanVm> GetLoansInfo(long pEmployeeID)
         {
-
-            LoanVm obj = new LoanVm(); ;
-            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            LoanVm obj = new LoanVm();
+            try
             {
-                var paramater1 = new DynamicParameters();
-                paramater1.Add("@EmployeeID", pEmployeeID); 
-         
+               
+                using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+                {
+                    var paramater1 = new DynamicParameters();
+                    paramater1.Add("@EmployeeID", pEmployeeID);
 
-                var reader = con.QueryMultiple("[ess].[LoadLoansInfo]", paramater1, commandType: CommandType.StoredProcedure);
-                obj.LoanSum  = reader.Read<LoanSum>().FirstOrDefault(); 
-                obj.LoanHeader = reader.Read<LoanHeader>().ToList();
-                obj.LoanDetails = reader.Read<LoanDetails>().ToList();
+                    var reader = con.QueryMultiple("[ess].[LoadLoansInfo]", paramater1, commandType: CommandType.StoredProcedure);
+                    obj.LoanSum = reader.Read<LoanSum>().FirstOrDefault(); 
+                    obj.LoanHeader = reader.Read<LoanHeader>().ToList();
+                    obj.LoanDetails = reader.Read<LoanDetails>().ToList();
 
-                return obj;
-           
+                    return obj;
+
+                }
             }
+            catch (Exception)
+            { 
+                return null;
+            }
+            
 
         }
 
@@ -129,20 +163,29 @@ namespace EssPortal.Concrete
         public async Task<PayslipVM> GetPaySlipInfo(long pEmployeeID)
         {
 
-            PayslipVM obj = new PayslipVM(); ;
-            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            PayslipVM obj = new PayslipVM();
+            try
             {
-                var paramater1 = new DynamicParameters();
-                paramater1.Add("@EmployeeID", pEmployeeID);
+                using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+                {
+                    var paramater1 = new DynamicParameters();
+                    paramater1.Add("@EmployeeID", pEmployeeID);
 
-                var reader = con.QueryMultiple("[ess].[LoadPaySlipInfo]", paramater1, commandType: CommandType.StoredProcedure);
-                obj.PayslipHeader = reader.Read<PayslipHeader>().ToList();
-                obj.PayslipIncome = reader.Read<PayslipIncome>().ToList();
-                obj.Payslipdeduction = reader.Read<Payslipdeduction>().ToList();
+                    var reader = con.QueryMultiple("[ess].[LoadPaySlipInfo]", paramater1, commandType: CommandType.StoredProcedure);
+                    obj.PayslipHeader = reader.Read<PayslipHeader>().ToList();
+                    obj.PayslipIncome = reader.Read<PayslipIncome>().ToList();
+                    obj.Payslipdeduction = reader.Read<Payslipdeduction>().ToList();
 
-                return obj;
+                    return obj;
 
+                }
             }
+            catch (Exception)
+            { 
+                return null;
+            }
+
+            
 
         }
 
@@ -150,31 +193,40 @@ namespace EssPortal.Concrete
 
         public async Task<AttendeesVM> GetAttendeesInfo(long pEmployeeID,string pFromDate,string pToDate)
         {
-            AttendeesVM obj = new AttendeesVM(); 
-            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            AttendeesVM obj = new AttendeesVM();
+            try
             {
-                var paramater = new DynamicParameters();
-                paramater.Add("@EmployeeID", pEmployeeID);
-                paramater.Add("@FromDate", pFromDate);
-                paramater.Add("@ToDate", pToDate);
+               
+                using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+                {
+                    var paramater = new DynamicParameters();
+                    paramater.Add("@EmployeeID", pEmployeeID);
+                    paramater.Add("@FromDate", pFromDate);
+                    paramater.Add("@ToDate", pToDate);
 
-                var reader = con.QueryMultiple("[ess].[LoadAttendeesInfo]", paramater, commandType: CommandType.StoredProcedure);
-                obj.AttendeesToDay = reader.Read<Attendees>().ToList();
-                obj.AttendeesList = reader.Read<Attendees>().ToList();
+                    var reader = con.QueryMultiple("[ess].[LoadAttendeesInfo]", paramater, commandType: CommandType.StoredProcedure);
+                    obj.AttendeesToDay = reader.Read<Attendees>().ToList();
+                    obj.AttendeesList = reader.Read<Attendees>().ToList();
 
-                return obj;
+                    return obj;
 
-              } 
+                }
+            }
+            catch (Exception)
+            { 
+                return null;
+            }            
 
         }
 
 
-        public async Task<dynamic> GetVacationBalanceInfo(long pEmployeeID)
+        public async Task<dynamic> GetVacationBalanceInfo(Nullable<long> pEmployeeID,string pFromDate)
         {
             using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
             {
                 var paramater = new DynamicParameters();
                 paramater.Add("@EmployeeID", pEmployeeID);
+                paramater.Add("@RequsetDate", pFromDate);
 
                 return con.Query("[ess].LoadVacationBalanceInfo", paramater, null, true, 0, commandType: System.Data.CommandType.StoredProcedure);
             }

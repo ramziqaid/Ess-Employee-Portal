@@ -1,14 +1,14 @@
-import { CoreUIPage } from './app.po';
+import { NgEgretPage } from './app.po';
 
-describe('core-ui App', function() {
-  let page: CoreUIPage;
+describe('ng-egret App', () => {
+  let page: NgEgretPage;
 
   beforeEach(() => {
-    page = new CoreUIPage();
+    page = new NgEgretPage();
   });
 
-  it('should display footer containing creativeLabs', () => {
+  it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toContain('creativeLabs');
+    expect(page.getParagraphText()).toEqual('app works!');
   });
 });

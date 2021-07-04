@@ -11,7 +11,10 @@ namespace EssPortal.Interfaces
 {
     public interface INotificationRepository : IGenericRepository<Notification>
     {
-        Task<List<Notification>> GetNotification(int UserID);
+        Task<bool> SaveNotification(int pNotDecisionID, bool pNotStatus, string pNotType, int pUserID, int pNotActionID, int? pCreatedUserID);
+        Task<List<dynamic>> GetNotification(int UserID, String NotType);
+        Task<bool> HideNotification(int Id);
+        
     }
 
 }

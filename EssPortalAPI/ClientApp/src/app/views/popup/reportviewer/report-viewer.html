@@ -1,0 +1,12 @@
+
+  <dx-report-viewer [reportUrl]="reportUrl" height="600px">
+    <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+    <!-- <dxrv-callbacks (ParametersSubmitted)="parametersSubmitted($event)">
+    </dxrv-callbacks> -->
+  </dx-report-viewer>
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">  
+    <div fxFlex="100" class="mt-16" style="text-align: center;">   
+      <button mat-button color="warn" class="background2" type="button" (click)="dialogRef.close(false)"> {{ 'CLOSE' | translate }}</button>
+    </div>
+  </div>
+ 

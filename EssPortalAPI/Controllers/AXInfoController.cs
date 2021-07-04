@@ -13,6 +13,7 @@ using EssPortal.ViewModels;
 using EssPortal.Interfaces;
 using System.Security.Claims;
 using static EssPortal.Models.DynamicAxClass;
+using EssPortal.Models.searchVM;
 
 namespace EssPortalAPI.Controllers
 {
@@ -102,6 +103,44 @@ namespace EssPortalAPI.Controllers
             return Ok(vend);
         }
 
+        [Route("GetLoanTypes")]
+        [HttpGet]
+        public async Task<IActionResult> GetLoanTypes()
+        {
+            IEnumerable<object> vend = await _iAXInfoRepository.GetLoanTypes();
+            if (vend == null)
+            {
+                return BadRequest("Not Found Loan Types ");
+            }
+            return Ok(vend);
+        }
+
+        [Route("GetEvalPeriod")]
+        [HttpGet]
+        public async Task<IActionResult> GetEvalPeriod()
+        {
+            IEnumerable<object> obj = await _iAXInfoRepository.GetEvalPeriod();
+            if (obj == null)
+            {
+                return BadRequest("Not Found Data  ");
+            }
+            return Ok(obj);
+        }
+
+        [Route("GetEvalCommunity")]
+        [HttpGet]
+        public async Task<IActionResult> GetEvalCommunity()
+        {
+            IEnumerable<object> obj = await _iAXInfoRepository.GetEvalCommunity();
+            if (obj == null)
+            {
+                return BadRequest("Not Found Data ");
+            }
+            return Ok(obj);
+        }
+
+        
+
 
         [HttpGet]
         [Route("GetLoansInfo/{employeeID}")] 
@@ -111,12 +150,11 @@ namespace EssPortalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-           LoanVm loanvms = await _iAXInfoRepository.GetLoansInfo(employeeID);
+            LoanVm loanvms = await _iAXInfoRepository.GetLoansInfo(employeeID);
             if (loanvms == null)
             {
-                return NotFound();
-            } 
+                return BadRequest("Not Found Loans Data ");
+            }
             return Ok(loanvms);
         }
 
@@ -132,7 +170,7 @@ namespace EssPortalAPI.Controllers
             IEnumerable<object>  assset= await _iAXInfoRepository.GetAssestInfo(employeeID);
             if (assset == null)
             {
-                return NotFound();
+                return BadRequest("Not Found assset Data ");
             }
             return Ok(assset);
         }
@@ -149,44 +187,40 @@ namespace EssPortalAPI.Controllers
             PayslipVM obj = await _iAXInfoRepository.GetPaySlipInfo(employeeID);
             if (obj == null)
             {
-                return NotFound();
+                return BadRequest("Not Found PaySlip Data ");
             }
             return Ok(obj);
         }
 
 
-        [HttpGet]
-        [Route("GetAttendeesInfo/{employeeID}/{fromdate?}/{todate?}")]
-        public async Task<IActionResult> GetAttendeesInfo( long employeeID,   string fromdate,   string todate)
+        [HttpPost]
+        [Route("GetAttendeesInfo")]
+        public async Task<IActionResult> GetAttendeesInfo([FromBody] CommonVM commonVM)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            AttendeesVM obj = await _iAXInfoRepository.GetAttendeesInfo(employeeID, fromdate, todate);
-
-              if (obj == null)
-            {
-                return NotFound();
-            }
-            return Ok(obj);
-        }
-
-
-        [HttpGet]
-        [Route("GetVacationBalanceInfo/{employeeID}")]
-        public async Task<IActionResult> GetVacationBalanceInfo([FromRoute] long employeeID)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            IEnumerable<object> obj = await _iAXInfoRepository.GetVacationBalanceInfo(employeeID);
+            AttendeesVM obj = await _iAXInfoRepository.GetAttendeesInfo(commonVM.employeeID, commonVM.fromDate, commonVM.toDate);
             if (obj == null)
             {
-                return NotFound();
+                return BadRequest("Not Found Attendees Data ");
             }
+            return Ok(obj);
+        }
+
+
+        [HttpPost]
+        [Route("GetVacationBalanceInfo")]
+        public async Task<IActionResult> GetVacationBalanceInfo([FromBody] CommonVM commonVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IEnumerable<object> obj = await _iAXInfoRepository.GetVacationBalanceInfo(commonVM.employeeID, commonVM.fromDate);
+            
             return Ok(obj);
         }
 
@@ -201,10 +235,7 @@ namespace EssPortalAPI.Controllers
             }
 
             IEnumerable<object> obj = await _iAXInfoRepository.GetEmployeeVacationInfo(employeeID);
-            if (obj == null)
-            {
-                return NotFound();
-            }
+           
             return Ok(obj);
         }
 

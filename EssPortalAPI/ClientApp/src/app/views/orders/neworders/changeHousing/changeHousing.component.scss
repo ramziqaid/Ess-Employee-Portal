@@ -1,0 +1,29 @@
+// .col-form-label {
+//     font-weight: 500 !important;
+// }
+
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+mat-radio-button,
+mat-label {
+  margin: 0 10px;
+}
+
+#requestID,
+#FromDate,
+.egret-navy .mat-select-disabled .mat-select-value {
+  color: black !important;
+}
+
+mat-card-title {
+  padding-bottom: 25px;
+}

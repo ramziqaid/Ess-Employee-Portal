@@ -1,59 +1,135 @@
-<div class="row">
-  <div class="col-md-6 mx-auto">
-    <div class="card mx-6">
-      <div class="card-body p-12">
-
-        <form #f="ngForm" (ngSubmit)="onSubmit('onAssign')" novalidate>
-          <p class="text-muted">Assign / Remove Role</p>
-          <div class="row">
-            <div class="col-md-6">
-              <label>User</label>
-              <select required name="UserId" #refUserId="ngModel" class="form-control"
-                [(ngModel)]="AssignRemoveModel.userId">
-                <option value=''>Please select User</option>
-                <option *ngFor="let user of UserList" [ngValue]="user.userId">
-                  {{user.userName}}
-                </option>
-              </select>
-              <div *ngIf="!refUserId.valid  && (refUserId.dirty || refUserId.touched)" class="alert alert-danger">
-                <div [hidden]="!refUserId.errors.required">
-                  Users is required
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label>Role</label>
-              <select required name="roleId" #refRoleId="ngModel" class="form-control"
-                [(ngModel)]="AssignRemoveModel.roleId">
-                <option value=''>Please select Role</option>
-                <option *ngFor="let role of RoleList" [ngValue]="role.roleId">
-                  {{role.roleName}}
-                </option>
-              </select>
-              <div *ngIf="!refRoleId.valid  && (refRoleId.dirty || refRoleId.touched)" class="alert alert-danger">
-                <div [hidden]="!refRoleId.errors.required">
-                  Role is required
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-md-8">
-            <button type="submit" type="submit" style="margin-top: 10px" [disabled]="!f.form.valid"
-              class="btn primary">Assign Role</button>
-            <!-- <button type="submit" (click)="onSubmit('onRemove')" style="margin-left: 10px; margin-top: 10px"
-              [disabled]="!f.form.valid" class="btn btn-success">Remove Role</button> -->
-
-            <a style="margin-left: 10px; margin-top:7px;" class="btn primary"
-              [routerLink]="['/AdminArea/Assign/AllRole']">
-              All Assign Role </a>
-          </div>
-
-        </form>
-
+ 
+<mat-card class="p-0">
+  <mat-card-title class="">
+      <div class="card-title-text"> {{ "USER_ROLES" | translate }}
       </div>
-    </div>
-  </div>
+      <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
 
-</div>
+   
+          <div fxLayout="row wrap"> 
+              <div fxFlex="100" fxFlex.gt-xs="50">
+
+                <div class="pb-16">
+                  <mat-form-field class="full-width"> 
+                    <mat-select  
+                    name="roleId" 
+                    #refRoleId="ngModel"  
+                    [(ngModel)]="AssignRemoveModel.roleId"
+                    required
+                    (selectionChange)='SelectRole()' 
+                     placeholder="{{ 'PLEASE_SELECT_ROLE'| translate }}"  >
+                      <mat-option  *ngFor="let role of RoleTypeList" [value]="role.roleId"> 
+                        {{  role.roleName   }} 
+                      </mat-option>
+                    </mat-select> 
+
+                    <small 
+                    *ngIf="!refRoleId.valid  && (refRoleId.dirty || refRoleId.touched)"  
+                    class="form-error-msg">   {{ "FILED_IS_REQUIRED" | translate }}
+                  </small>
+                  
+                  </mat-form-field>  
+                </div>  
+           
+              </div>
+
+          </div> 
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">
+          <mat-label>Filter</mat-label> 
+          <div class="ml-8 mr-8 mt-8 pb-16">
+            <div class="mat-elevation-z8">
+                <mat-table [dataSource]="DataSource1" matSort >
+          
+                  <ng-container matColumnDef="index">
+                    <mat-header-cell class="w-75" *matHeaderCellDef> {{ "INDEX" | translate }}  </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+                  </ng-container>
+          
+                  <ng-container matColumnDef="employeeNumber">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "EMPLOYEENUMBER" | translate }}  </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="employeeNumber"> {{row.employeeNumber}} </mat-cell>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="employeeNameEn">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>   {{ "EMPLOYEE_NAME" | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="employeeNameEn"> {{row.employeeNameEn}} </mat-cell>
+                  </ng-container> 
+          
+                    <ng-container matColumnDef="action">
+                      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                      <mat-cell *matCellDef="let row;" [style.color]="row.color" data-label="color">  
+                        
+                        <button mat-mini-fab color="primary" aria-label="reset" title="Add" class="mr-16" (click)="onAdd(row.userId)">
+                        <mat-icon>add_circle</mat-icon> 
+                        </button>
+                     
+                      </mat-cell>
+                    </ng-container> 
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns1; let cIndex = index;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator #paginator1 [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+          </div>  
+      
+          <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">
+            <div class="example-label">Basic</div>
+            <div class="ml-8 mr-8 mt-8 pb-16">
+              <div class="mat-elevation-z8">
+                  <mat-table [dataSource]="DataSource2" matSort >
+            
+                    <ng-container matColumnDef="index">
+                      <mat-header-cell *matHeaderCellDef> {{ "INDEX" | translate }}  </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+                    </ng-container>
+            
+                      <ng-container matColumnDef="fullName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "FULLNAME" | translate }}  </mat-header-cell>
+                        <mat-cell *matCellDef="let row" data-label="fullName"> {{row.fullName}} </mat-cell>
+                      </ng-container> 
+                    
+                      <ng-container matColumnDef="userName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "USERNAME" | translate }}  </mat-header-cell>
+                        <mat-cell *matCellDef="let row" data-label="userName"> {{row.userName}} </mat-cell>
+                      </ng-container>
+                  
+                      <ng-container matColumnDef="roleName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "ROLENAME" | translate }}  </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [style.color]="row.color" data-label="color"> {{row.roleName}} </mat-cell>
+                      </ng-container>
+            
+                      <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                        <mat-cell *matCellDef="let row;" [style.color]="row.color" data-label="color">  
+                          
+                          <button mat-icon-button mat-sm-button color="accent" aria-label="reset" 
+                          title="delete" class="mr-16" (click)="onRemove(row.roleId,row.userId)">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                       
+                        </mat-cell>
+                      </ng-container> 
+                  
+                      <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns2; let cIndex = index;">
+                      </mat-row>
+                  </mat-table>
+                  <mat-paginator  #paginator2 [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+              </div>
+            </div>
+            </div>  
+          </div>  
+
+      
+  </mat-card-content>
+</mat-card>
+ 
+ 
+

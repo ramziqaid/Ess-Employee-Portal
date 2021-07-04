@@ -1,0 +1,57 @@
+<div class="text-center mat-bg-primary pt-16 pb-16">
+  <h6 class="m-0 text-white"> {{ "NOTIFICATIONS"   | translate }}</h6>
+</div>
+<mat-nav-list class="notification-list" role="list">
+  <!-- Notification item -->
+  <mat-list-item *ngFor="let n of NotificationArray01$ | async" class="notific-item" role="listitem" routerLinkActive="open">
+    <mat-icon [color]="n.color" class="notific-icon mr-16">{{n.icon}}</mat-icon>
+    
+      <div class="mat-list-text">
+        <h6 class="message">
+          {{ (authService.currentLang=="1")? n.messageEN:n.messageAR }} 
+           </h6>
+        <small class="time text-muted">
+          {{n.createdDate}}
+         
+          <a (click)="hideNotification(n.ID)" class="time text-muted"  style="width: 50px; float: left;">
+            {{ "HIDE"   | translate }} 
+          </a>
+        </small>
+        <!-- <small class="time text-muted">         
+          <a  [routerLink]="[n.route || '/dashboard']" class="time text-muted" style="width: 50px; float: right;">hide</a>
+        </small> -->
+       
+      </div>    
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-nav-list>
+
+<mat-nav-list class="notification-list" role="list">
+  <!-- Notification item -->
+  <mat-list-item *ngFor="let n of NotificationArray02$ | async" class="notific-item" role="listitem" routerLinkActive="open">
+    <mat-icon [color]="n.color" class="notific-icon mr-16">{{n.icon}}</mat-icon>
+    
+      <div class="mat-list-text">
+        <h6 class="message">
+          {{ (authService.currentLang=="1")? n.messageEN:n.messageAR }} 
+           </h6>
+        <small class="time text-muted">
+          {{n.createdDate}}
+         
+          <a (click)="hideNotification(n.ID)" class="time text-muted"  style="width: 50px; float: left;">
+            {{ "HIDE"   | translate }} 
+          </a>
+        </small>
+        <!-- <small class="time text-muted">         
+          <a  [routerLink]="[n.route || '/dashboard']" class="time text-muted" style="width: 50px; float: right;">hide</a>
+        </small> -->
+       
+      </div>    
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-nav-list>
+
+<div class="text-center mt-16" *ngIf="count01>0 || count02>0 || count03>0">
+  <small><a href="#" (click)="clearAll($event)">   {{ "HIDE_ALL"   | translate }} </a></small>
+</div>
+ 

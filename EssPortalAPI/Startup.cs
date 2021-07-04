@@ -119,7 +119,8 @@ namespace EssPortalAPI
             services.AddTransient<IOperationRepository, OperationConcrete>();
             services.AddTransient<IPurchasesStageTypeRepository, PurchasesStageTypeConcrete>();
             services.AddTransient<INotificationRepository, NotificationConcrete>();
-             
+            services.AddTransient<IEvaluationRepository, EvaluationConcrete>();
+
 
             services.AddScoped<IUrlHelper>(implementationFactory =>
             {

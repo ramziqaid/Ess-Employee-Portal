@@ -1,0 +1,140 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+
+    <mat-divider></mat-divider>
+
+    <actionBar [disabled]="!heroForm.form.valid" (newAction)="newClick()" (editAction)="edit()" (saveAction)="save()"
+      (deleteAction)="delete()" (cancelAction)="reset()" [referenceID]="requestID" [showPrint]="false"
+      (onUploadFinishedFire)="uploadFinished($event)">
+    </actionBar>
+    <mat-divider></mat-divider>
+
+  </mat-card-title>
+  <mat-card-content>
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" novalidate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">
+
+          <div class="pb-16">
+            <employeeList (employeeSelect)="employeeSelect($event)" [empoyeeList]="this.empoyeeList"
+              [employee]="this.employeeID" [editMode]="true">
+            </employeeList>
+          </div>
+ 
+
+          <div class="pb-16">
+            <mat-form-field appearance="full-width" appearance="fill">
+              <mat-label> {{ "PERIOD" | translate }} </mat-label>
+              <mat-date-range-input required [min]="this.minFromDate" [rangePicker]="picker">
+                <input matStartDate id="fromDate" #refFromDate="ngModel" [(ngModel)]="this.bsFromDate" name="FromDate"
+                  required [disabled]="editMode" [min]="minFromDate" [max]="maxToDate" placeholder="Start date">
+                <input matEndDate id="toDate" name="ToDate" #refToDate="ngModel" [(ngModel)]="this.bsToDate"
+                  [min]="minFromDate" [max]="maxToDate" required [disabled]="editMode"
+                  (dateChange)="dateRangeChange(refFromDate, refToDate)" placeholder="End date">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            <small *ngIf="!refFromDate.valid  && (refFromDate.dirty || refFromDate.touched) && !editMode"
+              class="form-error-msg">
+              <small [hidden]="!refFromDate.errors.required">
+                {{ "FILED_IS_REQUIRED" | translate }}
+              </small>
+            </small>
+            <small *ngIf="!refToDate.valid  && (refToDate.dirty || refToDate.touched) && !editMode"
+              class="form-error-msg">
+              <small [hidden]="!refToDate.errors.required">
+                {{ "FILED_IS_REQUIRED" | translate }}
+              </small>
+            </small>
+          </div>
+
+          <div class="pb-16">
+            <mat-form-field class="full-width" appearance="fill">   
+            <mat-label>{{ "REASON" | translate }}   </mat-label>  
+            <mat-select 
+            required 
+            name="Reason" 
+            #refReason="ngModel"  
+             id="Reason" 
+            [disabled]="editMode"
+            (selectionChange)="ReasonselectedValue($event)"
+             [(ngModel)]="this.reasonCode">
+             <mat-option *ngFor="let item of reasonTypeList" [value]="item.systemCode">
+              {{(authService.currentLang=="1")? item.descriptionEn :item.descriptionAr }} 
+           </mat-option>
+            </mat-select>
+          
+            <small *ngIf="!refReason.valid  && (refReason.dirty || refReason.touched) && !editMode" class="form-error-msg">
+              <small [hidden]="!refReason.errors.required">
+                {{ "FILED_IS_REQUIRED" | translate }}
+              </small>
+            </small>
+          </mat-form-field>
+        </div>  
+
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16">
+
+          <div class="pb-16">
+            <mat-form-field class="full-width" appearance="fill">
+              <input matInput name="requsetPrivateNumber" id="requsetPrivateNumber"
+                placeholder=" {{ 'ORDER_NUMBER' | translate }} " [disabled]="true" 
+                [(ngModel)]="this.newObj.request.requsetPrivateNumber">
+            </mat-form-field>
+          </div>
+
+          <div class="pb-16">
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>{{ "COUNT_DAYS" | translate }} </mat-label>
+              <input matInput type="number" name="Days" id="Days" placeholder=" {{ 'COUNT_DAYS' | translate }} "
+                #refDays="ngModel" [(ngModel)]="this.days" required [disabled]="true">
+                <small                *ngIf="!refDays.valid  && (refDays.dirty || refDays.touched) && !editMode"
+                class="form-error-msg">
+                <small [hidden]="!refDays.errors.required">
+                  {{ "FILED_IS_REQUIRED" | translate }}
+                </small>
+              </small>
+            </mat-form-field>
+          </div>
+
+         
+
+        </div>
+
+
+        <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16">
+          <div class="pb-16">
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>{{ "JUSTIFICATION" | translate }} </mat-label>
+              <textarea matInput id="textarea-input" rows="2" class="form-control" name="Justification"
+                [disabled]="editMode" [(ngModel)]="this.justification" maxlength="500" #refJustification="ngModel"
+                id="Justification" required>
+                          </textarea>
+              <small
+                *ngIf="!refJustification.valid  && (refJustification.dirty || refJustification.touched) && !editMode"
+                class="form-error-msg">
+                <small [hidden]="!refJustification.errors.required">
+                  {{ "FILED_IS_REQUIRED" | translate }}
+                </small>
+              </small>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- <div style="float: right; width:50%;">
+  < 
+
+ 
+  <h3>Form Value</h3>
+  {{heroForm.value | json }}
+ 
+</div> -->
+
+<!-- {{heroForm.value | json }} -->

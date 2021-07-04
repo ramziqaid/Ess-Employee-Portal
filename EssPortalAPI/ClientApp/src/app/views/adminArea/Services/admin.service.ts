@@ -1,11 +1,9 @@
-import { ApiService } from './../../../core/services/api.service';
-
+import { ApiService } from '../../../core/services/api.service'; 
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { shareReplay, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
-import { UserModel, AssignRolesViewModel, RoleModel, AssignRemoveModel, UserChangePasswordModel } from '../Models/adminModel';
+import { UserModel, AssignRolesViewModel, RoleModel, AssignRemoveModel } from '../Models/adminModel';
 
 
 @Injectable()
@@ -29,7 +27,7 @@ export class AdminService {
   }
 
 
-  // Get All Users
+  // Get All Roles
   public GetAllAssignedRoles() {
     return this.apiService.get("AssignRoles").pipe(shareReplay(),
       catchError(this.handleError));
@@ -40,6 +38,8 @@ export class AdminService {
     return this.apiService.get("CreateRole").pipe(shareReplay(),
       catchError(this.handleError));
   }
+
+
 
   public GetPurchasesStageType() {
     return this.apiService.get(`PurchasesStageType`).pipe(shareReplay(),
@@ -55,6 +55,7 @@ export class AdminService {
         catchError(this.handleError)
       );
   }
+
   public AssignRole(assignmodel: AssignRemoveModel) {
     return this.apiService.post("AssignRoles", assignmodel).pipe(shareReplay(),
       catchError(this.handleError));
@@ -75,12 +76,7 @@ export class AdminService {
     );
   }
 
-  public UpdateUserPassword(changeUserPassword: UserChangePasswordModel) {
-    return this.apiService.put(`User/ChangePassword`, changeUserPassword)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
+
 
   public ResetUserPassword(userId: number) {
     return this.apiService.put(`User/ResetPassword/${userId}`, {}).pipe(
@@ -96,13 +92,11 @@ export class AdminService {
   }
 
 
-
-
   public RemoveRole(assignmodel: AssignRemoveModel) {
     return this.apiService.post("RemoveRole", assignmodel).pipe(shareReplay(),
-      catchError(this.handleError));
-
+      catchError(this.handleError)); 
   }
+
   public DeleteUser(Id) {
     return this.apiService.delete(`User/${Id}`)
       .pipe(
@@ -110,7 +104,24 @@ export class AdminService {
       );
   }
 
+//#region Permission
 
+public GetOperationWithPermission() {
+  return this.apiService.get("Operation").pipe(shareReplay(),
+    catchError(this.handleError));
+}
+
+public SavePermission(model: any) {
+  return this.apiService.post("Operation", model).pipe(shareReplay(),
+    catchError(this.handleError));
+}
+
+public DeletePermission(model: any) {
+  return this.apiService.post("Operation/DeletePermission", model).pipe(shareReplay(),
+    catchError(this.handleError)); 
+}
+
+//#endregion
 
   private handleError(error: HttpErrorResponse) {
 

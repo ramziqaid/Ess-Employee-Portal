@@ -1,108 +1,146 @@
-<div class="col-sm-12">
-  <div class="card">
-    <div class="card-header">
-      <div class="row">
-        <div class=" col-sm-3">
-          <strong>Employee Clearance Request </strong> Form / {{title}}
-        </div>
-        <div class=" col-sm-6">
-          <actionBar class=" col-md-12   col-sm-12" [disabled]="!heroForm.form.valid" (newAction)="newClick()"
-            (editAction)="edit()" (saveAction)="save()" (deleteAction)="delete()" (cancelAction)="reset()"></actionBar>
-          <app-MultiFilesManager (onUploadFinished)="uploadFinished($event)" [canAddRemove]="!editMode" [text]="' '"
-            [referenceID]="requsetId">
-          </app-MultiFilesManager>
-        </div>
-        <div class=" col-sm-3">
-
-        </div>
-      </div>
-    </div>
-
-    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="form-horizontal">
-
-      <div class="card-body col-sm-8">
-
-        <div class="row" *ngIf="this.newObj.request.requestID>0">
-
-          <div class="form-group row col-md-12   col-sm-12">
-            <label class="col-md-3 col-form-label" for="Employee">Request Number</label>
-            <div class="col-md-9">
-              <input type="text" id="PurchaseNumber" class="form-control" name="PurchaseNumber" [disabled]="true"
-                [(ngModel)]="this.newObj.request.requestID" #refPurchaseNumber="ngModel">
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <employeeList class="form-group row col-md-12   col-sm-12" (employeeSelect)="employeeSelect($event)"
-            [employee]="this.newObj.request.employeeID" [loadAllEmployee]="false" [required]="true"
-            [editMode]="editMode">
-          </employeeList>
-        </div>
 
 
-
-
-        <div class="row">
-          <div class="form-group row col-md-12   col-sm-12">
-            <label class="col-md-3 col-form-label" for="Type">Clearance Type</label>
-            <div class="col-md-9">
-              <select required name="Type" id="Type" #Type="ngModel" class="form-control" [disabled]="editMode"
-                [(ngModel)]="this.newObj.leave[0].vacationTypeID">
-                <option value=''>Please select Type</option>
-                <option *ngFor="let item of vactionTypes" [value]="item.ID">
-                  {{item.NameEn}}
-                </option>
-              </select>
-
-              <div *ngIf="!Type.valid  && (Type.dirty || Type.touched) && !editMode" class="alert alert-danger">
-                <div [hidden]="!Type.errors.required">
-                  Type is required.
+<mat-card class="p-0">
+  <mat-card-title class="">
+      
+      <mat-divider></mat-divider>
+       
+        <actionBar  
+         [disabled]="!heroForm.form.valid" 
+          (newAction)="newClick()"
+          (editAction)="edit()" 
+          (saveAction)="save()" 
+          (deleteAction)="delete()"
+           (cancelAction)="reset()" 
+           [referenceID]="requestID"
+           [showPrint]="false"
+           (onUploadFinishedFire)="uploadFinished($event)" 
+           >
+          </actionBar> 
+          <mat-divider></mat-divider>
+       
+  </mat-card-title>
+  <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm" novalidate>
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+ 
+                <div class="pb-16" > 
+                  <employeeList   (employeeSelect)="employeeSelect($event)"
+                  [empoyeeList]= "this.empoyeeList" 
+                  [employee]="this.employeeID" [editMode]="true">
+                </employeeList>   
                 </div>
-              </div>
 
-            </div>
+                <div class="pb-16">  
+                  <mat-form-field class="full-width" appearance="fill"> 
+                    <mat-label> {{ "FROM_DATE" | translate }}   </mat-label> 
+                      <input 
+                      matInput 
+                      name="FromDate" 
+                      id="FromDate"  
+                      #refFromDate="ngModel"
+                      [(ngModel)]="bsFromDate" 
+                      required  
+                      [disabled]="editMode"
+                      [min]="minFromDate" 
+                      [matDatepicker]="appDatepicker2">
+                    
+                      <mat-datepicker-toggle matSuffix [for]="appDatepicker2"></mat-datepicker-toggle> 
+                      <mat-datepicker touchUi #appDatepicker2 ></mat-datepicker>  
+                  </mat-form-field>
+                 
+                <small *ngIf="!refFromDate.valid  && (refFromDate.dirty || refFromDate.touched) && !editMode" class="form-error-msg">
+                  <small [hidden]="!refFromDate.errors.required">
+                    {{ "FILED_IS_REQUIRED" | translate }}
+                  </small>
+                  <mat-error *ngIf="refFromDate.hasError('matDatepickerMax')">Date should be inferior</mat-error>
+                </small>
+              
+              </div> 
+
+              
+         
+           
+              </div> 
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+
+                <div class="pb-16" >
+                  <mat-form-field class="full-width" appearance="fill"> 
+                     <input
+                     matInput
+                     name="requsetPrivateNumber"
+                     id="requsetPrivateNumber" 
+                     placeholder=" {{ 'ORDER_NUMBER' | translate }} "
+                     [disabled]="true"
+                     [(ngModel)]=" this.newObj.request.requsetPrivateNumber"  
+                     >
+                 </mat-form-field>  
+               </div>
+
+               <div class="pb-16">
+                <mat-form-field class="full-width" appearance="fill">   
+                <mat-label>{{ "CLEARANCE_TYPE" | translate }}   </mat-label>  
+                <mat-select 
+                required 
+                name="ClearanceType" 
+                #refClearanceType="ngModel"  
+                 id="ClearanceType" 
+                [disabled]="editMode"
+                (selectionChange)="selectedValue($event)"
+                 [(ngModel)]="this.clearanceTypeCode">
+                 <mat-option *ngFor="let item of clearanceTypeList" [value]="item.systemCode">
+                  {{(authService.currentLang=="1")? item.descriptionEn :item.descriptionAr }} 
+               </mat-option>
+                </mat-select>
+              
+                <small *ngIf="!refClearanceType.valid  && (refClearanceType.dirty || refClearanceType.touched) && !editMode" class="form-error-msg">
+                  <small [hidden]="!refClearanceType.errors.required">
+                    {{ "FILED_IS_REQUIRED" | translate }}
+                  </small>
+                </small>
+              </mat-form-field>
+            </div> 
+             
+           </div>  
+        
+
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16"> 
+                  <div class="pb-16">
+                    <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "JUSTIFICATION" | translate }} </mat-label>
+                        <textarea matInput 
+                        id="textarea-input"   
+                        rows="2" 
+                        class="form-control" 
+                        name="Justification"
+                        [disabled]="editMode"
+                        [(ngModel)]="this.justification" maxlength="500"
+                          #refJustification="ngModel" id="Justification" required>
+                          </textarea>  
+                          <small *ngIf="!refJustification.valid  && (refJustification.dirty || refJustification.touched) && !editMode" class="form-error-msg">
+                            <small [hidden]="!refJustification.errors.required">
+                              {{ "FILED_IS_REQUIRED" | translate }}
+                            </small>
+                          </small>  
+                    </mat-form-field>
+                  </div> 
+                </div>
           </div>
-        </div>
+           
+      </form>
+  </mat-card-content>
+</mat-card>
 
-        <div class="row">
+<!-- <div style="float: right; width:50%;">
+  < 
 
-          <div class="form-group row col-md-12   col-sm-12">
-            <label class="col-md-3 col-form-label" for="fromdate"> Start Date</label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" name="FromDate" id="FromDate" bsDatepicker #FromDate
-                [disabled]="editMode" #datepickerMDY="bsDatepicker" [bsValue]="bsFromDate" ngModel
-                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="FromDate" required>
-            </div>
-          </div>
+ 
+  <h3>Form Value</h3>
+  {{heroForm.value | json }}
+ 
+</div> -->
 
-        </div>
-
-
-        <div class="row">
-          <div class="form-group row col-md-12   col-sm-12">
-
-            <label class="col-md-3  col-form-label" for="Justification">Justification</label>
-            <div class="col-md-9">
-              <textarea id="textarea-input" name="textarea-input" rows="2" class="form-control" name="Justification"
-                [disabled]="editMode" [(ngModel)]="this.newObj.leave[0].justification" maxlength="50"
-                #refJustification="ngModel" id="Justification" required>
-                </textarea>
-            </div>
-
-          </div>
-        </div>
-
-
-      </div>
-
-      <div class="card-footer">
-
-      </div>
-    </form>
-
-  </div>
-
-</div>
-<!--/.col-->
+<!-- {{heroForm.value | json }} -->
+  

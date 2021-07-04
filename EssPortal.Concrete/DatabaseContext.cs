@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EssPortal.Models;
- 
+using EssPortal.Models.Views;
 
 namespace EssPortal.Concrete
 {
@@ -31,8 +31,7 @@ namespace EssPortal.Concrete
         public DbSet<Amendment> Amendments { get; set; }
         public DbSet<RequestType> RequestTypes { get; set; }
         public DbSet<OrderStageType> OrderStageTypes { get; set; }
-        public DbSet<Employee> EmployeeInfoView { get; set; }
-        public DbSet<Housing> Housings { get; set; } 
+        public DbSet<Employee> EmployeeInfoView { get; set; } 
         public DbSet<Purchases> Purchases { get; set; }
         public DbSet<PurchasesDetails> PurchasesDetails { get; set; }
         public DbSet<PurchasesStage> PurchasesStages { get; set; }
@@ -42,12 +41,18 @@ namespace EssPortal.Concrete
         public DbSet<SystemCodes> SystemCode { get; set; }
         public DbSet<operation> Operations { get; set; }
         public DbSet<operationPermission> OperationPermissions { get; set; }
-
+        public DbSet<PortalSetting> PortalSettings { get; set; }
+        public DbSet<Evaluation> Evaluations { get; set; }
+        public DbSet<EvaluationCharterItem> evaluationCharterItems { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<EmailsNotification> EmailsNotifications { get; set; }
+        
         //Dyanmic AX
         public DbSet<BankInfo> bankInfos { get; set; }
 
         //view
         public DbSet<Product> Products { get; set; }
+        public DbSet<VactionTypesView> VactionTypesViews { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

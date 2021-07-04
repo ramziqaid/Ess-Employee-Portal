@@ -6,9 +6,9 @@ export class AdminAuthGuardService implements CanActivate {
 
     constructor(private router: Router) { }
 
-    canActivate() {
-
+    canActivate() { 
         if (localStorage.getItem('AdminUser')) {
+            console.log('AdminUser Area');
             // logged in so return true
             return true;
         }

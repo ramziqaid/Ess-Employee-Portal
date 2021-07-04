@@ -1,0 +1,146 @@
+<div class="m-333">
+  <button mat-raised-button class="mb-8 btn background2" color="primary"  [routerLink]="['/Evaluation/EvalEmployee', -1]" >
+    <mat-icon>add</mat-icon>
+    {{"ADD_EVALUATION" | translate }}     
+    <span class="glyphicon glyphicon-envelope"></span> 
+  </button>
+</div>
+<mat-card>
+ 
+  <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+  
+  <div fxLayout="row wrap">
+  
+    <div fxFlex="100" fxFlex.gt-xs="100"  class="pr-16 borderDiv"> 
+  <div fxFlex="100" fxFlex.gt-xs="33" class="pr-16">
+      <div class="pb-16">  
+        <mat-label>{{ "SEARCH_ON" | translate }}   </mat-label>  
+        <mat-radio-group aria-label="Select an option" 
+        required [(ngModel)]="this.myOrder" name="myOrder"
+        #refMyOrder="ngModel" 
+        (selectionChange)="myOrderChange($event)" >
+          <mat-radio-button value="0"  >{{ "MY_ORDERS" | translate }}  </mat-radio-button>
+          <mat-radio-button value="1"> {{ "MY_EMPLOYEE" | translate }}  </mat-radio-button>
+        </mat-radio-group>
+      </div>   
+      <small *ngIf="!refMyOrder.valid  && (refMyOrder.dirty || refMyOrder.touched) && !editMode" class="form-error-msg">
+        <small [hidden]="!refMyOrder.errors.required">
+          {{ "FILED_IS_REQUIRED" | translate }}
+        </small>
+      </small>    
+      </div>
+ 
+      <div class="pb-16" fxFlex="100" fxFlex.gt-xs="20">
+        <employeeList #employeeList   (employeeSelect)="employeeSelect($event)" [required]="true"
+          [employee]="this.employeeID" [editMode]="this.myOrder=='0'"  
+           [addAllText]="true">
+        </employeeList>  
+      </div>
+
+      <div class="pb-16" fxFlex="100" fxFlex.gt-xs="5">
+      </div>
+
+      <div class="pb-16" fxFlex="100" fxFlex.gt-xs="20">
+        <mat-form-field class="full-width">  
+        <mat-label>{{ "EVALPERIOD" | translate }}   </mat-label>  
+        <mat-select required name="EvalPeriod" #refEvalPeriod="ngModel"  
+         id="evalPeriod" 
+         (selectionChange)="evalPeriodChange($event)"         
+         [(ngModel)]="this.evalPeriodID">
+          <mat-option *ngFor="let item of evalPeriod" [value]="item.EvalPeriodID">
+             {{  item.NamePeriod  }} 
+          </mat-option>
+        </mat-select>
+      
+        <small *ngIf="!refEvalPeriod.valid  && (refEvalPeriod.dirty || refEvalPeriod.touched) && !editMode" class="form-error-msg">
+          <small [hidden]="!refEvalPeriod.errors.required">
+            {{ "FILED_IS_REQUIRED" | translate }}
+          </small>
+        </small>
+      </mat-form-field>
+    </div> 
+    <div class="pb-16" fxFlex="100" fxFlex.gt-xs="5">
+    </div>
+ 
+    <div fxFlex="100" fxFlex.gt-xs="10" class="pr-16">
+            <div class="pb-16">  
+              <button 
+              mat-raised-button 
+              [disabled]="heroForm.invalid"
+              color="primary" 
+              class="btn background2"
+              >{{ "SEARCH" | translate }} </button>
+            </div>  
+    </div>
+    </div>    
+          
+  </div>
+
+</form>
+</mat-card>
+
+ 
+
+<div class="ml-8 mr-8 mt-8 pb-16 borderDiv">
+  <div class="mat-elevation-z8 ">
+ 
+      <mat-table [dataSource]="dataSource" matSort >
+
+        <ng-container matColumnDef="index">
+          <mat-header-cell *matHeaderCellDef class="background1"> {{ "INDEX" | translate }}  </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+        </ng-container>
+
+          <ng-container matColumnDef="number">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "NUMBER" | translate }}  </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="number"> {{row.EvaluationID}} </mat-cell>
+          </ng-container> 
+
+          <ng-container matColumnDef="employeeName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>   {{ "EMPLOYEE_NAME" | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="employeeName">
+              {{(authService.currentLang=="1")? row.EnglishName : row.ArabicName }} 
+               </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="namePeriod">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>   {{ "EVALPERIOD" | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="NamePeriod">
+              {{row.NamePeriod }} 
+               </mat-cell>
+          </ng-container>  
+      
+          <ng-container matColumnDef="evaluationStauts">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "EVAL_STATUS" | translate }}  </mat-header-cell>            
+            <mat-cell *matCellDef="let row" data-label="evaluationStauts">
+              {{(authService.currentLang=="1")? row.EvaluationStautsAr : row.EvaluationStautsAr }} 
+               </mat-cell>
+          </ng-container>  
+
+          <ng-container matColumnDef="createdDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "CREATED_DATE" | translate }}  </mat-header-cell>            
+            <mat-cell *matCellDef="let row" data-label="createDate">
+              {{  row.CreatedDate }} 
+               </mat-cell>
+          </ng-container>  
+          
+
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row;" [style.color]="row.color" data-label="color">           
+              <button mat-icon-button mat-sm-button color="primary" aria-label="reset" class="mr-16"                
+              [routerLink]="['/Evaluation/EvalEmployee', row.EvaluationID]"
+                  title='{{ "VIEW" | translate }}'  [queryParams]="{debug: true}">
+                <mat-icon>visibility</mat-icon>
+              </button>             
+            </mat-cell>
+          </ng-container> 
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns; let cIndex = index;">
+          </mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+   
+  </div>
+</div>

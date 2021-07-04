@@ -1,0 +1,63 @@
+<button 
+  mat-raised-button
+  color="warn"  
+  type="button" 
+  [disabled]="disabled" 
+  matTooltip='{{ "ATTACHMENTS" | translate }}'
+  (click)="openPopUp()" title={{text}}
+  >
+ 
+  <ng-template [ngIf]="text" [ngIfElse]="uploadText">
+    <i class="fa fa-paperclip" aria-hidden="true"></i>
+    <span> {{text}}</span>
+    <mat-icon>attachment</mat-icon> 
+  </ng-template>
+
+  <ng-template #uploadText>
+    <i class="fa fa-paperclip" aria-hidden="true"></i>
+    <mat-icon>attachment</mat-icon> 
+  </ng-template>
+
+</button>
+
+<ng-template #templateUploadFile>
+
+  <div class="modal-header">
+    <h4 class="modal-title">  {{ "MANAGEATTACHMENTS" | translate }}  {{referenceID}}</h4> 
+  </div>
+
+  <app-upload [disabled]="showProgress" *ngIf="canAddRemove" (uploadStatus)="uploadStatus($event)"
+    [referenceID]="referenceID"></app-upload>
+   
+  <p *ngIf="showProgress"> progress <strong>{{percentage}}%</strong></p>
+  <label class="error" [hidden]="!showDownloadError">Error in download</label>
+  <label class="error" [hidden]="!showUploadError">{{message}}</label>
+  <hr>
+  
+  <div class="container">
+    <ul>
+      <li *ngFor="let file of files">
+        <a>
+          <div style="font-size: 12px; float: left; width: 60%;margin-top: 8px;">
+            {{file.fileName}}
+          </div>
+          <app-download #editTemplate [disabled]="showProgress" [attachmentID]="file.attachmentID"
+            [fileName]="file.fileName" (downloadStatus)="downloadStatus($event)" (deleteFile)="removeRow()"
+            [canRemove]="canAddRemove">
+          </app-download>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <mat-divider></mat-divider>
+  <div fxFlex="100" class="mt-16" style="text-align: center;"> 
+    <span fxFlex></span>
+    <button  mat-raised-button
+     color="warn"  type="button" (click)="closePopUp()">{{ "CLOSE" | translate }}</button>
+  </div>
+  
+</ng-template>
+
+ 
+ 
+ 

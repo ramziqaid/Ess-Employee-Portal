@@ -1,0 +1,103 @@
+
+
+<mat-card class="p-0">
+  <mat-card-title class="">
+      
+      <mat-divider></mat-divider>
+       
+        <actionBar  
+         [disabled]="!heroForm.form.valid" 
+          (newAction)="newClick()"
+          (editAction)="edit()" 
+          (saveAction)="save()" 
+          (deleteAction)="delete()"
+           (cancelAction)="reset()" 
+           [referenceID]="requestID"
+           [showPrint]="false"
+           (onUploadFinishedFire)="uploadFinished($event)" 
+           >
+          </actionBar> 
+          <mat-divider></mat-divider>
+       
+  </mat-card-title>
+  <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm" novalidate>
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+ 
+                <div class="pb-16" > 
+                  <employeeList   (employeeSelect)="employeeSelect($event)"
+                  [empoyeeList]= "this.empoyeeList" 
+                  [employee]="this.employeeID" [editMode]="true">
+                </employeeList>   
+                </div>
+
+                    <div class="pb-16">  
+                      <mat-form-field class="full-width" appearance="fill"> 
+                        <mat-label> {{ "FROM_DATE" | translate }}   </mat-label> 
+                          <input 
+                          matInput
+                          name="FromDate" 
+                          id="FromDate"  
+                          #refFromDate="ngModel"
+                          [(ngModel)]="bsFromDate" 
+                          required  
+                          [disabled]="editMode"
+                          [matDatepicker]="appDatepicker">
+                        
+                          <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle> 
+                          <mat-datepicker touchUi #appDatepicker ></mat-datepicker>  
+                      </mat-form-field>
+                     
+                    <small *ngIf="!refFromDate.valid  && (refFromDate.dirty || refFromDate.touched) && !editMode" class="form-error-msg">
+                      <small [hidden]="!refFromDate.errors.required">
+                        {{ "FILED_IS_REQUIRED" | translate }}
+                      </small>
+                    </small>
+                  </div>  
+               
+           
+              </div> 
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-16"> 
+
+                <div class="pb-16" >
+                  <mat-form-field class="full-width" appearance="fill"> 
+                     <input
+                     matInput
+                     name="requsetPrivateNumber"
+                     id="requsetPrivateNumber" 
+                     placeholder=" {{ 'ORDER_NUMBER' | translate }} "
+                     [disabled]="true"
+                     [(ngModel)]=" this.newObj.request.requsetPrivateNumber"  
+                     >
+                 </mat-form-field>  
+               </div>
+
+                 
+          </div>  
+
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16"> 
+                  <div class="pb-16">
+                    <mat-form-field class="full-width" appearance="fill">   
+                      <mat-label>{{ "COMPLAIN_TEXT" | translate }} </mat-label>
+                        <textarea matInput 
+                        id="textarea-input"   rows="2" class="form-control" name="Justification"
+                        [disabled]="editMode"
+                           [(ngModel)]="this.justification" maxlength="500"
+                          #refJustification="ngModel" id="Justification" required>
+                          </textarea>  
+                          <small *ngIf="!refJustification.valid  && (refJustification.dirty || refJustification.touched) && !editMode" class="form-error-msg">
+                            <small [hidden]="!refJustification.errors.required">
+                              {{ "FILED_IS_REQUIRED" | translate }}
+                            </small>
+                          </small>  
+                    </mat-form-field>
+                  </div> 
+                </div>
+          </div>
+           
+      </form>
+  </mat-card-content>
+</mat-card>
+ 

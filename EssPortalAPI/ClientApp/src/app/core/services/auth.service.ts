@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, BehaviorSubject } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { LoginModel } from '../../views/login/Models/app.LoginModel';
+//import { LoginModel } from '../../views/login/Models/app.LoginModel';
 import { Router } from '@angular/router';
+//import jwt_decode from 'jwt-decode';
 import * as jwt_decode from "jwt-decode";
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment'; 
 
 
 @Injectable()
@@ -24,7 +25,7 @@ export class AuthService {
     private UserRole = new BehaviorSubject<string>(localStorage.getItem('userRole'));
 
 
-    public Login(loginmodel: LoginModel) {
+    public Login(loginmodel: any) {
 
         // this._http.get<any>('http://localhost:4800/RamziAPI/api/Default').pipe().subscribe(
         //     res => {
@@ -44,7 +45,7 @@ export class AuthService {
                     if (data.token != null) {
                         this.loginStatus.next(true);
                         this.decodedToken = jwt_decode(data.token)
-                        this.userToken = data.token;
+                        this.userToken = data.token; 
                         localStorage.setItem('loginStatus', '1');
                         localStorage.setItem('jwtToken', data.token);
                         localStorage.setItem('username', data.username);
@@ -52,6 +53,7 @@ export class AuthService {
                         localStorage.setItem('userRole', data.userRole);
                         localStorage.setItem('EmployeeId', data.employeeId);
                         localStorage.setItem('Email', data.email);
+                        //localStorage.setItem('UserId', data.nameid);                        
                         localStorage.setItem('EmployeeName', data.employeeName);
 
                         this.UserName.next(localStorage.getItem('username'));
@@ -91,9 +93,10 @@ export class AuthService {
         localStorage.setItem('loginStatus', '0');
         localStorage.removeItem('currentUser');
         localStorage.removeItem('AdminUser');
-        localStorage.removeItem('UserId');
-        // this.router.navigate(['/login']);
+        localStorage.removeItem('UserId');  
+        localStorage.removeItem('EmployeeName');  
         console.log("Logged Out Successfully");
+        //this._Route.navigate(['/login']); 
 
     }
 
@@ -140,11 +143,15 @@ export class AuthService {
     logginUserID() {
         // Get and Decode the Token
         const token = localStorage.getItem('jwtToken');
+        
+        if (token=== null || token === undefined) {
+            return undefined;
+        }
         const decoded = jwt_decode(token);
         // Check if the cookie is valid
 
         if (decoded.nameid === undefined) {
-            return -1;
+            return undefined;
         }
         return Number(decoded.nameid);
     }
@@ -160,17 +167,44 @@ export class AuthService {
         return String(decoded.unique_name);
     }
 
-    get userEmployeeId() {
-        if (localStorage.getItem('EmployeeId') === null || localStorage.getItem('EmployeeId') === undefined) {
+    logginEmployeeId() {
+        if (localStorage.getItem('EmployeeId') === null || localStorage.getItem('EmployeeId') === undefined || localStorage.getItem('EmployeeId') == 'undefined') {
             return null;
         }
         return Number(localStorage.getItem('EmployeeId'));
-    }
+    } 
+ 
+    // get userId() {
+    //     const token = localStorage.getItem('jwtToken');
+    //     if (token=== null || token === undefined) {
+    //         return undefined;
+    //     }
+    //     const decoded = jwt_decode(token);
+    //     // Check if the cookie is valid 
+    //     if (decoded.nameid === undefined) {
+    //         return undefined;
+    //     }
+    //     // if (localStorage.getItem('UserId') === null || localStorage.getItem('UserId') === undefined || localStorage.getItem('UserId') == 'undefined') {
+    //     //     return null;
+    //     // }
+        
+    //     console.log(decoded.nameid);
+    //     return Number(decoded.nameid);
+    // }
 
     get isLoggesIn() {
         return this.loginStatus.asObservable();
     }
 
+    get isAdminUser() {
+        if (localStorage.getItem('AdminUser')) { 
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    
     get currentUserName() {
         return this.UserName.asObservable();
     }
@@ -179,8 +213,16 @@ export class AuthService {
         return this.UserRole.asObservable();
     }
 
-    get currenEmployeeName() {
+    get currenEmployeeName() { 
+        if (localStorage.getItem('EmployeeName') === null || localStorage.getItem('EmployeeName') === undefined || localStorage.getItem('EmployeeName') == 'undefined') {
+            return null;
+        }
         return localStorage.getItem('EmployeeName');
+    }
+
+    get currentLang(){
+        var dir=localStorage.getItem('dir');
+        return (dir === "ltr"  ? "1": "2");
     }
 
     private handleError(error: HttpErrorResponse) {

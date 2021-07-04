@@ -13,7 +13,7 @@ namespace EssPortal.Models
     {
         [Key]
         public int UserId { get; set; }
-        public Int64 EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
         [NotMapped]
         public string EmployeeNumber { get; set; }
         [NotMapped]
@@ -21,8 +21,10 @@ namespace EssPortal.Models
         [NotMapped]
         public string EmployeeNameEn { get; set; }
 
+        [Required]
         public string UserName { get; set; }
         public string FullName { get; set; }
+        [Required]
         public string EmailId { get; set; }
         public string Contactno { get; set; }
  

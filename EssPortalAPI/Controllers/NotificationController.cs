@@ -29,8 +29,8 @@ namespace EssPortalAPI.Controllers
 
         // GET: api/CreateRole
         [HttpGet]
-        [Route("GetNotification/{UserId}")]
-        public async Task<IActionResult> Get(int userId)
+        [Route("GetNotification/{UserId}/{NotType}")]
+        public async Task<IActionResult> Get(int userId,String NotType)
         {
             var CurrentuserId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (CurrentuserId !=userId)
@@ -39,14 +39,30 @@ namespace EssPortalAPI.Controllers
             }
             try
             {
-               List< Notification> notifications= await  _notificationRepository.GetNotification(userId);
-                return Ok(notifications);
+               IEnumerable<object> notifications = await  _notificationRepository.GetNotification(userId, NotType);
+               return Ok(notifications);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-        } 
+        }
+
+        // GET: api/CreateRole
+        [HttpPost]
+        [Route("HideNotification/{ID}")]
+        public async Task<IActionResult> HideNotification(int ID)
+        { 
+            try
+            {
+               await _notificationRepository.HideNotification(ID);
+               return Ok(); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }

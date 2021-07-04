@@ -1,0 +1,100 @@
+
+<div fxLayout="row wrap" fxLayout.lt-sm="column">  
+  <div fxFlex="50" class="mt-16">   
+    <h1 matDialogTitle>{{"ORDER_STAGE_DETAILS" | translate }}</h1> 
+  </div>
+</div>
+
+<div class="ml-8 mr-8 mt-8 pb-16">
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort >
+
+          <ng-container matColumnDef="index">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "INDEX" | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="employeeName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'EMPLOYEE_NAME' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="progress"  > 
+              {{(data.currentLang=="1")? row.EmpActionEnglishName : row.EmpActionArabicName }} 
+             </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'TYPE_ACTION' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="name"> 
+              {{(data.currentLang=="1")? row.ActionTypeEN : row.ActionTypeAR }} </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="createdDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.color]="row.color" data-label="color">   
+              {{row.CreateDate }} 
+             </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="note">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'JUSTIFICATION' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.color]="row.color" data-label="color">
+              {{row.Justification }}</mat-cell>
+          </ng-container> 
+          
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns; let i = index">
+          </mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>
+
+
+ 
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">  
+    <div fxFlex="100" class="mt-16">   
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)"> {{ 'CLOSE' | translate }}</button>
+    </div>
+  </div>
+  
+ 
+  <!-- <ngx-datatable
+  class="material ml-0 mr-0"
+  [rows]="items"
+  [columnMode]="'flex'"
+  [headerHeight]="50"
+  [footerHeight]="50" 
+  [limit]="10"
+  [rowHeight]="50">
+  >
+ 
+  
+  <ngx-datatable-column name="Index"   [flexGrow]="0.5">
+    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+      <strong>{{ rowIndex +1}}</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name=" {{ 'EMPLOYEE_NAME' | translate }}" [flexGrow]="2" >
+    <ng-template let-row="row"   ngx-datatable-cell-template>
+      {{(data.currentLang=="1")? row.EmpActionEnglishName : row.EmpActionArabicName }} 
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name=" {{ 'TYPE_ACTION' | translate }}"  [flexGrow]="2" >
+    <ng-template let-row="row"  ngx-datatable-cell-template>
+      {{(data.currentLang=="1")? row.ActionTypeEN : row.ActionTypeAR }} 
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name=" {{ 'DATE' | translate }}" [flexGrow]="1"  >
+    <ng-template let-row="row"   ngx-datatable-cell-template>
+      {{row.CreateDate }} 
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name=" {{ 'JUSTIFICATION' | translate }}" [flexGrow]="2"  >
+    <ng-template let-row="row"   ngx-datatable-cell-template>
+      {{row.Justification }} 
+    </ng-template>
+  </ngx-datatable-column>
+  
+  </ngx-datatable>
+  -->

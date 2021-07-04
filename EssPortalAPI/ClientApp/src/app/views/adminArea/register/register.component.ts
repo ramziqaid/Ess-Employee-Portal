@@ -1,8 +1,9 @@
-import { AdminService } from './../Services/admin.service';
+import { AuthService } from './../../../core/services/auth.service';
+import { AdminService } from '../Services/admin.service';
 import { OnInit, Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { UserModel } from '../Models/adminModel';
-import { Employee } from '../../../Shared/_models';
+import { Employee } from './../../../shared/models/common.model';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AlertifyService, EssPortalService } from '../../../core';
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private userService: AdminService,
+    private authService: AuthService,
     private alertify: AlertifyService,
     private EssPortalService: EssPortalService,
     private _routeParams: ActivatedRoute) {
@@ -89,25 +91,25 @@ export class RegisterComponent implements OnInit {
   }
 
   getEmployees() {
-    // this.emp.getEmployees().subscribe(
-    //   result => {
-    //     this.empoyeeList = result;
-    //   },
-    //   error => console.log(error)
-    // );
+    this.EssPortalService.getEmployees().subscribe(
+      result => {
+        this.empoyeeList = result;
+      },
+      error => console.log(error)
+    );
 
-    forkJoin([this.EssPortalService.getEmployees(), this.EssPortalService.getClient()]).subscribe(results => {
-      this.empoyeeList = results[0];
-      this.client = results[1];
-      for (let i = 0; i < this.client.length; i++) {
-        let Employee2 = new Employee();
-        Employee2.employeeID = this.client[i].ID;
-        Employee2.arabicName = this.client[i].NameAR;
-        Employee2.englishName = this.client[i].NameEN;
-        this.empoyeeList.push(Employee2);
-      }
-    }
-    )
+    // forkJoin([this.EssPortalService.getEmployees(), this.EssPortalService.getClient()]).subscribe(results => {
+    //   this.empoyeeList = results[0];
+    //   this.client = results[1];
+    //   for (let i = 0; i < this.client.length; i++) {
+    //     let Employee2 = new Employee();
+    //     Employee2.employeeID = this.client[i].ID;
+    //     Employee2.arabicName = this.client[i].NameAR;
+    //     Employee2.englishName = this.client[i].NameEN;
+    //     this.empoyeeList.push(Employee2);
+    //   }
+    // }
+    // )
   }
 
   onSubmit() {

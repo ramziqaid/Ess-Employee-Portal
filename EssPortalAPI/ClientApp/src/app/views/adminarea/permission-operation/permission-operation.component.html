@@ -1,0 +1,75 @@
+ 
+<mat-card class="p-0">
+  <mat-card-title class="">
+      <div class="card-title-text"> {{ "USER_ROLES" | translate }}
+      </div>
+      <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+
+   
+          <div fxLayout="row wrap"> 
+              <div fxFlex="100" fxFlex.gt-xs="50">
+
+                <div class="pb-16">
+                  <mat-form-field class="full-width"> 
+                    <mat-select  
+                    name="roleId"   
+                    [(ngModel)]="permission.roleId"
+                    required
+                    (selectionChange)='SelectRole()' 
+                     placeholder="{{ 'PLEASE_SELECT_ROLE'| translate }}"  >
+                      <mat-option  *ngFor="let role of RoleTypeList" [value]="role.roleId"> 
+                        {{  role.roleName   }} 
+                      </mat-option>
+                    </mat-select>  
+                  </mat-form-field>  
+                </div>  
+           
+              </div>
+
+          </div> 
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16">
+         
+          <div class="ml-8 mr-8 mt-8 pb-16">
+            <div class="mat-elevation-z8">
+                <mat-table [dataSource]="DataSource1" matSort >
+          
+                  <ng-container matColumnDef="index">
+                    <mat-header-cell class="w-75" *matHeaderCellDef> {{ "INDEX" | translate }}  </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="operationName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>   {{ "OPERATION_NAME" | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="operationName">  
+                      {{(authService.currentLang=="1")? row.operationNameEn :row.operationNameAr }} 
+                    </mat-cell>
+                  </ng-container> 
+          
+                  <ng-container matColumnDef="active">
+                    <mat-header-cell *matHeaderCellDef>{{ "ACTIVE" | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let row; " [style.color]="row.color" data-label="color"> 
+                      <mat-checkbox (change)="changeStatus(row.operationID,!row.check)" [checked]="row.check"></mat-checkbox>
+                     
+                    </mat-cell>
+                  </ng-container> 
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns1; let cIndex = index;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator #paginator1 [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+          </div>   
+          </div>  
+
+      
+  </mat-card-content>
+</mat-card>
+ 
+ 
+

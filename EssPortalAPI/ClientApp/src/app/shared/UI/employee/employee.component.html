@@ -1,0 +1,57 @@
+ 
+
+<mat-form-field appearance="full-width" appearance="fill">
+  <mat-label> {{ labelName   | translate }}  </mat-label>
+
+  <mat-select 
+  [required]="required" 
+  name="Employee" 
+  (selectionChange)='SelectEmoployee()'
+  [disabled]="editMode" 
+  [(ngModel)]="this.employeeID" 
+  #refEmployeeID="ngModel" 
+  [(value)]="this.employeeID">
+    <mat-option *ngFor="let emp of empoyeeList" [value]="emp.employeeID" > 
+      {{ (authService.currentLang=="1")? (emp.personnelnumber +' ' + emp.englishName)
+       :(emp.personnelnumber +' ' + emp.arabicName) }} 
+    </mat-option>
+  </mat-select>
+
+  <small *ngIf="!refEmployeeID.valid  && (refEmployeeID.dirty || refEmployeeID.touched)" class="form-error-msg">
+    <div [hidden]="!refEmployeeID.errors.required">
+      {{ "FILED_IS_REQUIRED" | translate }}
+    </div>
+  </small> 
+
+</mat-form-field>  
+
+<!-- <form [formGroup]="patientCategory">
+  <mat-form-field class="full-width">
+    <mat-select placeholder="Category" formControlName="patientCategory">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let emp of empoyeeList" [value]="emp.employeeID" > 
+        {{ (authService.currentLang=="1")? (emp.personnelnumber +' ' + emp.englishName)
+         :(emp.personnelnumber +' ' + emp.arabicName) }} 
+      </mat-option>
+    </mat-select>
+  </mat-form-field>  
+   
+  </form> -->
+  
+
+
+<!-- <mat-form-field class="example-full-width">
+  <mat-label>Number</mat-label>
+  <input type="text"
+         placeholder="Pick one"
+         aria-label="Number"
+         matInput
+         [formControl]="myControl"
+         [matAutocomplete]="auto">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let emp of empoyeeList | async" [value]="emp">
+      {{(auth.currentLang=="1")? emp.englishName :emp.arabicName }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+  -->
