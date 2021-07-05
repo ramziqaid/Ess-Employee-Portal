@@ -48,6 +48,7 @@
     <ProjectReference Include="..\EssPortal.Interface\EssPortal.Interface.csproj" />
     <ProjectReference Include="..\EssPortal.Models\EssPortal.Models.csproj" />
     <ProjectReference Include="..\EssPortal.ViewModels\EssPortal.ViewModels.csproj" />
+    <ProjectReference Include="..\LoggerServices\LoggerServices.csproj" />
   </ItemGroup>
 
 

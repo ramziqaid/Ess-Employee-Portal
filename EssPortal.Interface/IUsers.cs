@@ -15,7 +15,7 @@ namespace EssPortal.Interface
         bool UpdateUsers(Users users, string Password);
         bool UpdateUsersStatus(Users user);
         bool ChangePassword(UsersChangePasswordViewModel usersChangePasswordViewModel);
-         bool ResetPassword(int userid);
+        bool ResetPassword(int userid);
 
         List<Users> GetAllUsers();
         Users AuthenticateUsers(string username, string password);

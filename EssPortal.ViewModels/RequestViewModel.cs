@@ -17,7 +17,6 @@ namespace EssPortal.ViewModels
         public List<RequestExtraField> RequestExtraFields { get; set; }
 
         public List<Attachment> attachments { get; set; }
-        public List<Amendment> amendments { get; set; }  
     }
 
 }

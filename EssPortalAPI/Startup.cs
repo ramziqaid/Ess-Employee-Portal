@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using EssPortal.Concrete;
 using EssPortal.Interface;
 using EssPortal.Interfaces;
 using EssPortalAPI.Email;
+using EssPortalAPI.ExtensionServices;
 using EssPortalAPI.Models;
 using EssPortalAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,18 +30,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog;
 
 namespace EssPortalAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
 
+        public Startup(IConfiguration configuration)
+        {
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "nLog.config"));
+            Configuration = configuration;
+        }
+       
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -94,32 +98,8 @@ namespace EssPortalAPI
                 };
             });
 
-            
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddTransient<ISchemeMaster, SchemeMasterConcrete>();
-            services.AddTransient<IPlanMaster, PlanMasterConcrete>();
-            services.AddTransient<IPeriodMaster, PeriodMasterConcrete>();
-            services.AddTransient<IRole, RoleConcrete>();
-            services.AddTransient<IMemberRegistration, MemberRegistrationConcrete>();
-            services.AddTransient<IUsers, UsersConcrete>();
-            services.AddTransient<IUsersInRoles, UsersInRolesConcrete>();
-            services.AddTransient<IPaymentDetails, PaymentDetailsConcrete>();
-            services.AddTransient<IRenewal, RenewalConcrete>();
-            services.AddTransient<IReports, ReportsMaster>();
-            services.AddTransient<IGenerateRecepit, GenerateRecepitConcrete>();
-            services.AddTransient<IEmployeeRepository, EmployeesConcrete>();
-            services.AddTransient<IRequestTypeRepository, RequestTypeConcrete>();            
-            services.AddTransient<IRequestRepository, RequestConcrete>();
-            services.AddTransient<ISystemCodeRepository, SystemCodeConcrete>();
-            services.AddTransient<IPurchasesRepository, PurchasesConcrete>();
-            services.AddTransient<IAXInfoRepository, AXInfoConcrete>();
-            services.AddTransient<IAttachmentRepository, AttachmentConcrete>();
-            services.AddTransient<IOperationPermissionRepository, OperationPermissionConcrete>();
-            services.AddTransient<IOperationRepository, OperationConcrete>();
-            services.AddTransient<IPurchasesStageTypeRepository, PurchasesStageTypeConcrete>();
-            services.AddTransient<INotificationRepository, NotificationConcrete>();
-            services.AddTransient<IEvaluationRepository, EvaluationConcrete>();
+            services.CreateServices();
 
 
             services.AddScoped<IUrlHelper>(implementationFactory =>

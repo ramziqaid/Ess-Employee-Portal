@@ -15,20 +15,13 @@ namespace EssPortal.Concrete
         {
             
         }
-
-        public DbSet<SchemeMaster> SchemeMaster { get; set; }
-        public DbSet<PeriodTB> PeriodTb { get; set; }
-        public DbSet<PlanMaster> PlanMaster { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<MemberRegistration> MemberRegistration { get; set; }
+         
+        public DbSet<Role> Role { get; set; } 
         public DbSet<Users> Users { get; set; }
-        public DbSet<UsersInRoles> UsersInRoles { get; set; }
-        public DbSet<PaymentDetails> PaymentDetails { get; set; }
-
+        public DbSet<UsersInRoles> UsersInRoles { get; set; }  
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestStage> RequestStages { get; set; }
-        public DbSet<RequestExtraField> RequestExtraFields { get; set; }
-        public DbSet<Amendment> Amendments { get; set; }
+        public DbSet<RequestExtraField> RequestExtraFields { get; set; } 
         public DbSet<RequestType> RequestTypes { get; set; }
         public DbSet<OrderStageType> OrderStageTypes { get; set; }
         public DbSet<Employee> EmployeeInfoView { get; set; } 

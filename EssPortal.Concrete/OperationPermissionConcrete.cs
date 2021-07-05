@@ -73,14 +73,7 @@ namespace EssPortal.Concrete
             }
 
         }
-        public List<MemberRegistrationGridModel> GetMemberList()
-        {
-            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
-            {
-                return con.Query<MemberRegistrationGridModel>("sprocMemberRegistrationSelectList", null, null, true, 0, commandType: CommandType.StoredProcedure).ToList();
-            }
-        }
-
+        
         public bool RemovePermission(operationPermission obj)
         {
             var role = (from operationPermission in _context.OperationPermissions
