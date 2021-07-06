@@ -223,6 +223,10 @@ namespace EssPortal.Concrete
             }
         }
 
+        public IRequestStageRepository requestStageRepository => throw new NotImplementedException();
+
+        public IRequestExtraFieldsRepository requestExtraFieldsRepository => throw new NotImplementedException();
+
         public async Task<bool> SaveChangesAsync()
         {
             var result = await _context.SaveChangesAsync();

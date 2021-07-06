@@ -25,7 +25,8 @@ namespace EssPortal.Interface
         IEvaluationRepository evaluationRepository { get; }
         IPortalSettingRepository portalSettingRepository { get; }
         IEmailsNotificationsRepository emailsNotificationsRepository { get; }
-
+        IRequestStageRepository requestStageRepository { get; }
+        IRequestExtraFieldsRepository requestExtraFieldsRepository { get; }
         Task<bool> SaveChangesAsync();
     }
 }
