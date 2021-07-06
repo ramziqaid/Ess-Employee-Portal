@@ -67,7 +67,7 @@ export class ClearanceComponent implements OnInit {
 
     this.loadEmployees();
     this.loadclearanceType();
-
+    this.newObj = this.getEmptyObject();
     if (this.requestID > 0) {
       this.title = "Edit";
       this.loadRequest(this.requestID);

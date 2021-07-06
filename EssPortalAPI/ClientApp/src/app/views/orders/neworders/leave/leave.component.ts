@@ -79,7 +79,7 @@ export class LeaveComponent implements OnInit {
 
     this.loadEmployees();
     this.loadVacationType();
-
+    this.newObj = this.getEmptyObject();
     if (this.requestID > 0) {
       this.title = "Edit";
       this.loadRequest(this.requestID);

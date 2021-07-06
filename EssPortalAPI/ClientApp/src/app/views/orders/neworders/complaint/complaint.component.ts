@@ -58,7 +58,7 @@ export class ComplaintComponent implements OnInit {
 
   ngOnInit() {
     this.loadEmployees();
-    //this.newObj = this.getEmptyObject();
+    this.newObj = this.getEmptyObject();
 
     if (this.requestID > 0) {
       this.title = "Edit";

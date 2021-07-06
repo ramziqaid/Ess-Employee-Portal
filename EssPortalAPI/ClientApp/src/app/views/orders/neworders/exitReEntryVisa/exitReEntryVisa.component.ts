@@ -71,7 +71,7 @@ export class ExitReEntryVisaComponent implements OnInit {
 
     this.loadEmployees();
     this.loadVisaDLL();
-
+    this.newObj = this.getEmptyObject();
     if (this.requestID > 0) {
       this.title = "Edit";
       this.loadRequest(this.requestID);

@@ -67,7 +67,7 @@ export class LoanComponent implements OnInit {
 
     this.loadEmployees();
     this.loadLoanType();
-
+    this.newObj = this.getEmptyObject();
     if (this.requestID > 0) {
       this.title = "Edit";
       this.loadRequest(this.requestID);
@@ -117,8 +117,8 @@ export class LoanComponent implements OnInit {
       this.addUpdateExtraField(8, this.loanTypeID);
       this.addUpdateExtraField(45, this.loanTypeCode);
       this.addUpdateExtraField(9, dateToDB);//LoanStartDate
-      this.addUpdateExtraField(10, this.loanAmount);
-      this.addUpdateExtraField(13, this.noOfInstallmen);
+      this.addUpdateExtraField(10, Number(this.loanAmount));
+      this.addUpdateExtraField(13, Number(this.noOfInstallmen));
       this.addUpdateExtraField(15, this.justification);
 
       let numb = this.loanAmount / this.noOfInstallmen;
