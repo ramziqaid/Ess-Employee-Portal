@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interfaces\IUnitOfWork.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EssPortal.Models\EssPortal.Models.csproj" />
     <ProjectReference Include="..\EssPortal.ViewModels\EssPortal.ViewModels.csproj" />
   </ItemGroup>

@@ -21,18 +21,24 @@ using Microsoft.AspNetCore.Mvc;
 namespace EssPortal.Concrete
 {
     public class RequestConcrete : GenericRepository<Request>, IRequestRepository
-    {
-        //  private readonly UserManager<IdentityUser> _userManager;
-        // private readonly DatabaseContext _context;
+    { 
         private readonly IConfiguration _configuration;
-        NotificationConcrete notificationConcrete;
-        EmailsNotificationConcrete emails;
-        public RequestConcrete(DatabaseContext context, IConfiguration configuration) : base(context)
+        private readonly NotificationConcrete notificationConcrete;
+        private readonly EmailsNotificationConcrete emails;
+        private readonly AttachmentConcrete attachmentConcrete;
+        private readonly EmployeesConcrete employeesConcrete;
+        private readonly RequestTypeConcrete requestTypeConcrete;
+       // private readonly IFactory _factory;
+        public RequestConcrete(DatabaseContext context, IConfiguration configuration ) : base(context)
         {
             // _context = context;
             _configuration = configuration;
+            //this._factory = factory;
             notificationConcrete = new NotificationConcrete(_context, _configuration);
             emails = new EmailsNotificationConcrete(_context, _configuration);
+            attachmentConcrete = new AttachmentConcrete(_context, _configuration);
+            employeesConcrete = new EmployeesConcrete(_context, _configuration);
+            requestTypeConcrete = new RequestTypeConcrete(_context, _configuration);
         }
 
 
@@ -50,7 +56,7 @@ namespace EssPortal.Concrete
                 paramater.Add("@StatusCode", orderStatusCode);
                 paramater.Add("@ShowMyEmployee", showMyEmployee);
 
-                return con.Query("[ess].GetOrder", paramater, null, true, 0, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return con.Query("[ess].LoadRequestListInfo", paramater, null, true, 0, commandType: System.Data.CommandType.StoredProcedure).ToList();
             }
 
         }
@@ -98,40 +104,7 @@ namespace EssPortal.Concrete
             //}
 
         }
-
-        //public async Task<RequestViewModel> GetRequestsWithAllData(int pRequestID, int UserID)
-        //{
-
-        //    RequestViewModel obj = new RequestViewModel();
-        //    using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
-        //    {
-        //        var paramater1 = new DynamicParameters();
-        //        paramater1.Add("@RequestID", pRequestID);
-        //        paramater1.Add("@UserID", UserID);
-
-        //        Request purchases = _context.Requests.Where(p => p.RequestID == pRequestID && p.UserID == UserID).FirstOrDefault();
-        //        //IEnumerable<Request> purchases = await con.QueryAsync<Request>("[ESS].LoadRequestInfo", paramater1, null, 0, commandType: CommandType.StoredProcedure);
-        //        if (purchases == null)
-        //        {
-        //            return obj;
-        //        }
-        //        IEnumerable<Amendment> amendment = _context.Amendments.Where(p => p.RequestID == pRequestID);
-        //        IEnumerable<Housing> housing = _context.Housings.Where(p => p.RequestID == pRequestID);
-        //        IEnumerable<RequestStage> requestStage = _context.RequestStages.Where(p => p.RequestID == pRequestID);
-        //        IEnumerable<RequestExtraField> extraFiled = _context.RequestExtraFields.Where(p => p.RequestID == pRequestID);
-
-
-        //        obj.request = purchases;
-        //        if (amendment != null) obj.amendments = amendment.ToList();
-        //        if (housing != null) obj.Housings = housing.ToList();
-        //        if (requestStage != null) obj.RequestStages = requestStage.ToList();
-        //        if (requestStage != null) obj.RequestExtraFields = extraFiled.ToList();
-
-        //        return obj;
-        //    }
-
-        //}
-
+         
         public async Task<RequestViewModel> GetRequestInfo(int pRequestID, int UserID)
         {
 
@@ -160,6 +133,8 @@ namespace EssPortal.Concrete
 
             requestVM.request.RequestID = 0;
             await _context.Requests.AddAsync(requestVM.request);
+           // await this._factory.requestRepository.AddAsyn(requestVM.request);
+
             foreach (RequestStage stage in requestVM.RequestStages)
             {
                 stage.RequestID = requestVM.request.RequestID;
@@ -172,10 +147,11 @@ namespace EssPortal.Concrete
                 obj.RequestExtraFieldID = 0;
             }
             await _context.AddRangeAsync(requestVM.RequestStages);
-            if (requestVM.RequestExtraFields != null) await _context.AddRangeAsync(requestVM.RequestExtraFields);
+            if (requestVM.RequestExtraFields != null) await _context.AddRangeAsync(requestVM.RequestExtraFields); 
+
             await _context.SaveChangesAsync();
 
-            AttachmentConcrete attachmentConcrete = new AttachmentConcrete(_context, _configuration);
+           
             if (requestVM.attachments != null)
             {
                 foreach (Attachment dtl in requestVM.attachments)
@@ -185,18 +161,19 @@ namespace EssPortal.Concrete
                     await attachmentConcrete.UpdateAttachment(obj);
                 }
             }
-
+            
 
             List<NextStageVM> nextStageVMs = await GetNextStageInfo(requestVM.request.RequestID, UserID);
             if (nextStageVMs != null)
             {
-                
+                var emp=employeesConcrete.FindBy(p => p.EmployeeID== requestVM.request.EmployeeID).SingleOrDefault();
+                var type= requestTypeConcrete.FindBy(p=>p.RequestTypeID== requestVM.request.RequestTypeID).SingleOrDefault();
                 foreach (NextStageVM item in nextStageVMs)
                 {
                     if (item.UserId != null)
-                    {
+                    { 
                         await notificationConcrete.SaveNotification(requestVM.request.RequestID, false, "NOT01",   Convert.ToInt32(item.UserId),0, UserID);
-                        await emails.InsertEmailsNotifications("New Request  طلب جديد ", "", null, Convert.ToInt32(item.UserId), requestVM.request.RequestID, false);
+                        await emails.InsertEmailsNotifications($" New Request  طلب جديد {type.RequestNameAr}", $"يوجد طلب جديد برقم {requestVM.request.RequsetPrivateNumber}  للموظف {emp.ArabicName}", null, Convert.ToInt32(item.UserId), requestVM.request.RequestID, false);
                     }
                 }
 
@@ -217,8 +194,7 @@ namespace EssPortal.Concrete
             if (requestVM.RequestExtraFields != null) _context.UpdateRange(requestVM.RequestExtraFields);
 
             await _context.SaveChangesAsync();
-
-            AttachmentConcrete attachmentConcrete = new AttachmentConcrete(_context, _configuration);
+             
             if (requestVM.attachments != null)
             {
                 foreach (Attachment dtl in requestVM.attachments)
@@ -228,13 +204,7 @@ namespace EssPortal.Concrete
                     await attachmentConcrete.UpdateAttachment(obj);
                 }
             }
-            return requestVM.request;
-
-            //await _context.AddRangeAsync(requestVM.RequestStages);
-            //if (requestVM.amendments != null)   _context.Amendments.UpdateRange(requestVM.amendments);
-            //if (requestVM.Housings != null)   _context.Housings.UpdateRange(requestVM.Housings);
-            //await _context.SaveChangesAsync();
-
+            return requestVM.request; 
         }
 
         public async Task<bool> DeleteRequest(int pRequestID, int pUserID)
@@ -298,7 +268,10 @@ namespace EssPortal.Concrete
                 paramater1.Add("@Justification", requestStage.Justification);
 
                 var affectedRows = await con.ExecuteAsync("[ESS].ApprovalRequestInfo", paramater1, null, 0, commandType: CommandType.StoredProcedure);
-                 
+
+                var emp = employeesConcrete.FindBy(p => p.EmployeeID == request.EmployeeID).SingleOrDefault();
+                var type = requestTypeConcrete.FindBy(p => p.RequestTypeID == request.RequestTypeID).SingleOrDefault();
+
                 if (requestStage.ActionCode == "COR02")// اعتماد
                 {
                     List<NextStageVM> nextStageVMs = await GetNextStageInfo(requestStage.RequestID, UserID);
@@ -309,7 +282,7 @@ namespace EssPortal.Concrete
                             if (item.UserId != null)
                             {
                                 await notificationConcrete.SaveNotification(requestStage.RequestID, false, "NOT01", Convert.ToInt32(item.UserId), 1, UserID);
-
+                                await emails.InsertEmailsNotifications($" طلب معتمد  {type.RequestNameAr}", $"يوجد طلب معتمد برقم {request.RequsetPrivateNumber}  للموظف {emp.ArabicName}", null, Convert.ToInt32(item.UserId), request.RequestID, false);
                             }
                         }
                     }
@@ -317,6 +290,8 @@ namespace EssPortal.Concrete
                 else if (requestStage.ActionCode == "COR03")// رفض
                 {
                     await notificationConcrete.SaveNotification(requestStage.RequestID, false, "NOT01", Convert.ToInt32(request.UserID), 2, UserID);
+                    await emails.InsertEmailsNotifications($" طلب مرفوض  {type.RequestNameAr}", $"يوجد طلب مرفوض برقم {request.RequsetPrivateNumber}  للموظف {emp.ArabicName}", null, Convert.ToInt32(request.UserID), request.RequestID, false);
+
                 }
 
                 if (affectedRows > 0)

@@ -11,8 +11,6 @@ using DevExpress.AspNetCore.Reporting;
 using DevExpress.XtraReports.Web.Extensions;
 using EssPortal.Common;
 using EssPortal.Concrete;
-using EssPortal.Interface;
-using EssPortal.Interfaces;
 using EssPortalAPI.Email;
 using EssPortalAPI.ExtensionServices;
 using EssPortalAPI.Models;
@@ -37,14 +35,12 @@ namespace EssPortalAPI
     public class Startup
     {
         public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
-            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "nLog.config"));
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nLog.config"));
             Configuration = configuration;
         }
        
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             #region MyRegion
@@ -53,16 +49,13 @@ namespace EssPortalAPI
 
             // Email Sending Service
             services.AddSendGridEmailSender();
-
             services.AddMemoryCache();
             services.AddSession(); 
             services.AddAutoMapper(typeof(Startup));
-            //services.AddMvc();
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDevExpressControls();
-            services.AddScoped<ReportStorageWebExtension, ReportStorageWebExtension1>();
-
-          //  services
+         
+          // services
           //.AddMvc()
           //.AddDefaultReportingControllers()
           //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -100,13 +93,8 @@ namespace EssPortalAPI
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.CreateServices();
+            services.CreateLoggerServices();
 
-
-            services.AddScoped<IUrlHelper>(implementationFactory =>
-            {
-                var actionContext = implementationFactory.GetService<IActionContextAccessor>().ActionContext;
-                return new UrlHelper(actionContext);
-            });
             #endregion
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -129,7 +117,6 @@ namespace EssPortalAPI
            //}); 
 
             services.AddMvc();
-
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -139,7 +126,6 @@ namespace EssPortalAPI
                         .AllowCredentials()
                         .WithExposedHeaders("X-Pagination"));
             });
-
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -155,8 +141,6 @@ namespace EssPortalAPI
                // options.AddPolicy("RequireManagerRole", policy => policy.RequireRole("Manager").RequireAuthenticatedUser());
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin","Manager").RequireAuthenticatedUser());
             });
-
-         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -196,8 +180,6 @@ namespace EssPortalAPI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            
             
         }
     }

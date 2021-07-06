@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EssPortal.Models 
 {
-    [Table("EmailsNotifications", Schema = "ess")]
+    [Table("EmailsNotification", Schema = "ess")]
    public class EmailsNotification
     {
         

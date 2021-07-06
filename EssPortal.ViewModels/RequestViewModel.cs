@@ -15,7 +15,6 @@ namespace EssPortal.ViewModels
         public Employee employee { get; set; }
         public List<RequestStage> RequestStages { get; set; }
         public List<RequestExtraField> RequestExtraFields { get; set; }
-
         public List<Attachment> attachments { get; set; }
     }
 

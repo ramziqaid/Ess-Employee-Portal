@@ -10,13 +10,14 @@ using EssPortal.Repository;
 using EssPortal.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace EssPortal.Concrete
 {
     public class RequestTypeConcrete : GenericRepository<RequestType>, IRequestTypeRepository
     {
        
-        public RequestTypeConcrete(DatabaseContext context) : base(context)
+        public RequestTypeConcrete(DatabaseContext context, IConfiguration configuration) : base(context)
         {
            
         }

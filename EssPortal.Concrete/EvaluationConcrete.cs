@@ -25,6 +25,7 @@ namespace EssPortal.Concrete
         NotificationConcrete notificationConcrete ;
         EmployeesConcrete employeesConcrete;
         EmailsNotificationConcrete emails;
+        private readonly AttachmentConcrete attachmentConcrete;
         public EvaluationConcrete(DatabaseContext context, IConfiguration configuration) : base(context)
         {
             // _context = context;
@@ -32,6 +33,7 @@ namespace EssPortal.Concrete
             notificationConcrete = new NotificationConcrete(_context, _configuration);
             employeesConcrete = new EmployeesConcrete(_context, _configuration);
             emails = new EmailsNotificationConcrete(_context, _configuration);
+            attachmentConcrete = new AttachmentConcrete(_context, _configuration);
         }
 
         public async Task<List<dynamic>> getEvalCharterCommunityInfo(long pEmployeeID, long pEvalPeriodID, long pEvalCommunityID)

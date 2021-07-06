@@ -27,7 +27,6 @@ namespace EssPortal.Concrete
         {
             _context = context;
             _configuration = configuration;
-
         }
 
 
