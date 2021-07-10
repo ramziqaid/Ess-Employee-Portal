@@ -107,18 +107,11 @@ namespace EssPortalAPI.Controllers
             {
                 return BadRequest("Bad Request");
             }
-            try
-            {
-                var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                evaluationVM.evaluationVM.UserID = userId; 
+            var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            evaluationVM.evaluationVM.UserID = userId;
 
-                var obj = await _evaluationRepository.saveEvaluation(evaluationVM, userId); 
-                return Ok(obj);
-            }
-            catch (Exception ex)
-            { 
-                return BadRequest(ex.Message);
-            }
+            var obj = await _evaluationRepository.saveEvaluation(evaluationVM, userId);
+            return Ok(obj);
 
         }
 
@@ -131,18 +124,11 @@ namespace EssPortalAPI.Controllers
             {
                 return BadRequest("Bad Request");
             }
-            try
-            {
-                var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                evaluationVM.evaluationVM.UserID = userId;
+            var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            evaluationVM.evaluationVM.UserID = userId;
 
-                var obj = await _evaluationRepository.updateEvaluation(evaluationVM, userId);
-                return Ok(obj);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var obj = await _evaluationRepository.updateEvaluation(evaluationVM, userId);
+            return Ok(obj);
 
         }
 
@@ -155,88 +141,28 @@ namespace EssPortalAPI.Controllers
             {
                 return BadRequest("Bad Request");
             }
-            try
-            {
-                var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                  _evaluationRepository.ApproveRejectEvaluation(evaluationVM);
-                return Ok();
-                 
-            }
-            catch (Exception ex)
-            {
-               
-                return BadRequest(ex.Message);
-            }
+            _evaluationRepository.ApproveRejectEvaluation(evaluationVM);
+            return Ok();
 
         }
+
+        #region "Delete"
 
         [HttpPost]
         [Route("DeleteEvaluation/{pEvaluationID}")]
         public async Task<IActionResult> DeleteEvaluation([FromRoute] int pEvaluationID)
         {
-            try
+            var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Boolean result = await _evaluationRepository.DeleteEvaluation(pEvaluationID, userId);
+            if (result)
             {
-                var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                Boolean result = await _evaluationRepository.DeleteEvaluation(pEvaluationID, userId);
-                if (result)
-                {
-                    return Ok();
-                }
-                return BadRequest("Not Deleted Record");
+                return Ok();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            } 
-           
+            return BadRequest("Not Deleted Record");
+
         }
-
-        //[HttpPost("ApprovalOrder")]
-        //public async Task<IActionResult> ApprovalOrder([FromBody] RequestStage requestStage)
-        //{
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest("Bad Request");
-        //    }
-        //    try
-        //    {
-        //        var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier)); 
-
-        //        var obj = await _requestRepository.approvalOrder(requestStage, userId); 
-        //        return Ok(obj);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //ModelState.AddModelError("error", ex.Message);
-        //        return BadRequest(ex.Message);
-        //    }
-
-        //}
-
-
-        #region "Delete"
-
-        //[HttpDelete]
-        //[Route("DeleteRequest/{requestID}")]
-        //public async Task<IActionResult> DeleteRequest(int requestID)
-        //{
-        //    try
-        //    {
-        //        var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-        //        Boolean result = await _requestRepository.DeleteRequest(requestID, userId);
-        //        if (result)
-        //        {
-        //            return Ok();
-        //        }
-        //        return BadRequest("Not Deleted Record");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
         #endregion
     }
 }

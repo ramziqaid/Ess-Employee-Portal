@@ -109,12 +109,12 @@ namespace EssPortalAPI
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-           // services.AddMvc(options => { options.Filters.Add(typeof(CustomExceptionFilterAttribute)); })
-           //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-           //.AddJsonOptions(options =>
-           //{
-           //    options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-           //}); 
+            services.AddMvc(options => { options.Filters.Add(typeof(CustomExceptionFilterAttribute)); })
+           .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+           .AddJsonOptions(options =>
+           {
+               options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+           });
 
             services.AddMvc();
             services.AddCors(options =>
@@ -133,13 +133,13 @@ namespace EssPortalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
             services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddAuthorization(options =>
             { 
                 options.AddPolicy("RequireLoggedIn", policy => policy.RequireRole("Admin", "Manager", "User","Client").RequireAuthenticatedUser());
-               // options.AddPolicy("RequireManagerRole", policy => policy.RequireRole("Manager").RequireAuthenticatedUser());
-                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin","Manager").RequireAuthenticatedUser());
+                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin","Manager").RequireAuthenticatedUser());
             });
         }
 
@@ -158,21 +158,21 @@ namespace EssPortalAPI
                 app.UseHsts();
             }
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
             app.UseHttpsRedirection(); 
             app.UseStaticFiles();
             app.UseDevExpressControls();
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseCors("CorsPolicy");
-           
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger(); 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            app.UseSession();
+ 
 
             app.UseMvc(routes =>
             {

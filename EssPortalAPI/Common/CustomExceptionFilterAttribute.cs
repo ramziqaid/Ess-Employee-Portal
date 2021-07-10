@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using EssPortal.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -14,10 +15,11 @@ namespace EssPortal.Common
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
         private readonly IHostingEnvironment _hostingEnvironment;
-
-        public CustomExceptionFilterAttribute(IHostingEnvironment hostingEnvironment)
+        private readonly ILoggerManager logger;
+        public CustomExceptionFilterAttribute(IHostingEnvironment hostingEnvironment, ILoggerManager logger)
         {
             _hostingEnvironment = hostingEnvironment;
+            this.logger = logger;
         }
 
         public override void OnException(ExceptionContext context)
@@ -48,42 +50,45 @@ namespace EssPortal.Common
                 strLogText += Environment.NewLine + "HelpLink ---\n{0}" + ex.HelpLink;//error prone
             }
 
-            StreamWriter log;
-
-            string timestamp = DateTime.Now.ToString("d-MMMM-yyyy", new CultureInfo("en-GB"));
-
-            string errorFolder = Path.Combine(_hostingEnvironment.WebRootPath, "ErrorLog");
-
-            if (!System.IO.Directory.Exists(errorFolder))
-            {
-                System.IO.Directory.CreateDirectory(errorFolder);
-            }
-
-            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (!File.Exists($@"{errorFolder}\Log_{timestamp}.txt"))
-            {
-                log = new StreamWriter($@"{errorFolder}\Log_{timestamp}.txt");
-            }
-            else
-            {
-                log = File.AppendText($@"{errorFolder}\Log_{timestamp}.txt");
-            }
-
             var controllerName = (string)context.RouteData.Values["controller"];
             var actionName = (string)context.RouteData.Values["action"];
 
-            // Write to the file:
-            log.WriteLine(Environment.NewLine + DateTime.Now);
-            log.WriteLine("------------------------------------------------------------------------------------------------");
-            log.WriteLine("Controller Name :- " + controllerName);
-            log.WriteLine("Action Method Name :- " + actionName);
-            log.WriteLine("------------------------------------------------------------------------------------------------");
-            log.WriteLine(objClass);
-            log.WriteLine(strLogText);
-            log.WriteLine();
 
-            // Close the stream:
-            log.Close();
+            //StreamWriter log;
+            //string timestamp = DateTime.Now.ToString("d-MMMM-yyyy", new CultureInfo("en-GB"));
+            //string errorFolder = Path.Combine(_hostingEnvironment.WebRootPath, "ErrorLog");
+            //if (!System.IO.Directory.Exists(errorFolder))            {
+            //    System.IO.Directory.CreateDirectory(errorFolder);            }
+
+            //// ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            //if (!File.Exists($@"{errorFolder}\Log_{timestamp}.txt"))
+            //{
+            //    log = new StreamWriter($@"{errorFolder}\Log_{timestamp}.txt");
+            //}
+            //else
+            //{
+            //    log = File.AppendText($@"{errorFolder}\Log_{timestamp}.txt");
+            //} 
+
+            //// Write to the file:
+            //log.WriteLine(Environment.NewLine + DateTime.Now);
+            //log.WriteLine("------------------------------------------------------------------------------------------------");
+            //log.WriteLine("Controller Name :- " + controllerName);
+            //log.WriteLine("Action Method Name :- " + actionName);
+            //log.WriteLine("------------------------------------------------------------------------------------------------");
+            //log.WriteLine(objClass);
+            //log.WriteLine(strLogText);
+            //log.WriteLine(); 
+            //// Close the stream:
+            //log.Close();
+
+            logger.LogError(Environment.NewLine + DateTime.Now);
+            logger.LogError("------------------------------------------------------------------------------------------------");
+            logger.LogError("Controller Name :- " + controllerName);
+            logger.LogError("Action Method Name :- " + actionName);
+            logger.LogError("------------------------------------------------------------------------------------------------");
+            logger.LogError(objClass.ToString());
+            logger.LogError(strLogText); 
 
 
             if (!_hostingEnvironment.IsDevelopment())

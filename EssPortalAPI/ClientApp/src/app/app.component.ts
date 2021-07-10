@@ -1,12 +1,9 @@
 import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-
 import { RoutePartsService } from './shared/services/route-parts.service';
-
 import { filter } from 'rxjs/operators';
 import { UILibIconService } from './shared/services/ui-lib-icon.service';
-import { AlertifyService } from './core/services';
 
 @Component({
   selector: 'app-root',

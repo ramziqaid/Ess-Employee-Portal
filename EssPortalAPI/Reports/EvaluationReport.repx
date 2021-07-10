@@ -7,7 +7,7 @@
   <Bands>
     <Item1 Ref="5" ControlType="TopMarginBand" Name="TopMargin" HeightF="153.472229">
       <Controls>
-        <Item1 Ref="6" ControlType="XRPictureBox" Name="pictureBox1" ImageUrl="wwwroot\images\logo.png" Sizing="StretchImage" SizeF="148.333344,83.33333" LocationFloat="255,22.9999924" />
+        <Item1 Ref="6" ControlType="XRPictureBox" Name="pictureBox1" ImageUrl="wwwroot\images\ReportHeader.png" Sizing="StretchImage" SizeF="148.333344,83.33333" LocationFloat="255,22.9999924" />
         <Item2 Ref="7" ControlType="XRLabel" Name="label46" Multiline="true" Text="تقرير تقييم اداء الموظف" TextAlignment="TopLeft" SizeF="204.166718,22.9999962" LocationFloat="21.4585419,68.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" BorderColor="WhiteSmoke">
           <ExpressionBindings>
             <Item1 Ref="8" EventName="BeforePrint" PropertyName="Text" Expression="[NameEN]" />

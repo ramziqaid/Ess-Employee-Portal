@@ -20,7 +20,7 @@ let AppComponent = class AppComponent {
         this.activeRoute = activeRoute;
         this.routePartsService = routePartsService;
         this.iconService = iconService;
-        this.appTitle = 'Egret';
+        this.appTitle = 'ESS';
         this.pageTitle = '';
         iconService.init();
     }

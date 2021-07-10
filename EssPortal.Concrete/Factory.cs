@@ -12,6 +12,27 @@ namespace EssPortal.Concrete
     {
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
+        private AttachmentConcrete _attachmentConcrete;
+        private AXInfoConcrete _aXInfoConcrete;
+        private RoleConcrete _roleConcrete;
+        private UsersConcrete _usersConcrete;
+        private UsersInRolesConcrete _usersInRolesConcrete;
+        private EmployeesConcrete _employeesConcrete;
+        private RequestTypeConcrete _requestTypeConcrete;
+        private RequestConcrete _requestConcrete;
+        private SystemCodeConcrete _systemCodeConcrete;
+        private PurchasesConcrete _purchasesConcrete;
+        private OperationPermissionConcrete _operationPermissionConcrete;
+        private OperationConcrete _operationConcrete;
+        private PurchasesStageTypeConcrete _purchasesStageTypeConcrete;
+        private NotificationConcrete _notificationConcrete;
+        private EvaluationConcrete _evaluationConcrete;
+        private PortalSettingConcrete _portalSettingConcrete;
+        private EmailsNotificationConcrete _emailsNotificationConcrete;
+        private RequestStageConcrete _requestStageRepository;
+        private RequestExtraFieldsConcrete _requestExtraFieldsConcrete;
+
+
         public Factory(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
@@ -22,11 +43,12 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (attachmentRepository == null)
+                if (_attachmentConcrete == null)
                 {
-                    return new AttachmentConcrete(_context, _configuration);
+                    _attachmentConcrete = new AttachmentConcrete(_context, _configuration);
+                    return _attachmentConcrete;
                 }
-                return attachmentRepository;
+                return _attachmentConcrete;
             }
         }
 
@@ -34,47 +56,50 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (aXInfoRepository == null)
+                if (_aXInfoConcrete == null)
                 {
-                    return new AXInfoConcrete(_context, _configuration);
+                    _aXInfoConcrete = new AXInfoConcrete(_context, _configuration);
+                    return _aXInfoConcrete;
                 }
-                return aXInfoRepository;
+                return _aXInfoConcrete;
             }
         }
 
         public IRole role
         {
-            get
-            {
-                if (role == null)
-                {
-                    return new RoleConcrete(_context, _configuration);
-                }
-                return role;
-            }
+            get => (_roleConcrete == null) ? _roleConcrete = new RoleConcrete(_context, _configuration) : _roleConcrete;
+            //{
+            //    if (_roleConcrete == null)
+            //    {
+            //        _roleConcrete = new RoleConcrete(_context, _configuration);
+            //        return _roleConcrete;
+            //    }
+            //    return _roleConcrete;
+            //}
         }
 
         public IUsers users
         {
-            get
-            {
-                if (users == null)
-                {
-                    return new UsersConcrete(_context, _configuration);
-                }
-                return users;
-            }
+            get => (_usersConcrete == null) ? _usersConcrete = new UsersConcrete(_context, _configuration) : _usersConcrete;
+            //{
+            //    if (_usersConcrete == null)
+            //    {
+            //        _usersConcrete = new UsersConcrete(_context, _configuration);
+            //    }
+            //    return _usersConcrete;
+            //}
         }
 
         public IUsersInRoles usersInRoles
         {
             get
             {
-                if (usersInRoles == null)
+                if (_usersInRolesConcrete == null)
                 {
-                    return new UsersInRolesConcrete(_context, _configuration);
+                    _usersInRolesConcrete = new UsersInRolesConcrete(_context, _configuration);
+                    return _usersInRolesConcrete;
                 }
-                return usersInRoles;
+                return _usersInRolesConcrete;
             }
         }
 
@@ -82,24 +107,25 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (employeeRepository == null)
+                if (_employeesConcrete == null)
                 {
-                    return new EmployeesConcrete(_context, _configuration);
+                    _employeesConcrete = new EmployeesConcrete(_context, _configuration);
+                    return _employeesConcrete;
                 }
-                return employeeRepository;
+                return _employeesConcrete;
             }
         }
-
 
         public IRequestTypeRepository requestTypeRepository
         {
             get
             {
-                if (requestTypeRepository == null)
+                if (_requestTypeConcrete == null)
                 {
-                    return new RequestTypeConcrete(_context, _configuration);
+                    _requestTypeConcrete = new RequestTypeConcrete(_context, _configuration);
+                    return _requestTypeConcrete;
                 }
-                return requestTypeRepository;
+                return _requestTypeConcrete;
             }
         }
 
@@ -107,23 +133,24 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (requestRepository == null)
+                if (_requestConcrete == null)
                 {
-                    return new RequestConcrete(_context, _configuration);
+                    _requestConcrete = new RequestConcrete(_context, _configuration);
+                    return _requestConcrete;
                 }
-                return requestRepository;
+                return _requestConcrete;
             }
         }
-
+          
         public ISystemCodeRepository systemCodeRepository
         {
             get
             {
-                if (systemCodeRepository == null)
+                if (_systemCodeConcrete == null)
                 {
-                    return new SystemCodeConcrete(_context);
+                    _systemCodeConcrete = new SystemCodeConcrete(_context);
                 }
-                return systemCodeRepository;
+                return _systemCodeConcrete;
             }
         }
 
@@ -131,11 +158,11 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (purchasesRepository == null)
+                if (_purchasesConcrete == null)
                 {
-                    return new PurchasesConcrete(_context, _configuration);
+                    _purchasesConcrete = new PurchasesConcrete(_context, _configuration);
                 }
-                return purchasesRepository;
+                return _purchasesConcrete;
             }
         }
 
@@ -143,11 +170,11 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (operationPermissionRepository == null)
+                if (_operationPermissionConcrete == null)
                 {
-                    return new OperationPermissionConcrete(_context, _configuration);
+                    _operationPermissionConcrete = new OperationPermissionConcrete(_context, _configuration);
                 }
-                return operationPermissionRepository;
+                return _operationPermissionConcrete;
             }
         }
 
@@ -155,11 +182,11 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (operationRepository == null)
+                if (_operationConcrete == null)
                 {
-                    return new OperationConcrete(_context);
+                    _operationConcrete = new OperationConcrete(_context);
                 }
-                return operationRepository;
+                return _operationConcrete;
             }
         }
 
@@ -167,11 +194,11 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (purchasesStageTypeRepository == null)
+                if (_purchasesStageTypeConcrete == null)
                 {
-                    return new PurchasesStageTypeConcrete(_context);
+                    _purchasesStageTypeConcrete = new PurchasesStageTypeConcrete(_context);
                 }
-                return purchasesStageTypeRepository;
+                return _purchasesStageTypeConcrete;
             }
         }
 
@@ -179,11 +206,11 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (notificationRepository == null)
+                if (_notificationConcrete == null)
                 {
-                    return new NotificationConcrete(_context, _configuration);
+                    _notificationConcrete = new NotificationConcrete(_context, _configuration);
                 }
-                return notificationRepository;
+                return _notificationConcrete;
             }
         }
 
@@ -191,11 +218,11 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (evaluationRepository == null)
+                if (_evaluationConcrete == null)
                 {
-                    return new EvaluationConcrete(_context, _configuration);
+                    _evaluationConcrete = new EvaluationConcrete(_context, _configuration);
                 }
-                return evaluationRepository;
+                return _evaluationConcrete;
             }
         }
 
@@ -203,29 +230,49 @@ namespace EssPortal.Concrete
         {
             get
             {
-                if (portalSettingRepository == null)
+                if (_portalSettingConcrete == null)
                 {
-                    return new PortalSettingConcrete(_context);
+                    _portalSettingConcrete = new PortalSettingConcrete(_context);
                 }
-                return portalSettingRepository;
+                return _portalSettingConcrete;
             }
         }
 
         public IEmailsNotificationsRepository emailsNotificationsRepository
         {
+
             get
             {
-                if (emailsNotificationsRepository == null)
+                if (_emailsNotificationConcrete == null)
                 {
-                    return new EmailsNotificationConcrete(_context, _configuration);
+                    _emailsNotificationConcrete = new EmailsNotificationConcrete(_context, _configuration);
                 }
-                return emailsNotificationsRepository;
+                return _emailsNotificationConcrete;
             }
         }
 
-        public IRequestStageRepository requestStageRepository => throw new NotImplementedException();
+        public IRequestStageRepository requestStageRepository  {
+            get
+            {
+                if (_requestStageRepository == null)
+                {
+                    _requestStageRepository = new RequestStageConcrete(_context);
+                }
+                return _requestStageRepository;
+            }
+        }
 
-        public IRequestExtraFieldsRepository requestExtraFieldsRepository => throw new NotImplementedException();
+        public IRequestExtraFieldsRepository requestExtraFieldsRepository
+        {
+            get
+            {
+                if (_requestExtraFieldsConcrete == null)
+                {
+                    _requestExtraFieldsConcrete = new RequestExtraFieldsConcrete(_context);
+                }
+                return _requestExtraFieldsConcrete;
+            }
+        }
 
         public async Task<bool> SaveChangesAsync()
         {

@@ -14,7 +14,8 @@ namespace EssPortal.Interfaces
         Task<bool> SaveNotification(int pNotDecisionID, bool pNotStatus, string pNotType, int pUserID, int pNotActionID, int? pCreatedUserID);
         Task<List<dynamic>> GetNotification(int UserID, String NotType);
         Task<bool> HideNotification(int Id);
-        
+        Task<bool> HideAllNotification(int UserID);
+
     }
 
 }

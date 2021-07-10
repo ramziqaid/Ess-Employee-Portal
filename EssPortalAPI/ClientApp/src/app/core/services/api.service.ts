@@ -15,17 +15,18 @@ export class ApiService {
     }
 
     get(path: string, params: HttpParams = new HttpParams()): Observable<any> { 
-        while(path.includes('/undefined')){
-            path = path.replace('/undefined','');
-        }
-        
+        // while(path.includes('/undefined')){
+        //     path = path.replace('/undefined','');
+        // }
+        // let currentuser = this.acct.isLoggesIn;
+        // let token = localStorage.getItem('jwtToken');
+    
+        // if (currentuser && token !== undefined) {
+        // }
         return this.http.get(`${environment.apiUrl}${path}`, { params })
             .pipe(catchError(this.formatErrors));
     }
 
-    get2(path: string, params: HttpParams = new HttpParams()): Observable<any> {  
-        return this.http.get(`${environment.apiUrl}${path}`, { params });             
-    }
 
     put(path: string, body: Object = {}): Observable<any> {
         return this.http.put(

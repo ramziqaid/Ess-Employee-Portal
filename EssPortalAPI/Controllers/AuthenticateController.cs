@@ -53,12 +53,14 @@ namespace EssPortalAPI.Controllers
                     if (loginstatus == null)
                         return BadRequest("MSG_USERNAMR_PASSWORD_NOTFOUND");
 
-                    //if (loginstatus)
-                    //{
+                   
                     var userdetails = _users.GetUserDetailsbyCredentials(value.UserName, value.Password);
 
                     if (userdetails != null)
                     {
+                        if(!userdetails.Status)
+                            return BadRequest("MSG_USERNAMR_NOT_ACTIVE");
+
                         var tokenHandler = new JwtSecurityTokenHandler();
                         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                         double tokenExpiryTime = Convert.ToDouble(_appSettings.ExpireTime);
@@ -101,12 +103,7 @@ namespace EssPortalAPI.Controllers
                             EmployeeName= userdetails.EmployeeName
                         });
                     }
-                    //else
-                    //{
-                    //    value.Password = null;
-                    //    value.Usertype = 0;
-                    //    return Ok(value);
-                    //}
+                    
                 }
                 ModelState.AddModelError("error", "Username/Password was not Found");
                 return Unauthorized();

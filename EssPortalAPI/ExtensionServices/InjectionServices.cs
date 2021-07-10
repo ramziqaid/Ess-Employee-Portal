@@ -52,5 +52,6 @@ namespace EssPortalAPI.ExtensionServices
         {
             services.AddScoped<ILoggerManager, LoggerManager>();
         }
+
         }
 }

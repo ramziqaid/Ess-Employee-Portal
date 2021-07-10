@@ -20,9 +20,11 @@
   <ItemGroup>
     <None Remove="Reports\EvaluationReport.repx" />
     <None Remove="Reports\InvoiceReport.repx" />
+    <None Remove="Reports\LetterARWIthPayrollReport.repx" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Reports\LetterARWIthPayrollReport.repx" />
     <EmbeddedResource Include="Reports\EvaluationReport.repx" />
     <EmbeddedResource Include="Reports\InvoiceReport.repx" />
   </ItemGroup>
@@ -38,7 +40,8 @@
     <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="20.1.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.1.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.4" />
  
   </ItemGroup>
 
@@ -53,6 +56,12 @@
 
 
   <ItemGroup>
+    <Compile Update="Reports\EvaluationReport - Copy.cs">
+      <DependentUpon>EvaluationReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\EvaluationReport - Copy.Designer.cs">
+      <DependentUpon>EvaluationReport.repx</DependentUpon>
+    </Compile>
     <Compile Update="Reports\EvaluationReport.cs">
       <DependentUpon>EvaluationReport.repx</DependentUpon>
     </Compile>
@@ -65,11 +74,12 @@
     <Compile Update="Reports\InvoiceReport.Designer.cs">
       <DependentUpon>InvoiceReport.repx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
+    <Compile Update="Reports\LetterARWIthPayrollReport.cs">
+      <DependentUpon>LetterARWIthPayrollReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\LetterARWIthPayrollReport.Designer.cs">
+      <DependentUpon>LetterARWIthPayrollReport.repx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

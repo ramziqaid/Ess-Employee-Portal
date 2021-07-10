@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EssPortalAPI.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     public class ReportDesignerController : Controller
     {

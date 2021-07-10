@@ -46,19 +46,43 @@ namespace EssPortal.Concrete
 
             return result > 0 ? true : false;
         }
+
         public Users AuthenticateUsers(string username, string password)
         {
             var user = _context.Users.FirstOrDefault(x => x.UserName == username);
 
             if (user == null)
                 return null;
+            bool verify = VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
+            if (!verify) 
+            {
+                if(ComparePassWordWithAXSystem(user.UserId, password))
+                {
+                    byte[] passwordHash, passwordSalt;
+                    CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+
+                    _context.Entry(user).Property(x => x.PasswordHash).IsModified = true;
+                    _context.Entry(user).Property(x => x.PasswordSalt).IsModified = true;
+
+                    var result = _context.SaveChanges();
+                    if (result > 0)
+                    {
+                        return user;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
                 return null;
+            }
+            
 
             // auth successful
             return user;
-
 
         }
 
@@ -271,7 +295,7 @@ namespace EssPortal.Concrete
 
             if (!VerifyPasswordHash(usersChangePasswordViewModel.oldPassword, user.PasswordHash, user.PasswordSalt))
             {
-                throw new Exception("The Old Password Not Correct");
+                throw new Exception("MSG_OLD_PASSWORD_NOT_CORRECT");
             }
 
             CreatePasswordHash(usersChangePasswordViewModel.newPassword, out passwordHash, out passwordSalt);
@@ -372,6 +396,17 @@ namespace EssPortal.Concrete
             }
         }
 
+        private bool ComparePassWordWithAXSystem(int pUserID,string pPassword)
+        {
+            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
+            {
+                var paramater = new DynamicParameters();
+                paramater.Add("@UserID", pUserID);
+                paramater.Add("@Password", pPassword); 
+
+                return con.Query<bool>("[ess].AXComparePassword", paramater, null, true, 0, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
 
     }
 }

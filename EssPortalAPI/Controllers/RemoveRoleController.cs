@@ -12,7 +12,7 @@ using EssPortal.Models;
 
 namespace EssPortalAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireAdminRole")] 
     [Route("api/[controller]")]
     [ApiController]
     public class RemoveRoleController : ControllerBase

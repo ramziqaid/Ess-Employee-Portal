@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="20.1.6.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v20.1, Version=20.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="LetterARWIthPayrollReport" Margins="100, 100, 100, 18" PageWidth="850" PageHeight="1100" Version="20.1" DataMember="ess_LoadLetterPrintInfo" DataSource="#Ref-0" Font="Arial, 9.75pt">
+  <Parameters>
+    <Item1 Ref="3" Description="UserID" ValueInfo="0" Name="UserID" Type="#Ref-2" />
+    <Item2 Ref="4" Description="LetterTypeID" ValueInfo="0" Name="LetterTypeID" Type="#Ref-2" />
+  </Parameters>
+  <Bands>
+    <Item1 Ref="5" ControlType="TopMarginBand" Name="TopMargin">
+      <Controls>
+        <Item1 Ref="6" ControlType="XRPictureBox" Name="pictureBox1" ImageUrl="wwwroot\images\ReportHeader.png" Sizing="StretchImage" SizeF="148.333344,83.33333" LocationFloat="259.166656,6.66666651" />
+      </Controls>
+    </Item1>
+    <Item2 Ref="7" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="18.333334" />
+    <Item3 Ref="8" ControlType="DetailBand" Name="Detail" HeightF="160.833328" />
+    <Item4 Ref="9" ControlType="ReportFooterBand" Name="ReportFooter" HeightF="52.5" />
+  </Bands>
+  <StyleSheet>
+    <Item1 Ref="10" Name="Title" BorderStyle="Inset" Font="Arial, 14.25pt" ForeColor="255,75,75,75" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item2 Ref="11" Name="DetailCaption1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="White" BackColor="255,75,75,75" BorderColor="White" Sides="Left" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
+    <Item3 Ref="12" Name="DetailData1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BorderColor="Transparent" Sides="Left" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
+    <Item4 Ref="13" Name="DetailData3_Odd" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BackColor="255,231,231,231" BorderColor="Transparent" Sides="None" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="1" />
+    <Item5 Ref="14" Name="PageInfo" BorderStyle="Inset" Padding="2,2,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="255,75,75,75" StringFormat="Near;Near;0;None;Character;Default" />
+  </StyleSheet>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v20.1" Name="sqlDataSource1" Base64="PFNxbERhdGFTb3VyY2UgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxDb25uZWN0aW9uIE5hbWU9IkRhdGFiYXNlQ29ubmVjdGlvbiIgRnJvbUFwcENvbmZpZz0idHJ1ZSIgLz48UXVlcnkgVHlwZT0iU3RvcmVkUHJvY1F1ZXJ5IiBOYW1lPSJlc3NfTG9hZExldHRlclByaW50SW5mbyI+PFBhcmFtZXRlciBOYW1lPSJAVXNlcklEIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5JbnQzMikoP1VzZXJJRCk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBMZXR0ZXJUeXBlSUQiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkludDMyKSg/TGV0dGVyVHlwZUlEKTwvUGFyYW1ldGVyPjxQcm9jTmFtZT5lc3MuTG9hZExldHRlclByaW50SW5mbzwvUHJvY05hbWU+PC9RdWVyeT48UmVzdWx0U2NoZW1hPjxEYXRhU2V0IE5hbWU9InNxbERhdGFTb3VyY2UxIj48VmlldyBOYW1lPSJlc3NfTG9hZExldHRlclByaW50SW5mbyI+PEZpZWxkIE5hbWU9IklEIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iU2hvd0hlYWRlciIgVHlwZT0iQm9vbGVhbiIgLz48RmllbGQgTmFtZT0iU2hvd0RhdGUiIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IlBvc3Rpc2lvbkVtcEFSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlBvc3Rpc2lvbkVtcEVOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlBvc3Rpc2lvbkRlc2NBUiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJQb3N0aXNpb25EZXNjRU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iVG9BUiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUb0VOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkZvb3RlckFSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkZvb3RlckVOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkxldHRlclR5cGVJRCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkxldHRlck5hbWVBUiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJMZXR0ZXJOYW1lRU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iTGV0dGVyRm9ybWF0ZUFSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkxldHRlckZvcm1hdGVFTiIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48L0RhdGFTZXQ+PC9SZXN1bHRTY2hlbWE+PENvbm5lY3Rpb25PcHRpb25zIENsb3NlQ29ubmVjdGlvbj0idHJ1ZSIgLz48L1NxbERhdGFTb3VyY2U+" />
+  </ComponentStorage>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v20.1" Ref="2" Content="System.Int32" Type="System.Type" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

@@ -22,10 +22,19 @@ namespace EssPortalAPI.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            logger.LogDebug("error get");
-            logger.LogError("Hell You have visited the Index view" + Environment.NewLine + DateTime.Now);
+            try
+            {
+                logger.LogDebug("error get");
+                logger.LogError("Hell You have visited the Index view" + Environment.NewLine + DateTime.Now);
+                throw new Exception("sex");
+                return new string[] { "value1", "value2" };
+            }
+            catch (Exception)
+            {
 
-            return new string[] { "value1", "value2" };
+                throw;
+            }
+           
         }
 
         // GET: api/Default/5

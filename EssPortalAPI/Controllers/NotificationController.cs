@@ -64,5 +64,20 @@ namespace EssPortalAPI.Controllers
             }
         }
 
+        // GET: api/CreateRole
+        [HttpPost]
+        [Route("HideAllNotification/{UserID}")]
+        public async Task<IActionResult> HideAllNotification(int UserID)
+        {
+            try
+            {
+                await _notificationRepository.HideAllNotification(UserID);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

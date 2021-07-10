@@ -10,6 +10,7 @@ import { takeUntil, switchMap, catchError, retry, share, tap, shareReplay } from
 export class NotificationService implements OnDestroy  {
 
   NotificationCount = new BehaviorSubject<number>(0);
+  private tempCount:number=0;
   private NotificationArray01$: Observable<any[]>;
   private NotificationArray02$: Observable<any[]>;
 
@@ -50,12 +51,26 @@ export class NotificationService implements OnDestroy  {
  
   setNotificationCount(n:number){
   this.NotificationCount.next(n);
+  this.tempCount=n;
   }
+ 
+  getNotificationCount():number{
+   return this.tempCount;
+    }
+
 
   hideNotification(Id:number){ 
     return this.apiService.post(`Notification/HideNotification/${Id}`).pipe(
       tap(()=>{ 
-        //this.fireAllNotification(); 
+        this.tempCount=this.tempCount-1; 
+      }    
+      )
+      ); 
+  }
+
+  hideAllNotification(){ 
+    return this.apiService.post(`Notification/HideAllNotification/${this._authService.logginUserID()}`).pipe(
+      tap(()=>{   
       }    
       )
       ); 

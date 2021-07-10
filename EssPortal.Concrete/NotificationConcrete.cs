@@ -90,5 +90,30 @@ namespace EssPortal.Concrete
             return false;
         }
 
+        public async  Task<bool> HideAllNotification(int UserID)
+        {
+            try
+            {
+                IEnumerable<Notification> obj = _context.Notifications.Where(p => p.UserID == UserID).ToList();
+                if (obj != null)
+                {
+                    foreach(var item in obj)
+                    {
+                        item.NotStatus = true;
+                        _context.Entry(item).Property(x => x.NotStatus).IsModified = true;
+                        _context.Notifications.Update(item);
+                    } 
+                    
+                    await _context.SaveChangesAsync();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+            return false;
+        }
     }
 }

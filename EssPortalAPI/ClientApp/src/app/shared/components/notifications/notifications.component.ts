@@ -6,8 +6,13 @@ import { AuthService } from 'app/core/services/auth.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html'
+  selector: 'app-notifications', 
+  templateUrl: './notifications.component.html',
+  styles:[`
+  .mat-nav-list .mat-list-item {
+    cursor: default !important; 
+      } 
+        `]
 })
 export class NotificationsComponent implements OnInit  {
   @Input() notificPanel;
@@ -63,7 +68,7 @@ export class NotificationsComponent implements OnInit  {
     this.NotificationArray01$.subscribe(
       result => {          
         this.count01=result.length;  
-        this.notService.setNotificationCount(this.count01+this.count02+this.count03);    
+        this.notService.setNotificationCount(this.count01+this.count02+this.count03);   
       }
     );
 
@@ -77,20 +82,25 @@ export class NotificationsComponent implements OnInit  {
 
   }
  
-  hideNotification(Id:number){
+  hideNotification(Id:number){ 
     this.notService.hideNotification(Id).subscribe(
-      result => {    
-   
+      result => {     
+        this.notService.setNotificationCount( this.notService.getNotificationCount());
       },       
       );      
   }
   
   
-  clearAll(e) {
-    e.preventDefault();
-    this.NotificationArray01$= of(<any>[]);
-    this.NotificationArray02$= of(<any>[]);
-    this.notService.setNotificationCount(0);  
+  clearAll(e) {   
+    this.notService.hideAllNotification().subscribe(
+      result => {     
+        e.preventDefault();
+        this.NotificationArray01$= of(<any>[]);
+        this.NotificationArray02$= of(<any>[]);
+        this.notService.setNotificationCount(0);  
+      },       
+      );   
+    
   }
 
   

@@ -28,16 +28,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Integrating with [Angular Landing page](https://themeforest.net/item/angular-landing-material-design-angular-app-landing-page/21198258)
-  Folder structures are same for both projects. 
-  1. Replace Egret Admin's 'home' with Angular landing's 'home' folder inside app/views.
-  2. Uncomment @import "views/landing"; inside assets/styles/scss/_views.scss
 
+Folder structures are same for both projects.
+
+1. Replace Egret Admin's 'home' with Angular landing's 'home' folder inside app/views.
+2. Uncomment @import "views/landing"; inside assets/styles/scss/\_views.scss
 
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-
 ## Credits
+
 #### Cryptocurrency icons
+
 [100 Blockchain (Cryptocurrency) Icons](https://dribbble.com/shots/4000214-100-Blockchain-Assets-Icons-Freebies)
