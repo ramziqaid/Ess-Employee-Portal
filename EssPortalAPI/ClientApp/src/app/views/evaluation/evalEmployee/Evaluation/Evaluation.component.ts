@@ -15,6 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EmployeeComponent } from 'app/shared/UI/employee/employee.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ReportViewerComponent } from 'app/views/popup/reportviewer/report-viewer';
+import { merge, Observable } from 'rxjs';
 
 
 @Component({
@@ -31,7 +32,6 @@ export class EvaluationComponent implements OnInit {
   evalDegree: any[];
   attachment: shared.Attachment[] = [];
 
-  displayedColumns1: string[] = ['index', 'evalCharterDetails', 'evalCharterDetailsItems', 'degree', 'weight'];
 
   editMode: boolean = true;
   editModeDTL: boolean = true;
@@ -52,7 +52,8 @@ export class EvaluationComponent implements OnInit {
   isShowManagerReject = false;
   isShowHRApproval = false;
   isShowHRReject = false;
-
+  isEditDegreeEmployee=true;
+  isEditDegreeManager=false;
   //varabiles
   evaluationID: number;
   employeeID: number;
@@ -99,9 +100,25 @@ export class EvaluationComponent implements OnInit {
 
   }
 
+ 
   onSubmit() {
   }
+   
+    //displayedColumns1: string[] = ['index', 'evalCharterDetails', 'evalCharterDetailsItems', 'degreeEmployee','degreeManager', 'weight'];
 
+  columnDefinitions = [
+    { def: 'index', label: 'index', hide: false},
+    { def: 'evalCharterDetails', label: 'evalCharterDetails', hide: false},
+    { def: 'evalCharterDetailsItems', label: 'evalCharterDetailsItems', hide: false},
+    { def: 'degreeEmployee', label: 'degreeEmployee', hide: false},
+    { def: 'degreeManager', label: 'degreeManager', hide: false},
+    { def: 'weight', label: 'weight', hide: false} 
+  ]
+
+  getDisplayedColumns():string[] {
+    return this.columnDefinitions.filter(cd=>!cd.hide).map(cd=>cd.def);
+  }
+  
   //#region "actionBar"
 
   newClick() {
@@ -111,6 +128,8 @@ export class EvaluationComponent implements OnInit {
     this.newObj = this.getEmptyObject();
     this.evaluationID = this.newObj.evaluationVM.evaluationID;
     this.showApprovCancelBox = false;
+    this.isEditDegreeEmployee=true;
+    this.isEditDegreeManager=false; 
   }
 
   edit() {
@@ -121,9 +140,9 @@ export class EvaluationComponent implements OnInit {
 
 
   save() {
-
+ 
     this.findInvalidControls();
-    if (this.heroForm.valid) {
+    if (this.heroForm.valid || this.evaluationID>1) {
 
       if (this.evaluationID < 0) {
         if (this.evalCharterID) {
@@ -253,7 +272,7 @@ export class EvaluationComponent implements OnInit {
                       if (result2.length > 0) {
                         //this.evalChartCommunity = result2;
                         this.evalCharterID = result2[0].evalCharterID;
-
+ 
                         this.evalChartCommunity = new MatTableDataSource(result2);
                         this.evalChartCommunity.paginator = this.paginator1;
                         this.evalChartCommunity.sort = this.sort1;
@@ -342,7 +361,7 @@ export class EvaluationComponent implements OnInit {
     this.evalChartCommunity = new MatTableDataSource(this.newObj.evalCharterCommunityItemsVM);
     this.evalChartCommunity.paginator = this.paginator1;
     this.evalChartCommunity.sort = this.sort1;
-
+ 
     this.showActionBar(false);
     this.showApprovCancelBox = false;
     this.isShowEmployeeApproval = false;
@@ -352,6 +371,8 @@ export class EvaluationComponent implements OnInit {
     this.isShowManagerReject = false;
     this.isShowHRApproval = false;
     this.isShowHRReject = false;
+    this.isEditDegreeEmployee=false;
+    this.isEditDegreeManager=false; 
     if (this.newObj.evaluationVM.userID == this.authService.logginUserID()) {
       if (this.newObj.evaluationVM.evaluationStautsID == 1 || this.newObj.evaluationVM.evaluationStautsID == 5) {
         this.showActionBar(true);
@@ -364,6 +385,8 @@ export class EvaluationComponent implements OnInit {
         this.isShowEmployeeCancelApproval = true;
         this.showApprovCancelBox = true;
       }
+      this.isEditDegreeEmployee=true;
+      this.isEditDegreeManager=false; 
 
     } else if (this.newObj.evaluationVM.managerID == this.authService.logginEmployeeId()) {
       if (this.newObj.evaluationVM.evaluationStautsID == 2 || this.newObj.evaluationVM.evaluationStautsID == 7) {
@@ -378,6 +401,8 @@ export class EvaluationComponent implements OnInit {
         this.isShowManagerCancelApproval = true;
         this.showApprovCancelBox = true;
       }
+      this.isEditDegreeEmployee=false;
+      this.isEditDegreeManager=true; 
     } else {
       if (this.sharedService.checkEmployeeIsHR(this.authService.logginEmployeeId())) {
         if (this.newObj.evaluationVM.evaluationStautsID == 4) {
@@ -386,6 +411,7 @@ export class EvaluationComponent implements OnInit {
           this.showApprovCancelBox = true;
         }
       }
+      
     }
 
   }

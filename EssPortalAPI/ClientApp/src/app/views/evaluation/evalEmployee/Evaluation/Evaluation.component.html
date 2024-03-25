@@ -117,7 +117,7 @@
                       
                           <ng-container matColumnDef="evalCharterDetails">                            
                             <mat-header-cell class="w-100" *matHeaderCellDef [attr.rowspan]="2" >   {{ "SKILLS" | translate }} </mat-header-cell>
-                            <mat-cell *matCellDef="let row" data-label="SKILLS">  
+                            <mat-cell *matCellDef="let row" data-label="SKILLS" style="color: red;">  
                               {{(authService.currentLang=="1")? row.evalCharterDetailsEn :row.evalCharterDetailsAr }} 
                             </mat-cell>
                           </ng-container> 
@@ -130,14 +130,14 @@
                             </mat-cell>
                           </ng-container> 
 
-                          <ng-container matColumnDef="degree">
-                            <mat-header-cell style="text-align:center" *matHeaderCellDef>  {{ "DEGREE" | translate }} </mat-header-cell>
+                          <ng-container matColumnDef="degreeEmployee"  >
+                            <mat-header-cell class="w-75" style="text-align:center" *matHeaderCellDef>  {{ "DEGREE_EMPLOYEE" | translate }} </mat-header-cell>
                             <mat-cell *matCellDef="let element">                
                               <mat-form-field class="full-width"  >    
                                 <mat-select required name="Degree"                                    
                                 [(value)]="element.degreeEmployee"
                                 id="evalCommunity"  
-                                [disabled]="editModeDTL"
+                                [disabled]="editModeDTL || !this.isEditDegreeEmployee"
                                  >
                                   <mat-option *ngFor="let item of evalDegree" [value]="item.variable1">
                                      {{(authService.currentLang=="1")? item.descriptionEn :item.descriptionAr }} 
@@ -150,6 +150,31 @@
                                   </small>
                                 </small>
                               </mat-form-field>
+                              
+                            </mat-cell>
+                          </ng-container>
+
+                          <ng-container matColumnDef="degreeManager"  >
+                            <mat-header-cell class="w-75" style="text-align:center" *matHeaderCellDef>  {{ "DEGREE_MANAGER" | translate }} </mat-header-cell>
+                            <mat-cell *matCellDef="let element">                
+                              <mat-form-field class="full-width"  >    
+                                <mat-select required name="DegreeManager"                                    
+                                [(value)]="element.degreeManager"
+                                id="evalCommunity"  
+                                [disabled]="editModeDTL || !this.isEditDegreeManager"
+                                 >
+                                  <mat-option *ngFor="let item of evalDegree" [value]="item.variable1">
+                                     {{(authService.currentLang=="1")? item.descriptionEn :item.descriptionAr }} 
+                                  </mat-option>
+                                </mat-select>
+                              
+                                <small *ngIf="!refEvalCommunity.valid  && (refEvalCommunity.dirty || refEvalCommunity.touched) && !editMode" class="form-error-msg">
+                                  <small [hidden]="!refEvalCommunity.errors.required">
+                                    {{ "FILED_IS_REQUIRED" | translate }}
+                                  </small>
+                                </small>
+                              </mat-form-field>
+                              
                             </mat-cell>
                           </ng-container>
                         
@@ -160,8 +185,8 @@
                             </mat-cell>
                           </ng-container>
 
-                            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: displayedColumns1; let cIndex = index;">
+                            <mat-header-row *matHeaderRowDef="getDisplayedColumns()"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: getDisplayedColumns(); let cIndex = index;">
                             </mat-row>
                         </mat-table>
 
@@ -213,22 +238,32 @@
                               </td>
                               
                             </tr>
+                        
                             <tr>
-                              <td>
-                                <h3 class="m-0 font-normal">{{ "EMPLOYEE_APPROVAL" | translate }} </h3>  
+                              <td  >
+                                <h3 class="m-0 font-normal">{{ "EMPLOYEE_APPROVAL" | translate }} </h3>   
                               </td>
                               <td>
                                 :
                               </td>
-                              <td>
-                                <mat-form-field class="full-width">
+                              <td>                                                              
+                                <mat-form-field class="full-width" fxFlex="50">
                                   <input
-                                  matInput  [disabled]="true"
-                                  [value]= this.newObj.evaluationVM.arabicName
+                                  matInput  [disabled]="true" 
+                                  [value]= this.newObj.evaluationVM.arabicName 
                                    >
                               </mat-form-field>
-                                <h3 class="m-0 font-normal"></h3> 
+                            
+                              <mat-form-field class="full-width" >
+                                <input
+                                matInput  [disabled]="true"
+                                [value]=  this.newObj.evaluationVM.employeeApprovalDate  
+                                 >
+                                 
+                            </mat-form-field>
+                      
                               </td>
+                              
                             </tr>
                           </table>
                           <table fxFlex="50" class="doughnut-grid-item ">
@@ -240,12 +275,19 @@
                                 :
                               </td>
                               <td>
-                                <mat-form-field class="full-width">
+                                <mat-form-field class="full-width" fxFlex="50">
                                   <input
                                   matInput  [disabled]="true"
                                   [value]= this.newObj.evaluationVM.managerApprovalArabicName
                                    >
                               </mat-form-field> 
+                              <mat-form-field class="full-width" >
+                                <input
+                                matInput  [disabled]="true"
+                                [value]=  this.newObj.evaluationVM.managerApprovalDate  
+                                 >
+                                 
+                            </mat-form-field>
                               </td>
                               
                             </tr>
@@ -257,12 +299,19 @@
                                 :
                               </td>
                               <td>
-                                <mat-form-field class="full-width">
+                                <mat-form-field class="full-width" fxFlex="50">
                                   <input
                                   matInput  [disabled]="true"
                                   [value]= this.newObj.evaluationVM.hrApprovalArabicName
                                    >
                               </mat-form-field>
+                              <mat-form-field class="full-width" >
+                                <input
+                                matInput  [disabled]="true"
+                                [value]=  this.newObj.evaluationVM.hrApprovalDate  
+                                 >
+                                 
+                            </mat-form-field>
                               </td>
                             </tr>
                           </table>
@@ -272,7 +321,7 @@
                   </mat-accordion>
                  
               </div>
-                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16 borderDiv" *ngIf="showApprovCancelBox">   
+                <div fxFlex="100" fxFlex.gt-xs="100" class="pr-16 borderDiv" *ngIf="showApprovCancelBox || this.notes.length>0">   
                     <div class="example-button-row">
                       <button mat-raised-button type="button"   color="primary" class="btn  ml-16 btn-md primary background2" id="btnEmployeeApproval" *ngIf="isShowEmployeeApproval" (click)="approvalRejectAction(1)"  >
                             {{ "EMPLOYEE_APPROVAL" | translate }} 

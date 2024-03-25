@@ -86,6 +86,7 @@ namespace EssPortalAPI
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateLifetime=true,
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -109,12 +110,12 @@ namespace EssPortalAPI
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-            services.AddMvc(options => { options.Filters.Add(typeof(CustomExceptionFilterAttribute)); })
-           .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-           .AddJsonOptions(options =>
-           {
-               options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-           });
+           // services.AddMvc(options => { options.Filters.Add(typeof(CustomExceptionFilterAttribute)); })
+           //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+           //.AddJsonOptions(options =>
+           //{
+           //    options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+           //});
 
             services.AddMvc();
             services.AddCors(options =>
@@ -139,7 +140,7 @@ namespace EssPortalAPI
             services.AddAuthorization(options =>
             { 
                 options.AddPolicy("RequireLoggedIn", policy => policy.RequireRole("Admin", "Manager", "User","Client").RequireAuthenticatedUser());
-                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin","Manager").RequireAuthenticatedUser());
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin","Manager").RequireAuthenticatedUser());
             });
         }
 

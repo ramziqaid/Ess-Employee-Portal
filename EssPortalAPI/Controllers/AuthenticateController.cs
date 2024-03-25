@@ -52,7 +52,6 @@ namespace EssPortalAPI.Controllers
 
                     if (loginstatus == null)
                         return BadRequest("MSG_USERNAMR_PASSWORD_NOTFOUND");
-
                    
                     var userdetails = _users.GetUserDetailsbyCredentials(value.UserName, value.Password);
 
@@ -90,7 +89,6 @@ namespace EssPortalAPI.Controllers
                         //// remove password before returning
                         //value.Password = null;
                         //value.Usertype = userdetails.RoleId;
-
                         return Ok(new
                         {
                             token = tokenHandler.WriteToken(token),

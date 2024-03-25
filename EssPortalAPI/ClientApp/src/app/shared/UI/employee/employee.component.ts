@@ -76,6 +76,7 @@ export class EmployeeComponent implements OnInit, OnChanges {
     element.personnelnumber="";
     element.englishName= "All";
     element.arabicName= "الكل";   
+     debugger
     if (this.loadAllEmployee) {
       this.emp.getEmployees().subscribe(
         result => {  

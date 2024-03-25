@@ -119,7 +119,8 @@ namespace EssPortal.Concrete
                     EvaluationCharterItemsID = 0,
                     EvaluationID = evaluation.EvaluationID,
                     EvalCharterDetailsItemsID = obj.EvalCharterDetailsItemsID,
-                    DegreeEmployee = Convert.ToInt16(obj.DegreeEmployee)
+                    DegreeEmployee = Convert.ToInt16(obj.DegreeEmployee),
+                    DegreeManager=4
                 };
                 evaluationVM.evaluationCharterItems.Add(item);
             }
@@ -161,7 +162,8 @@ namespace EssPortal.Concrete
                     EvaluationCharterItemsID = Convert.ToInt16(obj.EvaluationCharterItemsID),
                     EvaluationID = Convert.ToInt16(evaluationVM.evaluationVM.EvaluationID),
                     EvalCharterDetailsItemsID = obj.EvalCharterDetailsItemsID,
-                    DegreeEmployee = Convert.ToInt16(obj.DegreeEmployee)
+                    DegreeEmployee = Convert.ToInt16(obj.DegreeEmployee),
+                    DegreeManager = Convert.ToInt16(obj.DegreeManager)
                 };
                 evaluationVM.evaluationCharterItems.Add(item);
             }
@@ -398,7 +400,7 @@ namespace EssPortal.Concrete
                         throw new Exception("MSG_EVALUATION_IN_FINAL");
                     }
                     Users manager = _context.Users.Where(p => p.UserId == UserID).FirstOrDefault();
-                    if (UserID != evaluationVM.evaluationVM.UserID && employee.ManagerID != manager.UserId)
+                    if (UserID != evaluationVM.evaluationVM.UserID && employee.ManagerID != manager.EmployeeId)
                     {
                         throw new Exception("MSG_NOT_HAVE_PERMISSION_EDIT_THIS_EVALUATION");
                     }

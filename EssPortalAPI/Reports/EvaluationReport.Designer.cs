@@ -86,6 +86,22 @@ namespace EssPortalAPI.Reports {
             this.tableCell2 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell2");
             this.tableCell3 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell3");
             this.tableCell4 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell4");
+            this.tableCell9 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell9");
+            this.tableCell10 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell10");
+            this.tableCell11 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell11");
+            this.tableCell12 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell12");
+            this.label50 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label50");
+            this.label51 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label51");
+            this.label52 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label52");
+            this.label53 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label53");
+            this.label54 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label54");
+            this.label55 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label55");
+            this.label56 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label56");
+            this.label57 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label57");
+            this.label58 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label58");
+            this.label59 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label59");
+            this.label60 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label60");
+            this.label61 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label61");
 
             // Parameters
             this.EvaluationID = reportInitializer.GetParameter("EvaluationID");
@@ -180,5 +196,21 @@ namespace EssPortalAPI.Reports {
         private DevExpress.XtraReports.UI.XRControlStyle PageInfo;
         private DevExpress.XtraReports.Parameters.Parameter EvaluationID;
         private DevExpress.XtraReports.Parameters.Parameter UserID;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell9;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell10;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell11;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell12;
+        private DevExpress.XtraReports.UI.XRLabel label50;
+        private DevExpress.XtraReports.UI.XRLabel label51;
+        private DevExpress.XtraReports.UI.XRLabel label52;
+        private DevExpress.XtraReports.UI.XRLabel label53;
+        private DevExpress.XtraReports.UI.XRLabel label54;
+        private DevExpress.XtraReports.UI.XRLabel label55;
+        private DevExpress.XtraReports.UI.XRLabel label56;
+        private DevExpress.XtraReports.UI.XRLabel label57;
+        private DevExpress.XtraReports.UI.XRLabel label58;
+        private DevExpress.XtraReports.UI.XRLabel label59;
+        private DevExpress.XtraReports.UI.XRLabel label60;
+        private DevExpress.XtraReports.UI.XRLabel label61;
     }
 }

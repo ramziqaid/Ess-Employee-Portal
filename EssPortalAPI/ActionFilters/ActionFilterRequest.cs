@@ -19,7 +19,7 @@ namespace EssPortalAPI.ActionFilters
         }
 
         public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        {
+        { 
             throw new NotImplementedException();
         }
     }

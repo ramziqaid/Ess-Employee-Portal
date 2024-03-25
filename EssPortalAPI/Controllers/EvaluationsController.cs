@@ -125,7 +125,7 @@ namespace EssPortalAPI.Controllers
                 return BadRequest("Bad Request");
             }
             var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            evaluationVM.evaluationVM.UserID = userId;
+            //evaluationVM.evaluationVM.UserID = userId;
 
             var obj = await _evaluationRepository.updateEvaluation(evaluationVM, userId);
             return Ok(obj);

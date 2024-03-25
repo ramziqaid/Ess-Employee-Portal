@@ -26,7 +26,7 @@ namespace EssPortalAPI.Controllers
             {
                 logger.LogDebug("error get");
                 logger.LogError("Hell You have visited the Index view" + Environment.NewLine + DateTime.Now);
-                throw new Exception("sex");
+               // throw new Exception("sex");
                 return new string[] { "value1", "value2" };
             }
             catch (Exception)

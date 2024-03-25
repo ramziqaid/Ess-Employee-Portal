@@ -122,196 +122,262 @@
     </Item3>
     <Item4 Ref="67" ControlType="DetailBand" Name="Detail" HeightF="25">
       <Controls>
-        <Item1 Ref="68" ControlType="XRTable" Name="table2" TextAlignment="TopLeft" SizeF="669,25" LocationFloat="0,0" OddStyleName="DetailData3_Odd" Borders="All">
+        <Item1 Ref="68" ControlType="XRTable" Name="table2" TextAlignment="TopLeft" SizeF="671,25" LocationFloat="0,0" OddStyleName="DetailData3_Odd" Borders="All">
           <Rows>
             <Item1 Ref="69" ControlType="XRTableRow" Name="tableRow2" Weight="11.5">
               <Cells>
-                <Item1 Ref="70" ControlType="XRTableCell" Name="tableCell5" Weight="0.2047683950570913" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="LightGray" Borders="Left, Right, Bottom" BorderWidth="1">
+                <Item1 Ref="70" ControlType="XRTableCell" Name="tableCell12" Weight="0.0938951580341045" Multiline="true" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="LightGray" Borders="Left, Right, Bottom" BorderWidth="1">
                   <ExpressionBindings>
-                    <Item1 Ref="71" EventName="BeforePrint" PropertyName="Text" Expression="[DegreeNameAR]" />
+                    <Item1 Ref="71" EventName="BeforePrint" PropertyName="Text" Expression="[DegreeManagerAR]" />
                   </ExpressionBindings>
                   <StylePriority Ref="72" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                 </Item1>
-                <Item2 Ref="73" ControlType="XRTableCell" Name="tableCell6" Weight="0.1423473886343149" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="Silver" Borders="Right, Bottom" BorderWidth="1">
+                <Item2 Ref="73" ControlType="XRTableCell" Name="tableCell11" Weight="0.0938951580341045" Multiline="true" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="LightGray" Borders="Left, Right, Bottom" BorderWidth="1">
                   <ExpressionBindings>
-                    <Item1 Ref="74" EventName="BeforePrint" PropertyName="Text" Expression="[DegreeEmployee]" />
+                    <Item1 Ref="74" EventName="BeforePrint" PropertyName="Text" Expression="[DegreeManager]" />
                   </ExpressionBindings>
                   <StylePriority Ref="75" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                 </Item2>
-                <Item3 Ref="76" ControlType="XRTableCell" Name="tableCell7" Weight="0.29816089336688711" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="Silver" Borders="Right, Bottom" BorderWidth="1">
+                <Item3 Ref="76" ControlType="XRTableCell" Name="tableCell5" Weight="0.095213356017115586" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="LightGray" Borders="Left, Right, Bottom" BorderWidth="1">
                   <ExpressionBindings>
-                    <Item1 Ref="77" EventName="BeforePrint" PropertyName="Text" Expression="[EvalCharterDetailsItemsEn]" />
+                    <Item1 Ref="77" EventName="BeforePrint" PropertyName="Text" Expression="[DegreeNameAR]" />
                   </ExpressionBindings>
                   <StylePriority Ref="78" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                 </Item3>
-                <Item4 Ref="79" ControlType="XRTableCell" Name="tableCell8" Weight="0.383954092172476" TextFormatString="{0:0.00 SAR}" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="Silver" Borders="Right, Bottom" BorderWidth="1">
+                <Item4 Ref="79" ControlType="XRTableCell" Name="tableCell6" Weight="0.07734623542293842" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="Silver" Borders="Right, Bottom" BorderWidth="1">
                   <ExpressionBindings>
-                    <Item1 Ref="80" EventName="BeforePrint" PropertyName="Text" Expression="[EvalCharterDetailsItemsAr]" />
+                    <Item1 Ref="80" EventName="BeforePrint" PropertyName="Text" Expression="[DegreeEmployee]" />
                   </ExpressionBindings>
                   <StylePriority Ref="81" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                 </Item4>
+                <Item5 Ref="82" ControlType="XRTableCell" Name="tableCell7" Weight="0.29816089336688711" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="Silver" Borders="Right, Bottom" BorderWidth="1">
+                  <ExpressionBindings>
+                    <Item1 Ref="83" EventName="BeforePrint" PropertyName="Text" Expression="[EvalCharterDetailsItemsEn]" />
+                  </ExpressionBindings>
+                  <StylePriority Ref="84" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
+                </Item5>
+                <Item6 Ref="85" ControlType="XRTableCell" Name="tableCell8" Weight="0.383954092172476" TextFormatString="{0:0.00 SAR}" TextAlignment="MiddleCenter" StyleName="DetailData1" BorderColor="Silver" Borders="Right, Bottom" BorderWidth="1">
+                  <ExpressionBindings>
+                    <Item1 Ref="86" EventName="BeforePrint" PropertyName="Text" Expression="[EvalCharterDetailsItemsAr]" />
+                  </ExpressionBindings>
+                  <StylePriority Ref="87" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
+                </Item6>
               </Cells>
             </Item1>
           </Rows>
-          <StylePriority Ref="82" UseBorders="false" UseTextAlignment="false" />
+          <StylePriority Ref="88" UseBorders="false" UseTextAlignment="false" />
         </Item1>
       </Controls>
     </Item4>
-    <Item5 Ref="83" ControlType="ReportFooterBand" Name="ReportFooter" HeightF="146.777985">
+    <Item5 Ref="89" ControlType="ReportFooterBand" Name="ReportFooter" HeightF="174.491913">
       <Controls>
-        <Item1 Ref="84" ControlType="XRPanel" Name="panel1" SizeF="668.3056,127.055557" LocationFloat="1.38883591,10.0000172" Borders="All" BorderDashStyle="Solid">
+        <Item1 Ref="90" ControlType="XRPanel" Name="panel1" SizeF="668.305664,164.491882" LocationFloat="1.38883328,10.0000229" Borders="All" BorderDashStyle="Solid">
           <Controls>
-            <Item1 Ref="85" ControlType="XRLabel" Name="label23" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.799,23" LocationFloat="9.000162,60.9999847" Padding="2,2,0,0,100" Borders="None">
+            <Item1 Ref="91" ControlType="XRLabel" Name="label56" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.799,23" LocationFloat="366.5341,138.491882" Padding="2,2,0,0,100" Borders="None">
               <ExpressionBindings>
-                <Item1 Ref="86" EventName="BeforePrint" PropertyName="Text" Expression="[ResultAR]" />
+                <Item1 Ref="92" EventName="BeforePrint" PropertyName="Text" Expression="[FinalResultAR]" />
               </ExpressionBindings>
-              <StylePriority Ref="87" UseBorders="false" UseTextAlignment="false" />
+              <StylePriority Ref="93" UseBorders="false" UseTextAlignment="false" />
             </Item1>
-            <Item2 Ref="88" ControlType="XRLabel" Name="label24" Multiline="true" Text="HR اعتماد الــ " TextAlignment="TopRight" SizeF="106.084961,23" LocationFloat="543.915039,61.0000153" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="89" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            <Item2 Ref="94" ControlType="XRLabel" Name="label57" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.798889,22.9999847" LocationFloat="9.000044,138.491882" Padding="2,2,0,0,100" Borders="None">
+              <ExpressionBindings>
+                <Item1 Ref="95" EventName="BeforePrint" PropertyName="Text" Expression="[FinalResult]" />
+              </ExpressionBindings>
+              <StylePriority Ref="96" UseBorders="false" UseTextAlignment="false" />
             </Item2>
-            <Item3 Ref="90" ControlType="XRLabel" Name="label25" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="529.915,60.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="91" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            <Item3 Ref="97" ControlType="XRLabel" Name="label58" Multiline="true" Text="درجة التقييم" TextAlignment="TopRight" SizeF="106.666718,23" LocationFloat="185.799088,138.491882" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="98" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
             </Item3>
-            <Item4 Ref="92" ControlType="XRLabel" Name="label26" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="529.9148,85.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="93" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            <Item4 Ref="99" ControlType="XRLabel" Name="label59" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.79895,138.491882" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="100" UseFont="false" UseBorders="false" UseTextAlignment="false" />
             </Item4>
-            <Item5 Ref="94" ControlType="XRLabel" Name="label27" Multiline="true" Text="تاريخ الاعتماد" TextAlignment="TopRight" SizeF="106.084961,23" LocationFloat="543.915039,86.0000153" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="95" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            <Item5 Ref="101" ControlType="XRLabel" Name="label60" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="531.333,138.491882" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="102" UseFont="false" UseBorders="false" UseTextAlignment="false" />
             </Item5>
-            <Item6 Ref="96" ControlType="XRLabel" Name="label28" Multiline="true" TextAlignment="TopRight" SizeF="149.713837,22.9999847" LocationFloat="377.2009,85.9999847" Padding="2,2,0,0,100" Borders="None">
-              <ExpressionBindings>
-                <Item1 Ref="97" EventName="BeforePrint" PropertyName="Text" Expression="[HRApprovalDate]" />
-              </ExpressionBindings>
-              <StylePriority Ref="98" UseBorders="false" UseTextAlignment="false" />
+            <Item6 Ref="103" ControlType="XRLabel" Name="label61" Multiline="true" Text=" نتيجة التقييم" TextAlignment="TopRight" SizeF="106.666718,22.9999962" LocationFloat="543.3331,138.491882" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="104" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
             </Item6>
-            <Item7 Ref="99" ControlType="XRLabel" Name="label29" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.798889,22.9999847" LocationFloat="9.000162,85.9999847" Padding="2,2,0,0,100" Borders="None">
+            <Item7 Ref="105" ControlType="XRLabel" Name="label50" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.799,23" LocationFloat="366.534119,112.3913" Padding="2,2,0,0,100" Borders="None">
               <ExpressionBindings>
-                <Item1 Ref="100" EventName="BeforePrint" PropertyName="Text" Expression="[ResultDegree]" />
+                <Item1 Ref="106" EventName="BeforePrint" PropertyName="Text" Expression="[ResultManagerAR]" />
               </ExpressionBindings>
-              <StylePriority Ref="101" UseBorders="false" UseTextAlignment="false" />
+              <StylePriority Ref="107" UseBorders="false" UseTextAlignment="false" />
             </Item7>
-            <Item8 Ref="102" ControlType="XRLabel" Name="label30" Multiline="true" Text="درجة التقييم" TextAlignment="TopRight" SizeF="106.666718,23" LocationFloat="185.79921,85.9999847" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="103" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            <Item8 Ref="108" ControlType="XRLabel" Name="label51" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.798889,22.9999847" LocationFloat="9.000083,112.3913" Padding="2,2,0,0,100" Borders="None">
+              <ExpressionBindings>
+                <Item1 Ref="109" EventName="BeforePrint" PropertyName="Text" Expression="[ResultManager]" />
+              </ExpressionBindings>
+              <StylePriority Ref="110" UseBorders="false" UseTextAlignment="false" />
             </Item8>
-            <Item9 Ref="104" ControlType="XRLabel" Name="label31" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.799057,85.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="105" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            <Item9 Ref="111" ControlType="XRLabel" Name="label52" Multiline="true" Text="درجة التقييم" TextAlignment="TopRight" SizeF="106.666718,23" LocationFloat="185.799118,112.3913" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="112" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
             </Item9>
-            <Item10 Ref="106" ControlType="XRLabel" Name="label34" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.799164,60.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="107" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            <Item10 Ref="113" ControlType="XRLabel" Name="label53" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.798981,112.3913" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="114" UseFont="false" UseBorders="false" UseTextAlignment="false" />
             </Item10>
-            <Item11 Ref="108" ControlType="XRLabel" Name="label35" Multiline="true" Text=" نتيجة التقييم" TextAlignment="TopRight" SizeF="106.666718,22.9999962" LocationFloat="185.79921,60.9999847" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="109" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            <Item11 Ref="115" ControlType="XRLabel" Name="label54" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="531.333,112.3913" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="116" UseFont="false" UseBorders="false" UseTextAlignment="false" />
             </Item11>
-            <Item12 Ref="110" ControlType="XRLabel" Name="label36" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="149.713837,23" LocationFloat="377.2009,60.9999847" Padding="2,2,0,0,100" Borders="None">
-              <ExpressionBindings>
-                <Item1 Ref="111" EventName="BeforePrint" PropertyName="Text" Expression="[HRApprovalArabicName]" />
-              </ExpressionBindings>
-              <StylePriority Ref="112" UseBorders="false" UseTextAlignment="false" />
+            <Item12 Ref="117" ControlType="XRLabel" Name="label55" Multiline="true" Text="نتيجة تقييم المدير" TextAlignment="TopRight" SizeF="106.666718,22.9999962" LocationFloat="543.3332,112.3913" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="118" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
             </Item12>
-            <Item13 Ref="113" ControlType="XRLabel" Name="label22" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.799,23" LocationFloat="9.000061,10" Padding="2,2,0,0,100" Borders="None">
+            <Item13 Ref="119" ControlType="XRLabel" Name="label23" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.799,23" LocationFloat="366.5341,85.9999847" Padding="2,2,0,0,100" Borders="None">
               <ExpressionBindings>
-                <Item1 Ref="114" EventName="BeforePrint" PropertyName="Text" Expression="[ManagerApprovalArabicName]" />
+                <Item1 Ref="120" EventName="BeforePrint" PropertyName="Text" Expression="[ResultEmployeeAR]" />
               </ExpressionBindings>
-              <StylePriority Ref="115" UseBorders="false" UseTextAlignment="false" />
+              <StylePriority Ref="121" UseBorders="false" UseTextAlignment="false" />
             </Item13>
-            <Item14 Ref="116" ControlType="XRLabel" Name="label12" Multiline="true" Text="اعتماد الموظف" TextAlignment="TopRight" SizeF="106.084961,23" LocationFloat="543.9149,10" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="117" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
-            </Item14>
-            <Item15 Ref="118" ControlType="XRLabel" Name="label13" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="529.914856,10" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="119" UseFont="false" UseBorders="false" UseTextAlignment="false" />
-            </Item15>
-            <Item16 Ref="120" ControlType="XRLabel" Name="label14" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="529.914734,35" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="121" UseFont="false" UseBorders="false" UseTextAlignment="false" />
-            </Item16>
-            <Item17 Ref="122" ControlType="XRLabel" Name="label15" Multiline="true" Text="تاريخ الاعتماد" TextAlignment="TopRight" SizeF="106.084961,22.9999847" LocationFloat="543.9149,35" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+            <Item14 Ref="122" ControlType="XRLabel" Name="label24" Multiline="true" Text="HR اعتماد الــ " TextAlignment="TopRight" SizeF="106.084961,23" LocationFloat="543.915039,61.0000153" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
               <StylePriority Ref="123" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item14>
+            <Item15 Ref="124" ControlType="XRLabel" Name="label25" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="529.915,60.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="125" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item15>
+            <Item16 Ref="126" ControlType="XRLabel" Name="label26" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="172.783615,60.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="127" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item16>
+            <Item17 Ref="128" ControlType="XRLabel" Name="label27" Multiline="true" Text="تاريخ الاعتماد" TextAlignment="TopRight" SizeF="106.084961,23" LocationFloat="186.783813,61.0000229" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="129" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
             </Item17>
-            <Item18 Ref="124" ControlType="XRLabel" Name="label16" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="149.713837,22.9999847" LocationFloat="377.200836,35" Padding="2,2,0,0,100" Borders="None">
+            <Item18 Ref="130" ControlType="XRLabel" Name="label28" Multiline="true" TextAlignment="TopRight" SizeF="149.713837,22.9999847" LocationFloat="20.0697041,60.9999847" Padding="2,2,0,0,100" Borders="None">
               <ExpressionBindings>
-                <Item1 Ref="125" EventName="BeforePrint" PropertyName="Text" Expression="[EmployeeApprovalDate]" />
+                <Item1 Ref="131" EventName="BeforePrint" PropertyName="Text" Expression="[HRApprovalDate]" />
               </ExpressionBindings>
-              <StylePriority Ref="126" UseBorders="false" UseTextAlignment="false" />
+              <StylePriority Ref="132" UseBorders="false" UseTextAlignment="false" />
             </Item18>
-            <Item19 Ref="127" ControlType="XRLabel" Name="label17" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.798889,22.9999847" LocationFloat="9.000061,35" Padding="2,2,0,0,100" Borders="None">
+            <Item19 Ref="133" ControlType="XRLabel" Name="label29" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.798889,22.9999847" LocationFloat="9.000162,85.9999847" Padding="2,2,0,0,100" Borders="None">
               <ExpressionBindings>
-                <Item1 Ref="128" EventName="BeforePrint" PropertyName="Text" Expression="[ManagerApprovalDate]" />
+                <Item1 Ref="134" EventName="BeforePrint" PropertyName="Text" Expression="[ResultEmployee]" />
               </ExpressionBindings>
-              <StylePriority Ref="129" UseBorders="false" UseTextAlignment="false" />
+              <StylePriority Ref="135" UseBorders="false" UseTextAlignment="false" />
             </Item19>
-            <Item20 Ref="130" ControlType="XRLabel" Name="label18" Multiline="true" Text="تاريخ الاعتماد" TextAlignment="TopRight" SizeF="106.666718,23" LocationFloat="185.7991,35" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="131" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
-            </Item20>
-            <Item21 Ref="132" ControlType="XRLabel" Name="label19" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.79895,35" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="133" UseFont="false" UseBorders="false" UseTextAlignment="false" />
-            </Item21>
-            <Item22 Ref="134" ControlType="XRLabel" Name="label20" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.799057,10" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-              <StylePriority Ref="135" UseFont="false" UseBorders="false" UseTextAlignment="false" />
-            </Item22>
-            <Item23 Ref="136" ControlType="XRLabel" Name="label21" Multiline="true" Text="اعتماد المدير " TextAlignment="TopRight" SizeF="106.666718,22.9999962" LocationFloat="185.7991,10" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+            <Item20 Ref="136" ControlType="XRLabel" Name="label30" Multiline="true" Text="درجة التقييم" TextAlignment="TopRight" SizeF="106.666718,23" LocationFloat="185.79921,85.9999847" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
               <StylePriority Ref="137" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item20>
+            <Item21 Ref="138" ControlType="XRLabel" Name="label31" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.799057,85.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="139" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item21>
+            <Item22 Ref="140" ControlType="XRLabel" Name="label34" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="531.333069,85.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="141" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item22>
+            <Item23 Ref="142" ControlType="XRLabel" Name="label35" Multiline="true" Text=" نتيجة التقييم الموظف" TextAlignment="TopRight" SizeF="106.666718,22.9999962" LocationFloat="543.3331,85.9999847" Font="Arial, 10pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="143" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
             </Item23>
-            <Item24 Ref="138" ControlType="XRLabel" Name="label11" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="149.713837,23" LocationFloat="377.200836,10" Padding="2,2,0,0,100" Borders="None">
+            <Item24 Ref="144" ControlType="XRLabel" Name="label36" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="149.713837,23" LocationFloat="377.2009,60.9999847" Padding="2,2,0,0,100" Borders="None">
               <ExpressionBindings>
-                <Item1 Ref="139" EventName="BeforePrint" PropertyName="Text" Expression="[ArabicName]" />
+                <Item1 Ref="145" EventName="BeforePrint" PropertyName="Text" Expression="[HRApprovalArabicName]" />
               </ExpressionBindings>
-              <StylePriority Ref="140" UseBorders="false" UseTextAlignment="false" />
+              <StylePriority Ref="146" UseBorders="false" UseTextAlignment="false" />
             </Item24>
+            <Item25 Ref="147" ControlType="XRLabel" Name="label22" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.799,23" LocationFloat="366.5341,34.9999847" Padding="2,2,0,0,100" Borders="None">
+              <ExpressionBindings>
+                <Item1 Ref="148" EventName="BeforePrint" PropertyName="Text" Expression="[ManagerApprovalArabicName]" />
+              </ExpressionBindings>
+              <StylePriority Ref="149" UseBorders="false" UseTextAlignment="false" />
+            </Item25>
+            <Item26 Ref="150" ControlType="XRLabel" Name="label12" Multiline="true" Text="اعتماد الموظف" TextAlignment="TopRight" SizeF="106.084961,23" LocationFloat="543.9149,10" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="151" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item26>
+            <Item27 Ref="152" ControlType="XRLabel" Name="label13" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="529.914856,10" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="153" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item27>
+            <Item28 Ref="154" ControlType="XRLabel" Name="label14" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="171.798981,9.999989" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="155" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item28>
+            <Item29 Ref="156" ControlType="XRLabel" Name="label15" Multiline="true" Text="تاريخ الاعتماد" TextAlignment="TopRight" SizeF="106.084961,22.9999847" LocationFloat="185.799118,9.999989" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="157" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item29>
+            <Item30 Ref="158" ControlType="XRLabel" Name="label16" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="149.713837,22.9999847" LocationFloat="19.0850048,9.999989" Padding="2,2,0,0,100" Borders="None">
+              <ExpressionBindings>
+                <Item1 Ref="159" EventName="BeforePrint" PropertyName="Text" Expression="[EmployeeApprovalDate]" />
+              </ExpressionBindings>
+              <StylePriority Ref="160" UseBorders="false" UseTextAlignment="false" />
+            </Item30>
+            <Item31 Ref="161" ControlType="XRLabel" Name="label17" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="162.798889,22.9999847" LocationFloat="9.000061,35" Padding="2,2,0,0,100" Borders="None">
+              <ExpressionBindings>
+                <Item1 Ref="162" EventName="BeforePrint" PropertyName="Text" Expression="[ManagerApprovalDate]" />
+              </ExpressionBindings>
+              <StylePriority Ref="163" UseBorders="false" UseTextAlignment="false" />
+            </Item31>
+            <Item32 Ref="164" ControlType="XRLabel" Name="label18" Multiline="true" Text="تاريخ الاعتماد" TextAlignment="TopRight" SizeF="106.666718,23" LocationFloat="185.7991,35" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="165" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item32>
+            <Item33 Ref="166" ControlType="XRLabel" Name="label19" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="173.79895,35" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="167" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item33>
+            <Item34 Ref="168" ControlType="XRLabel" Name="label20" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="531.333069,34.9999847" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="169" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item34>
+            <Item35 Ref="170" ControlType="XRLabel" Name="label21" Multiline="true" Text="اعتماد المدير " TextAlignment="TopRight" SizeF="106.666718,22.9999962" LocationFloat="543.3331,34.9999847" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="171" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item35>
+            <Item36 Ref="172" ControlType="XRLabel" Name="label11" Multiline="true" Text="Our Ref.: " TextAlignment="TopRight" SizeF="149.713837,23" LocationFloat="377.200836,10" Padding="2,2,0,0,100" Borders="None">
+              <ExpressionBindings>
+                <Item1 Ref="173" EventName="BeforePrint" PropertyName="Text" Expression="[ArabicName]" />
+              </ExpressionBindings>
+              <StylePriority Ref="174" UseBorders="false" UseTextAlignment="false" />
+            </Item36>
           </Controls>
-          <StylePriority Ref="141" UseBorders="false" UseBorderDashStyle="false" />
+          <StylePriority Ref="175" UseBorders="false" UseBorderDashStyle="false" />
         </Item1>
       </Controls>
     </Item5>
-    <Item6 Ref="142" ControlType="GroupHeaderBand" Name="GroupHeader2" HeightF="55.6943245">
+    <Item6 Ref="176" ControlType="GroupHeaderBand" Name="GroupHeader2" HeightF="55.6943245">
       <GroupFields>
-        <Item1 Ref="143" FieldName="EvalCharterDetailsID" />
+        <Item1 Ref="177" FieldName="EvalCharterDetailsID" />
       </GroupFields>
       <Controls>
-        <Item1 Ref="144" ControlType="XRLabel" Name="label40" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="569.0277,3" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
-          <StylePriority Ref="145" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+        <Item1 Ref="178" ControlType="XRLabel" Name="label40" Multiline="true" Text=":" TextAlignment="TopRight" SizeF="10.0000916,22.9999943" LocationFloat="569.0277,3" Font="Arial, 12pt" Padding="2,2,0,0,100" Borders="None">
+          <StylePriority Ref="179" UseFont="false" UseBorders="false" UseTextAlignment="false" />
         </Item1>
-        <Item2 Ref="146" ControlType="XRLabel" Name="label39" Multiline="true" Text="الجدارة" TextAlignment="TopRight" SizeF="76.66675,22.9999962" LocationFloat="579.027649,3" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
-          <StylePriority Ref="147" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
+        <Item2 Ref="180" ControlType="XRLabel" Name="label39" Multiline="true" Text="الجدارة" TextAlignment="TopRight" SizeF="76.66675,22.9999962" LocationFloat="579.027649,3" Font="Arial, 12pt" BackColor="WhiteSmoke" Padding="2,2,0,0,100" Borders="None">
+          <StylePriority Ref="181" UseFont="false" UseBackColor="false" UseBorders="false" UseTextAlignment="false" />
         </Item2>
-        <Item3 Ref="148" ControlType="XRTable" Name="table1" TextAlignment="MiddleCenter" SizeF="669,28" LocationFloat="0.694455,27.69432" Borders="All">
+        <Item3 Ref="182" ControlType="XRTable" Name="table1" TextAlignment="MiddleCenter" SizeF="671,28" LocationFloat="0,27.69432" Borders="All">
           <Rows>
-            <Item1 Ref="149" ControlType="XRTableRow" Name="tableRow1" Weight="1">
+            <Item1 Ref="183" ControlType="XRTableRow" Name="tableRow1" Weight="1">
               <Cells>
-                <Item1 Ref="150" ControlType="XRTableCell" Name="tableCell1" Weight="0.20476840057335352" Text="وصف الدرجة" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129" BorderColor="Black" Borders="None">
-                  <StylePriority Ref="151" UseBackColor="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+                <Item1 Ref="184" ControlType="XRTableCell" Name="tableCell10" Weight="0.093895130940533339" Multiline="true" Text="الوصف" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129" BorderColor="Black" Borders="None">
+                  <StylePriority Ref="185" UseBackColor="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
                 </Item1>
-                <Item2 Ref="152" ControlType="XRTableCell" Name="tableCell2" Weight="0.14234734246078107" Text="قيمة الدرجة" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129">
-                  <StylePriority Ref="153" UseBackColor="false" UseTextAlignment="false" />
+                <Item2 Ref="186" ControlType="XRTableCell" Name="tableCell9" Weight="0.093895130940533339" Multiline="true" Text="درجة المدير" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129" BorderColor="Black" Borders="None">
+                  <StylePriority Ref="187" UseBackColor="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
                 </Item2>
-                <Item3 Ref="154" ControlType="XRTableCell" Name="tableCell3" Weight="0.29816098453110673" Text="الهدف( انجليزي )" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129">
-                  <StylePriority Ref="155" UseBackColor="false" UseTextAlignment="false" />
+                <Item3 Ref="188" ControlType="XRTableCell" Name="tableCell1" Weight="0.09521336440355227" Text="الوصف" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129" BorderColor="Black" Borders="None">
+                  <StylePriority Ref="189" UseBackColor="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
                 </Item3>
-                <Item4 Ref="156" ControlType="XRTableCell" Name="tableCell4" Weight="0.38395401750427383" Text="الهدف (عربي)" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129">
-                  <StylePriority Ref="157" UseBackColor="false" UseTextAlignment="false" />
+                <Item4 Ref="190" ControlType="XRTableCell" Name="tableCell2" Weight="0.07734620221447705" Text="درجة الموظف" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129">
+                  <StylePriority Ref="191" UseBackColor="false" UseTextAlignment="false" />
                 </Item4>
+                <Item5 Ref="192" ControlType="XRTableCell" Name="tableCell3" Weight="0.29816098453110673" Text="الهدف( انجليزي )" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129">
+                  <StylePriority Ref="193" UseBackColor="false" UseTextAlignment="false" />
+                </Item5>
+                <Item6 Ref="194" ControlType="XRTableCell" Name="tableCell4" Weight="0.38395401750427383" Text="الهدف (عربي)" TextAlignment="MiddleCenter" StyleName="DetailCaption1" BackColor="255,0,134,129">
+                  <StylePriority Ref="195" UseBackColor="false" UseTextAlignment="false" />
+                </Item6>
               </Cells>
             </Item1>
           </Rows>
-          <StylePriority Ref="158" UseBorders="false" UseTextAlignment="false" />
+          <StylePriority Ref="196" UseBorders="false" UseTextAlignment="false" />
         </Item3>
-        <Item4 Ref="159" ControlType="XRLabel" Name="label38" Multiline="true" Text="تقرير تقييم اداء الموظف" TextAlignment="TopRight" SizeF="410.416656,22.9999962" LocationFloat="158.61087,3.000005" Font="Arial, 12pt" Padding="2,2,0,0,100" BorderColor="WhiteSmoke">
+        <Item4 Ref="197" ControlType="XRLabel" Name="label38" Multiline="true" Text="تقرير تقييم اداء الموظف" TextAlignment="TopRight" SizeF="410.416656,22.9999962" LocationFloat="158.61087,3.000005" Font="Arial, 12pt" Padding="2,2,0,0,100" BorderColor="WhiteSmoke">
           <ExpressionBindings>
-            <Item1 Ref="160" EventName="BeforePrint" PropertyName="Text" Expression="[EvalCharterDetailsAr]" />
+            <Item1 Ref="198" EventName="BeforePrint" PropertyName="Text" Expression="[EvalCharterDetailsAr]" />
           </ExpressionBindings>
-          <StylePriority Ref="161" UseFont="false" UseBorderColor="false" UseTextAlignment="false" />
+          <StylePriority Ref="199" UseFont="false" UseBorderColor="false" UseTextAlignment="false" />
         </Item4>
       </Controls>
     </Item6>
   </Bands>
   <StyleSheet>
-    <Item1 Ref="162" Name="Title" BorderStyle="Inset" Font="Arial, 14.25pt" ForeColor="255,75,75,75" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
-    <Item2 Ref="163" Name="DetailCaption1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="White" BackColor="255,75,75,75" BorderColor="White" Sides="Left" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
-    <Item3 Ref="164" Name="DetailData1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BorderColor="Transparent" Sides="Left" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
-    <Item4 Ref="165" Name="DetailData3_Odd" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BackColor="255,231,231,231" BorderColor="Transparent" Sides="None" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="1" />
-    <Item5 Ref="166" Name="PageInfo" BorderStyle="Inset" Padding="2,2,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="255,75,75,75" StringFormat="Near;Near;0;None;Character;Default" />
+    <Item1 Ref="200" Name="Title" BorderStyle="Inset" Font="Arial, 14.25pt" ForeColor="255,75,75,75" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item2 Ref="201" Name="DetailCaption1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="White" BackColor="255,75,75,75" BorderColor="White" Sides="Left" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
+    <Item3 Ref="202" Name="DetailData1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BorderColor="Transparent" Sides="Left" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
+    <Item4 Ref="203" Name="DetailData3_Odd" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BackColor="255,231,231,231" BorderColor="Transparent" Sides="None" StringFormat="Near;Center;0;None;Character;Default" TextAlignment="MiddleLeft" BorderWidthSerializable="1" />
+    <Item5 Ref="204" Name="PageInfo" BorderStyle="Inset" Padding="2,2,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="255,75,75,75" StringFormat="Near;Near;0;None;Character;Default" />
   </StyleSheet>
   <ComponentStorage>
-    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v20.1" Name="sqlDataSource1" Base64="PFNxbERhdGFTb3VyY2UgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxDb25uZWN0aW9uIE5hbWU9IkRhdGFiYXNlQ29ubmVjdGlvbiIgRnJvbUFwcENvbmZpZz0idHJ1ZSIgLz48UXVlcnkgVHlwZT0iU3RvcmVkUHJvY1F1ZXJ5IiBOYW1lPSJMb2FkRXZhbFJlc3VsdFJQVCI+PFBhcmFtZXRlciBOYW1lPSJARXZhbHVhdGlvbklEIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5JbnQzMikoP0V2YWx1YXRpb25JRCk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBVc2VySUQiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkludDMyKSg/VXNlcklEKTwvUGFyYW1ldGVyPjxQcm9jTmFtZT5lc3MuTG9hZEV2YWxSZXN1bHRSUFQ8L1Byb2NOYW1lPjwvUXVlcnk+PFJlc3VsdFNjaGVtYT48RGF0YVNldCBOYW1lPSJzcWxEYXRhU291cmNlMSI+PFZpZXcgTmFtZT0iTG9hZEV2YWxSZXN1bHRSUFQiPjxGaWVsZCBOYW1lPSJOYW1lQVIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iTmFtZUVOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkFkZHJlc3NPbmVBUiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBZGRyZXNzT25lRU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzc1R3b0FSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkFkZHJlc3NUd29FTiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJQaG9uZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJFdmFsdWF0aW9uSUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsUGVyaW9kSUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ29tbXVuaXR5SUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJDb21tdW5pdHlEZXNjQXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQ29tbXVuaXR5RGVzY0VuIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik5hbWVQZXJpb2QiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRW1wbG95ZWVJRCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlJlY29yZE51bWJlciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBcmFiaWNOYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkVuZ2xpc2hOYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik1hbmFnZXJJRCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVySUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckFyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVyRW4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRW1wbG95ZWVBcHByb3ZhbCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkVtcGxveWVlQXBwcm92YWxEYXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik1hbmFnZXJBcHByb3ZhbCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9Ik1hbmFnZXJBcHByb3ZhbElEIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iTWFuYWdlckFwcHJvdmFsQXJhYmljTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJNYW5hZ2VyQXBwcm92YWxEYXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkhSQXBwcm92YWwiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJIUkFwcHJvdmFsSUQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJIUkFwcHJvdmFsQXJhYmljTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJIUkFwcHJvdmFsRGF0ZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJVc2VySUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsdWF0aW9uU3RhdXRzQXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRXZhbHVhdGlvblN0YXV0c0VuIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkV2YWx1YXRpb25TdGF1dHNJRCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkNyZWF0ZWREYXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik5vdGVzIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlJlc3VsdERlZ3JlZSIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iUmVzdWx0QVIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUmVzdWx0RU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRXZhbENoYXJ0ZXJEZXRhaWxzSUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckRldGFpbHNBciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckRldGFpbHNFbiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJXZWlnaHQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckRldGFpbHNJdGVtc0lEIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iRXZhbENoYXJ0ZXJEZXRhaWxzSXRlbXNBciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckRldGFpbHNJdGVtc0VuIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkRlZ3JlZUVtcGxveWVlIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iRGVncmVlTmFtZUFSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkRlZ3JlZU5hbWVFTiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEZWdyZWVNYW5hZ2VyIiBUeXBlPSJJbnQzMiIgLz48L1ZpZXc+PC9EYXRhU2V0PjwvUmVzdWx0U2NoZW1hPjxDb25uZWN0aW9uT3B0aW9ucyBDbG9zZUNvbm5lY3Rpb249InRydWUiIC8+PC9TcWxEYXRhU291cmNlPg==" />
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v20.1" Name="sqlDataSource1" Base64="PFNxbERhdGFTb3VyY2UgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxDb25uZWN0aW9uIE5hbWU9IkRhdGFiYXNlQ29ubmVjdGlvbiIgRnJvbUFwcENvbmZpZz0idHJ1ZSIgLz48UXVlcnkgVHlwZT0iU3RvcmVkUHJvY1F1ZXJ5IiBOYW1lPSJMb2FkRXZhbFJlc3VsdFJQVCI+PFBhcmFtZXRlciBOYW1lPSJARXZhbHVhdGlvbklEIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5JbnQzMikoP0V2YWx1YXRpb25JRCk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBVc2VySUQiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkludDMyKSg/VXNlcklEKTwvUGFyYW1ldGVyPjxQcm9jTmFtZT5lc3MuTG9hZEV2YWxSZXN1bHRSUFQ8L1Byb2NOYW1lPjwvUXVlcnk+PFJlc3VsdFNjaGVtYT48RGF0YVNldCBOYW1lPSJzcWxEYXRhU291cmNlMSI+PFZpZXcgTmFtZT0iTG9hZEV2YWxSZXN1bHRSUFQiPjxGaWVsZCBOYW1lPSJOYW1lQVIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iTmFtZUVOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkFkZHJlc3NPbmVBUiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBZGRyZXNzT25lRU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzc1R3b0FSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkFkZHJlc3NUd29FTiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJQaG9uZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJFdmFsdWF0aW9uSUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsUGVyaW9kSUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ29tbXVuaXR5SUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJDb21tdW5pdHlEZXNjQXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQ29tbXVuaXR5RGVzY0VuIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik5hbWVQZXJpb2QiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRW1wbG95ZWVJRCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlJlY29yZE51bWJlciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBcmFiaWNOYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkVuZ2xpc2hOYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik1hbmFnZXJJRCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVySUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckFyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVyRW4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRW1wbG95ZWVBcHByb3ZhbCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkVtcGxveWVlQXBwcm92YWxEYXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik1hbmFnZXJBcHByb3ZhbCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9Ik1hbmFnZXJBcHByb3ZhbElEIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iTWFuYWdlckFwcHJvdmFsQXJhYmljTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJNYW5hZ2VyQXBwcm92YWxEYXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkhSQXBwcm92YWwiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJIUkFwcHJvdmFsSUQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJIUkFwcHJvdmFsQXJhYmljTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJIUkFwcHJvdmFsRGF0ZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJVc2VySUQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJFdmFsdWF0aW9uU3RhdXRzQXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRXZhbHVhdGlvblN0YXV0c0VuIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkV2YWx1YXRpb25TdGF1dHNJRCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkNyZWF0ZWREYXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik5vdGVzIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlJlc3VsdEVtcGxveWVlIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJSZXN1bHRFbXBsb3llZUFSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlJlc3VsdEVtcGxveWVlRU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUmVzdWx0TWFuYWdlciIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iUmVzdWx0TWFuYWdlckFSIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlJlc3VsdE1hbmFnZXJFTiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckRldGFpbHNJRCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVyRGV0YWlsc0FyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVyRGV0YWlsc0VuIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IldlaWdodCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVyRGV0YWlsc0l0ZW1zSUQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJFdmFsQ2hhcnRlckRldGFpbHNJdGVtc0FyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkV2YWxDaGFydGVyRGV0YWlsc0l0ZW1zRW4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGVncmVlRW1wbG95ZWUiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJEZWdyZWVOYW1lQVIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGVncmVlTmFtZUVOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkRlZ3JlZU1hbmFnZXIiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJEZWdyZWVNYW5hZ2VyQVIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGVncmVlTWFuYWdlckVOIiBUeXBlPSJTdHJpbmciIC8+PC9WaWV3PjwvRGF0YVNldD48L1Jlc3VsdFNjaGVtYT48Q29ubmVjdGlvbk9wdGlvbnMgQ2xvc2VDb25uZWN0aW9uPSJ0cnVlIiAvPjwvU3FsRGF0YVNvdXJjZT4=" />
   </ComponentStorage>
   <ObjectStorage>
     <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v20.1" Ref="2" Content="System.Int32" Type="System.Type" />

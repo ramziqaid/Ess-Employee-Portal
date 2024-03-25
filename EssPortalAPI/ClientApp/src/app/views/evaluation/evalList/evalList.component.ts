@@ -45,7 +45,7 @@ export class EvalListComponent implements OnInit {
    this.loadEvalYear();
    this.myOrder="0";
    this.employeeID=this.authService.logginEmployeeId();
-
+ 
    this.essService.checkEmployeeIsHR(this.employeeID).subscribe(
     result => { 
       this.isHRUser=result;     

@@ -7,6 +7,6 @@ export const environment = {
   // apiReportUrl: "http://localhost:4800/RamziAPI"
 
   //meem
-  apiUrl: "http://localhost:4800/PORTALAPI/api/",
-  apiReportUrl: "http://localhost:4800/PORTALAPI"
+  apiUrl: "http://localhost:4700/API/api/",
+  apiReportUrl: "http://localhost:4700/API"
 };

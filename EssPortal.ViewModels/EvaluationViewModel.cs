@@ -31,6 +31,7 @@ namespace EssPortal.ViewModels
             public string EvalCharterEn { get; set; }
             public long? ManagerID { get; set; }
             public int? EmployeeApproval { get; set; }
+            public string EmployeeApprovalDate { get; set; }
             public int? ManagerApproval { get; set; }
             public string ManagerApprovalArabicName { get; set; }
             public long? ManagerApprovalID { get; set; }
@@ -66,7 +67,7 @@ namespace EssPortal.ViewModels
             public int MinWeight { get; set; }
             public int MaxWeight { get; set; }
             public string DegreeEmployee { get; set; }
-            public int? DegreeManager { get; set; }
+            public string DegreeManager { get; set; }
 
             //public long EvalPeriodID { get; set; }
             //public string NamePeriod { get; set; }

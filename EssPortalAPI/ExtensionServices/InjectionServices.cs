@@ -41,7 +41,6 @@ namespace EssPortalAPI.ExtensionServices
             services.AddTransient<IEmailsNotificationsRepository, EmailsNotificationConcrete>();
 
             // services.AddScoped<IFactory, Factory>();
-
             services.AddScoped<IUrlHelper>(implementationFactory =>
             {
                 var actionContext = implementationFactory.GetService<IActionContextAccessor>().ActionContext;
